@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>二维码生成 · 在线文件工具站</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">二维码生成</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">证件照与码工具 / 二维码生成</div>
+        <h1 class="page-title">二维码生成</h1>
+        <p class="page-desc">把文本、网址、WiFi 密码或名片信息生成为二维码，支持容错等级、尺寸、配色、边距与中心 Logo，可导出 PNG / SVG，全部在本地完成。</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>输入内容</div>
+        <textarea id="text" placeholder="在此输入要生成二维码的内容，支持中文（UTF-8 编码）…"></textarea>
+        <div class="toolbar tight">
+          <span class="muted" id="count">0 字符</span>
+          <div class="toolbar-actions">
+            <button class="btn btn-sm" data-tpl="text">纯文本</button>
+            <button class="btn btn-sm" data-tpl="url">网址</button>
+            <button class="btn btn-sm" data-tpl="wifi">WiFi</button>
+            <button class="btn btn-sm" data-tpl="vcard">名片 vCard</button>
+            <button class="btn btn-sm btn-ghost" id="clearText">清空</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>参数设置</div>
+        <div class="toolbar tight">
+          <label class="field field-narrow">
+            <span>容错等级</span>
+            <select id="level">
+              <option value="L">L · 约 7%</option>
+              <option value="M" selected>M · 约 15%</option>
+              <option value="Q">Q · 约 25%</option>
+              <option value="H">H · 约 30%</option>
+            </select>
+          </label>
+          <label class="field field-narrow">
+            <span>输出尺寸</span>
+            <select id="size">
+              <option value="128">128 × 128</option>
+              <option value="256" selected>256 × 256</option>
+              <option value="512">512 × 512</option>
+              <option value="1024">1024 × 1024</option>
+            </select>
+          </label>
+          <label class="field field-narrow">
+            <span>前景色</span>
+            <input type="color" id="fg" value="#000000">
+          </label>
+          <label class="field field-narrow">
+            <span>背景色</span>
+            <input type="color" id="bg" value="#ffffff">
+          </label>
+          <label class="field field-range">
+            <span>边距（模块）<b id="marginVal">4</b></span>
+            <input type="range" id="margin" min="0" max="8" step="1" value="4">
+          </label>
+        </div>
+        <div class="toolbar">
+          <label class="field field-wide">
+            <span>中心 Logo（可选，建议配合容错等级 H）</span>
+            <div class="file-chips" id="logoInfo" style="margin-top:0"></div>
+            <input type="file" id="logo" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" hidden>
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-sm" id="pickLogo">选择图片</button>
+            <button class="btn btn-sm btn-ghost" id="clearLogo" hidden>移除 Logo</button>
+            <button class="btn btn-primary" id="generate">生成二维码</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">准备中…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <div class="result-head">
+        <h2>生成结果</h2>
+        <span class="muted" id="summary">尚未生成二维码</span>
+      </div>
+      <div class="empty" id="empty"><p>输入内容后点击「生成二维码」，成品会显示在这里</p></div>
+
+      <div id="result" hidden>
+        <div class="preview-box" id="qrBox"></div>
+        <div class="stat-row" id="stats"></div>
+        <div class="toolbar">
+          <div class="toolbar-actions">
+            <button class="btn btn-sm btn-primary" id="dlPng" disabled>下载 PNG</button>
+            <button class="btn btn-sm" id="dlSvg" disabled>下载 SVG</button>
+            <button class="btn btn-sm" id="copyImg" disabled>复制到剪贴板</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/qrcode.js"></script>
+</body>
+</html>

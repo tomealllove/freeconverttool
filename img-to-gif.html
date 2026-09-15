@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>图片转 GIF · 在线文件工具站</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .item.page-card { cursor: grab; }
+  .icon-btn.act:hover { background: var(--accent-soft); color: var(--accent); }
+  .icon-btn:disabled { opacity: .3; cursor: not-allowed; }
+  .item-head .grow { margin-left: auto; }
+  /* .field / .progress 自带 display:flex，会覆盖浏览器默认的 [hidden]，这里补一条局部修正 */
+  .field[hidden], .progress[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">图片转 GIF</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">图片工具 / 图片转 GIF</div>
+        <h1 class="page-title">图片转 GIF</h1>
+        <p class="page-desc">把多张图片按顺序合成为一张动态 GIF，可设置画布尺寸、帧间隔与循环次数，全程在浏览器本地编码，不上传任何文件。</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>上传图片</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="选择或拖拽图片到此处">
+          <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,.png,.jpg,.jpeg,.webp,.gif,.bmp" multiple hidden>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">点击选择图片，或拖拽文件到此处</p>
+          <p class="dz-sub">支持 PNG / JPG / WebP / GIF / BMP，单张不超过 20MB，最多 60 张</p>
+        </div>
+        <div class="file-chips" id="chips"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>参数设置</div>
+        <div class="toolbar tight">
+          <label class="field">
+            <span>画布尺寸</span>
+            <select id="sizeMode">
+              <option value="auto">跟随首图</option>
+              <option value="custom">指定宽高</option>
+            </select>
+          </label>
+          <label class="field field-narrow" id="wField" hidden>
+            <span>宽度（px）</span>
+            <input type="number" id="gifW" min="16" max="1600" step="1" value="480">
+          </label>
+          <label class="field field-narrow" id="hField" hidden>
+            <span>高度（px）</span>
+            <input type="number" id="gifH" min="16" max="1600" step="1" value="480">
+          </label>
+          <label class="field field-narrow">
+            <span>帧间隔（毫秒）</span>
+            <input type="number" id="delay" min="50" max="2000" step="10" value="500">
+          </label>
+          <label class="field field-narrow">
+            <span>循环次数</span>
+            <select id="loop">
+              <option value="0" selected>无限循环</option>
+              <option value="1">1 次</option>
+              <option value="3">3 次</option>
+              <option value="5">5 次</option>
+            </select>
+          </label>
+          <label class="field field-range">
+            <span>输出质量 <b id="qualityVal">10</b></span>
+            <input type="range" id="quality" min="1" max="30" step="1" value="10">
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="clear" disabled>清空</button>
+            <button class="btn btn-primary" id="build" disabled>合成 GIF</button>
+          </div>
+        </div>
+        <p class="helper">质量取值 1–30：数字越小画面越好但编码越慢，默认 10。GIF 不支持透明通道，透明区域会自动填充为白色。图片尺寸越大、数量越多，编码耗时越长。</p>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">准备中…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <section class="card" id="outCard" hidden>
+        <div class="card-title">合成结果</div>
+        <div class="preview-box"><img id="preview" alt="GIF 预览" data-zoom></div>
+        <div class="stat-row" id="outStats"></div>
+        <div class="toolbar tight">
+          <div class="toolbar-actions">
+            <button class="btn btn-primary" id="download" disabled>下载 GIF</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="result-head">
+        <h2>帧顺序</h2>
+        <span class="muted" id="summary">还没有添加图片</span>
+      </div>
+      <div class="empty" id="empty">
+        <p>上传图片后，这里会按顺序显示每一帧的缩略图，可拖拽调整顺序，顺序即 GIF 的播放顺序</p>
+      </div>
+      <div class="grid grid-pages" id="list"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/img-to-gif.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>在线文件工具站 · 纯前端本地处理</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">在线文件工具站</b>
+    </div>
+
+    <div class="content-inner">
+      <div class="home-hero">
+        <h1>在线文件工具站</h1>
+        <p>15 个常用文件处理工具，全部在浏览器本地完成，文件不上传服务器。选一个工具开始使用。</p>
+      </div>
+
+      <section class="card">
+        <div class="card-title">图片工具</div>
+        <div class="home-grid">
+          <a class="home-card" href="img-convert.html"><span class="hc-tag">图片工具</span><h3>图片格式化</h3><p>PNG / JPG / WebP / BMP 互转，支持批量与质量调节</p></a>
+          <a class="home-card" href="img-to-pdf.html"><span class="hc-tag">图片工具</span><h3>图片转 PDF</h3><p>多图排序合成一个 PDF，可选页面尺寸与页边距</p></a>
+          <a class="home-card" href="img-to-gif.html"><span class="hc-tag">图片工具</span><h3>图片转 GIF</h3><p>多图合成动图，可调帧间隔、尺寸与循环次数</p></a>
+          <a class="home-card" href="img-compress.html"><span class="hc-tag">图片工具</span><h3>图片压缩</h3><p>按质量或目标体积压缩，实时对比压缩前后大小</p></a>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-title">PDF 工具</div>
+        <div class="home-grid">
+          <a class="home-card" href="pdf-to-word.html"><span class="hc-tag">PDF 工具</span><h3>PDF 转 Word</h3><p>提取文本与段落生成 .docx，适合文字型 PDF</p></a>
+          <a class="home-card" href="pdf-merge.html"><span class="hc-tag">PDF 工具</span><h3>PDF 合并拆分</h3><p>多文件合并，或按页码范围拆分为多个文件</p></a>
+          <a class="home-card" href="pdf-compress.html"><span class="hc-tag">PDF 工具</span><h3>PDF 压缩</h3><p>重写结构并压缩内嵌图片，尽量减小体积</p></a>
+          <a class="home-card" href="pdf-to-img.html"><span class="hc-tag">PDF 工具</span><h3>PDF 转图片</h3><p>逐页渲染 PNG / JPG，支持页码范围与打包下载</p></a>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-title">转换工具</div>
+        <div class="home-grid">
+          <a class="home-card" href="audio-convert.html"><span class="hc-tag">转换工具</span><h3>音频格式转换</h3><p>MP3 / WAV / OGG 等互转，高级模式支持更多格式</p></a>
+          <a class="home-card" href="video-convert.html"><span class="hc-tag">转换工具</span><h3>视频格式互转</h3><p>短视频转码、转 GIF、抽帧截图（依赖 wasm）</p></a>
+          <a class="home-card" href="ebook-convert.html"><span class="hc-tag">转换工具</span><h3>电子书格式互转</h3><p>EPUB 与 TXT / HTML / PDF 互转，MOBI 提供替代方案</p></a>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-title">汉字转换</div>
+        <div class="home-grid">
+          <a class="home-card" href="zh-convert.html"><span class="hc-tag">汉字转换</span><h3>繁简汉字转换</h3><p>简体 / 繁体 / 台湾 / 香港用词互转，支持文件</p></a>
+          <a class="home-card" href="han-case.html"><span class="hc-tag">汉字转换</span><h3>汉字大小写转换</h3><p>金额转人民币大写、数字与中文数字互转</p></a>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-title">证件照与码工具</div>
+        <div class="home-grid">
+          <a class="home-card" href="id-photo.html"><span class="hc-tag">证件照与码工具</span><h3>证件照生成</h3><p>常见尺寸预设、换背景色、可排版到 5/6 寸相纸</p></a>
+          <a class="home-card" href="qrcode.html"><span class="hc-tag">证件照与码工具</span><h3>二维码生成</h3><p>文本 / 链接转二维码，可调容错等级、尺寸与配色</p></a>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/common.js"></script>
+<script>FT.mountShell(null);</script>
+</body>
+</html>

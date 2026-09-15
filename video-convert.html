@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>视频格式互转 · 在线文件工具站</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">视频格式互转</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">转换工具 / 视频格式互转</div>
+        <h1 class="page-title">视频格式互转</h1>
+        <p class="page-desc">在浏览器本地完成短视频转码、转 GIF 与抽帧截图。转码/转 GIF 使用 ffmpeg.wasm，抽帧使用浏览器原生解码，全部本地处理、文件不上传。</p>
+      </header>
+
+      <div id="tips"></div>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>上传视频</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="选择或拖拽视频到此处">
+          <input type="file" id="file" accept="video/*,.mp4,.webm,.mov,.mkv,.avi,.m4v,.ogv" hidden>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">点击选择视频，或拖拽文件到此处</p>
+          <p class="dz-sub">建议不超过 200MB，且时长越短越好（几十秒到几分钟）</p>
+        </div>
+        <div class="file-chips" id="fileInfo"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>参数设置</div>
+        <div class="toolbar tight">
+          <label class="field field-narrow">
+            <span>任务类型</span>
+            <select id="task">
+              <option value="transcode">格式转码</option>
+              <option value="gif">转 GIF</option>
+              <option value="frames">抽帧截图（原生）</option>
+            </select>
+          </label>
+
+          <!-- 转码 -->
+          <label class="field field-narrow" data-grp="transcode">
+            <span>目标格式</span>
+            <select id="tFormat">
+              <option value="mp4">MP4（H.264）</option>
+              <option value="webm">WebM（VP9）</option>
+              <option value="mov">MOV（H.264）</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="transcode">
+            <span>分辨率</span>
+            <select id="tRes">
+              <option value="0">原始</option>
+              <option value="720">720p</option>
+              <option value="480">480p</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="transcode">
+            <span>画质（CRF）</span>
+            <select id="tCrf">
+              <option value="18">高清（18）</option>
+              <option value="23" selected>标准（23）</option>
+              <option value="28">小体积（28）</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="transcode">
+            <span>音轨</span>
+            <label class="checkline"><input type="checkbox" id="tNoAudio">去除音轨</label>
+          </label>
+
+          <!-- 转 GIF -->
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>帧率 FPS</span>
+            <select id="gFps"><option value="10">10</option><option value="15" selected>15</option><option value="24">24</option></select>
+          </label>
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>宽度</span>
+            <select id="gWidth"><option value="320">320</option><option value="480" selected>480</option><option value="640">640</option></select>
+          </label>
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>起始时间（秒）</span>
+            <input type="number" id="gStart" min="0" step="0.5" value="0">
+          </label>
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>时长（秒）</span>
+            <input type="number" id="gDur" min="0.5" step="0.5" value="5">
+          </label>
+
+          <!-- 抽帧 -->
+          <label class="field field-narrow" data-grp="frames" hidden>
+            <span>抽帧方式</span>
+            <select id="fMode">
+              <option value="interval">按间隔（每 N 秒）</option>
+              <option value="point">单个时间点</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="frames" id="fIntervalField" hidden>
+            <span>间隔（秒）</span>
+            <input type="number" id="fInterval" min="0.2" step="0.5" value="2">
+          </label>
+          <label class="field field-narrow" data-grp="frames" id="fPointField" hidden>
+            <span>时间点（秒）</span>
+            <input type="number" id="fPoint" min="0" step="0.5" value="0">
+          </label>
+          <label class="field field-narrow" data-grp="frames" hidden>
+            <span>图片格式</span>
+            <select id="fFormat"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option></select>
+          </label>
+
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="reset" disabled>重置</button>
+            <button class="btn" id="downloadAll" disabled>打包下载</button>
+            <button class="btn btn-primary" id="run" disabled>开始处理</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">准备中…</span>
+        </div>
+      </section>
+
+      <div class="result-head">
+        <h2>处理结果</h2>
+        <span class="muted" id="summary">还没有加载视频</span>
+      </div>
+      <div class="empty" id="empty"><p id="emptyText">上传视频后设置参数，点击「开始处理」生成结果</p></div>
+
+      <section class="card" id="resultCard" hidden>
+        <div class="card-title">结果预览</div>
+        <div class="preview-box" id="previewBox"></div>
+        <div class="stat-row" id="stats"></div>
+        <div class="toolbar">
+          <button class="btn btn-primary" id="download" disabled>下载</button>
+        </div>
+      </section>
+
+      <div class="grid grid-pages" id="frameList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/video-convert.js"></script>
+</body>
+</html>

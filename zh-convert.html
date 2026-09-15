@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>繁简汉字转换 · 在线文件工具站</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">繁简汉字转换</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">汉字转换 / 繁简汉字转换</div>
+        <h1 class="page-title">繁简汉字转换</h1>
+        <p class="page-desc">基于 OpenCC 完整词库的简繁互转，支持台湾正体、香港繁体与地区惯用词，文本仅在浏览器本地处理。</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>输入文本</div>
+        <textarea id="src" placeholder="在此粘贴或输入需要转换的文本…（也可以上传 .txt 文件）"></textarea>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="选择或拖拽 TXT 到此处" style="margin-top:12px;padding:18px">
+          <input type="file" id="file" accept=".txt,text/plain" hidden>
+          <p class="dz-title">上传 .txt 文件，或拖拽到此处</p>
+          <p class="dz-sub">单个文件不超过 5MB，读取后会填入上方输入框</p>
+        </div>
+        <div class="file-chips" id="fileInfo"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>转换设置</div>
+        <div class="toolbar tight">
+          <label class="field field-wide">
+            <span>转换方向</span>
+            <select id="dir">
+              <option value="cn-t">简体 → 繁体</option>
+              <option value="t-cn">繁体 → 简体</option>
+              <option value="cn-tw">简体 → 台湾正体</option>
+              <option value="cn-hk">简体 → 香港繁体</option>
+              <option value="twp-cn">繁体 → 简体（台湾用词）</option>
+              <option value="hk-cn">繁体 → 简体（香港用词）</option>
+            </select>
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="clear">清空</button>
+            <button class="btn btn-primary" id="convert">开始转换</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">准备中…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <div class="result-head">
+        <h2>转换结果</h2>
+        <span class="muted" id="summary">尚未开始转换</span>
+      </div>
+      <div class="empty" id="empty"><p>输入文本并选择转换方向后，点击「开始转换」，结果会显示在这里</p></div>
+
+      <div id="result" hidden>
+        <div class="stat-row">
+          <div class="stat"><div class="k">输入字符</div><div class="v" id="statIn">0</div></div>
+          <div class="stat"><div class="k">输出字符</div><div class="v" id="statOut">0</div></div>
+          <div class="stat"><div class="k">耗时</div><div class="v" id="statTime">—</div></div>
+          <div class="stat"><div class="k">转换方向</div><div class="v" id="statDir">—</div></div>
+        </div>
+        <div class="toolbar tight">
+          <div class="toolbar-actions">
+            <button class="btn btn-sm" id="copy" disabled>复制结果</button>
+            <button class="btn btn-sm" id="download" disabled>下载 .txt</button>
+            <button class="btn btn-sm" id="reverse">交换方向并反向转换</button>
+          </div>
+        </div>
+        <pre class="text-result" id="out"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/opencc-js@1.0.5/dist/umd/full.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/zh-convert.js"></script>
+</body>
+</html>

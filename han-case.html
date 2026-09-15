@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>汉字大小写转换 · 在线文件工具站</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  #outMain { font-size: 17px; font-weight: 600; min-height: 64px; max-height: none; }
+  .sample-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+  .sample-bar > span { font-size: 12px; color: var(--text-3); }
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">汉字大小写转换</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">汉字转换 / 汉字大小写转换</div>
+        <h1 class="page-title">汉字大小写转换</h1>
+        <p class="page-desc">金额转人民币大写、阿拉伯数字转中文数字、中文数字转阿拉伯数字，纯本地算法实现，支持到亿级。</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>输入内容</div>
+        <div class="toolbar tight">
+          <label class="field field-wide">
+            <span>转换模式</span>
+            <select id="mode">
+              <option value="money">金额 → 人民币大写</option>
+              <option value="num2cn">阿拉伯数字 → 中文数字</option>
+              <option value="cn2num">中文数字 → 阿拉伯数字</option>
+            </select>
+          </label>
+          <label class="field field-narrow" id="upperWrap" hidden>
+            <span>数字样式</span>
+            <select id="upper">
+              <option value="lower">小写（一千二百三十四）</option>
+              <option value="upper">大写（壹仟贰佰叁拾肆）</option>
+            </select>
+          </label>
+        </div>
+        <div style="margin-top:12px">
+          <input type="text" id="src" placeholder="请输入金额，例如 1234.56" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="sample-bar" id="examples"><span>示例：</span></div>
+        <div class="toolbar">
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="clear">清空</button>
+            <button class="btn btn-primary" id="run">开始转换</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">准备中…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <div class="result-head">
+        <h2>转换结果</h2>
+        <span class="muted" id="summary">尚未开始转换</span>
+      </div>
+      <div class="empty" id="empty"><p>输入内容后点击「开始转换」，结果会显示在这里</p></div>
+
+      <div id="result" hidden>
+        <pre class="text-result" id="outMain"></pre>
+        <div class="toolbar tight">
+          <div class="toolbar-actions">
+            <button class="btn btn-sm" id="copy" disabled>复制结果</button>
+          </div>
+        </div>
+        <div class="stat-row" id="stats"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/han-case.js"></script>
+</body>
+</html>
