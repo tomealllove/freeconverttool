@@ -82,7 +82,7 @@
     var html = '' +
       '<a class="sidebar-brand" href="index.html">' +
         '<span class="brand-icon">' + svg('<path d="M4 7h7l2 2.5H20v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7z"/><path d="M8 15.5h8"/>', 19) + '</span>' +
-        '<span><b>文件工具站</b><span>纯前端 · 本地处理</span></span>' +
+        '<span><b>文件转换站</b><span>全免费 · 快速处理</span></span>' +
       '</a>' +
       '<nav class="nav">';
 
@@ -106,7 +106,7 @@
       html += '</ul></div>';
     });
 
-    html += '</nav><div class="sidebar-foot">无需上传服务器，文件仅在浏览器本地处理</div>';
+    html += '</nav><div class="sidebar-foot">即开即用不留存，隐私安全有保障</div>';
     side.innerHTML = html;
 
     side.addEventListener('click', function (e) {

@@ -202,7 +202,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 650; }
 .card-title {
   font-size: 14px;
   font-weight: 650;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -697,4 +697,57 @@ input[type="range"]::-moz-range-thumb {
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* 首页页脚 */
+.site-footer {
+  border-top: 1px solid var(--border, #e5e7eb);
+  margin-top: 32px;
+  padding: 24px 16px;
+  background: var(--surface-2, #f8fafc);
+}
+.footer-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-2, #64748b);
+}
+.footer-brand b { color: var(--text, #0f172a); }
+.footer-note { margin: 6px 0 0; max-width: 360px; line-height: 1.6; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.footer-links a { color: var(--text-2, #64748b); text-decoration: none; }
+.footer-links a:hover { color: var(--accent, #4f46e5); }
+.footer-copy { margin: 0; width: 100%; text-align: right; color: var(--text-3, #94a3b8); }
+
+/* 首页底部常用外链 */
+.ext-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 12px;
+}
+.ext-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  transition: border-color .15s, background .15s, color .15s, transform .15s;
+}
+.ext-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: translateY(-1px);
 }
