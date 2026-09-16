@@ -13,8 +13,8 @@
 -->
 <links max="12">
   <item>
-    <name>Google</name>
-    <url>https://www.google.com</url>
+    <name>中文资讯中心</name>
+    <url>http://www.freeconvertbox.com/News/ch/1newslist.html</url>
   </item>
   <item>
     <name>Baidu</name>
@@ -27,8 +27,8 @@
 
   <!-- 以下 9 个为预留位置，填写后自动显示 -->
   <item>
-    <name></name>
-    <url></url>
+    <name>Google</name>
+    <url>https://www.google.com</url>
   </item>
   <item>
     <name></name>
