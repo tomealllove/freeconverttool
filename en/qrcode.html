@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QR Code Generator - FreeConvertBox Online File Toolbox</title>
+<meta name="description" content="Free QR code generator for text, URLs and WiFi. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="qr code generator, free qr code, qr code maker, custom qr code, url to qr code, wifi qr code, qr code png, qr code svg">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="FreeConvertBox">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://www.freeconvertbox.com/en/qrcode.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/qrcode.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/qrcode.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/qrcode.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:title" content="QR Code Generator - FreeConvertBox Online File Toolbox">
+<meta property="og:description" content="Free QR code generator for text, URLs and WiFi. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:url" content="https://www.freeconvertbox.com/en/qrcode.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="QR Code Generator - FreeConvertBox Online File Toolbox">
+<meta name="twitter:description" content="Free QR code generator for text, URLs and WiFi. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">QR Code Generator</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">ID Photo &amp; QR Code / QR Code Generator</div>
+        <h1 class="page-title">QR Code Generator</h1>
+        <p class="page-desc">Turn text, URLs, WiFi credentials or a contact card into a QR code, with error correction level, size, colors, margin and a center logo. Export as PNG / SVG.</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>Enter content</div>
+        <textarea id="text" placeholder="Enter the content for your QR code here, Chinese is supported (UTF-8 encoded)…"></textarea>
+        <div class="toolbar tight">
+          <span class="muted" id="count">0 characters</span>
+          <div class="toolbar-actions">
+            <button class="btn btn-sm" data-tpl="text">Plain text</button>
+            <button class="btn btn-sm" data-tpl="url">URL</button>
+            <button class="btn btn-sm" data-tpl="wifi">WiFi</button>
+            <button class="btn btn-sm" data-tpl="vcard">vCard</button>
+            <button class="btn btn-sm btn-ghost" id="clearText">Clear</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>Settings</div>
+        <div class="toolbar tight">
+          <label class="field field-narrow">
+            <span>Error correction level</span>
+            <select id="level">
+              <option value="L">L · about 7%</option>
+              <option value="M" selected>M · about 15%</option>
+              <option value="Q">Q · about 25%</option>
+              <option value="H">H · about 30%</option>
+            </select>
+          </label>
+          <label class="field field-narrow">
+            <span>Size</span>
+            <select id="size">
+              <option value="128">128 × 128</option>
+              <option value="256" selected>256 × 256</option>
+              <option value="512">512 × 512</option>
+              <option value="1024">1024 × 1024</option>
+            </select>
+          </label>
+          <label class="field field-narrow">
+            <span>Foreground</span>
+            <input type="color" id="fg" value="#000000">
+          </label>
+          <label class="field field-narrow">
+            <span>Background</span>
+            <input type="color" id="bg" value="#ffffff">
+          </label>
+          <label class="field field-range">
+            <span>Margin (modules)<b id="marginVal">4</b></span>
+            <input type="range" id="margin" min="0" max="8" step="1" value="4">
+          </label>
+        </div>
+        <div class="toolbar">
+          <label class="field field-wide">
+            <span>Center logo (optional, error correction level H recommended)</span>
+            <div class="file-chips" id="logoInfo" style="margin-top:0"></div>
+            <input type="file" id="logo" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" hidden>
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-sm" id="pickLogo">Choose image</button>
+            <button class="btn btn-sm btn-ghost" id="clearLogo" hidden>Remove logo</button>
+            <button class="btn btn-primary" id="generate">Generate QR code</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">Preparing…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <div class="result-head">
+        <h2>Generation result</h2>
+        <span class="muted" id="summary">No QR code generated yet</span>
+      </div>
+      <div class="empty" id="empty"><p>Enter your content and click Generate QR Code — the result shows up here</p></div>
+
+      <div id="result" hidden>
+        <div class="preview-box" id="qrBox"></div>
+        <div class="stat-row" id="stats"></div>
+        <div class="toolbar">
+          <div class="toolbar-actions">
+            <button class="btn btn-sm btn-primary" id="dlPng" disabled>Download PNG</button>
+            <button class="btn btn-sm" id="dlSvg" disabled>Download SVG</button>
+            <button class="btn btn-sm" id="copyImg" disabled>Copy to clipboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/qrcode.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.freeconvertbox.com/en/qrcode.html#webpage",
+      "url": "https://www.freeconvertbox.com/en/qrcode.html",
+      "name": "QR Code Generator - FreeConvertBox",
+      "description": "Free online QR code generator for text, URLs, WiFi and vCards, with error correction level, size, colors, margin and center logo. Export PNG or SVG.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "ID Photo & QR Code", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "QR Code Generator", "item": "https://www.freeconvertbox.com/en/qrcode.html" }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

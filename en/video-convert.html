@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Video Converter - FreeConvertBox Online File Toolbox</title>
+<meta name="description" content="Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="video converter,convert video online,mp4 converter,video to gif,online video converter,video compression,frame extractor,webm to mp4">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="FreeConvertBox">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://www.freeconvertbox.com/en/video-convert.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/video-convert.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/video-convert.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/video-convert.html">
+
+<!-- Performance: preconnect third party CDNs to improve Core Web Vitals -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+<!-- Open Graph / social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:title" content="Video Converter - FreeConvertBox Online File Toolbox">
+<meta property="og:description" content="Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:url" content="https://www.freeconvertbox.com/en/video-convert.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox - Video Converter">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Video Converter - FreeConvertBox Online File Toolbox">
+<meta name="twitter:description" content="Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Video Converter</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">Converters / Video Converter</div>
+        <h1 class="page-title">Video Converter</h1>
+        <p class="page-desc">Transcode short clips, convert video to GIF and grab frames online. Transcoding and GIF use ffmpeg.wasm, while frame extraction uses the browser's native decoder. Free and fast, right in your browser.</p>
+      </header>
+
+      <div id="tips"></div>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>Upload video</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Select or drop a video file here">
+          <input type="file" id="file" accept="video/*,.mp4,.webm,.mov,.mkv,.avi,.m4v,.ogv" hidden>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">Click to select files, or drag &amp; drop them here</p>
+          <p class="dz-sub">Keep it under 200MB and as short as possible (a few seconds up to a few minutes)</p>
+        </div>
+        <div class="file-chips" id="fileInfo"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>Settings</div>
+        <div class="toolbar tight">
+          <label class="field field-narrow">
+            <span>Task</span>
+            <select id="task">
+              <option value="transcode">Transcode</option>
+              <option value="gif">Convert to GIF</option>
+              <option value="frames">Extract frames (native)</option>
+            </select>
+          </label>
+
+          <!-- Transcode -->
+          <label class="field field-narrow" data-grp="transcode">
+            <span>Target format</span>
+            <select id="tFormat">
+              <option value="mp4">MP4 (H.264)</option>
+              <option value="webm">WebM (VP9)</option>
+              <option value="mov">MOV (H.264)</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="transcode">
+            <span>Resolution</span>
+            <select id="tRes">
+              <option value="0">Original</option>
+              <option value="720">720p</option>
+              <option value="480">480p</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="transcode">
+            <span>Quality (CRF)</span>
+            <select id="tCrf">
+              <option value="18">High (18)</option>
+              <option value="23" selected>Standard (23)</option>
+              <option value="28">Small size (28)</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="transcode">
+            <span>Audio track</span>
+            <label class="checkline"><input type="checkbox" id="tNoAudio">Remove audio track</label>
+          </label>
+
+          <!-- GIF -->
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>Frame rate (FPS)</span>
+            <select id="gFps"><option value="10">10</option><option value="15" selected>15</option><option value="24">24</option></select>
+          </label>
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>Width</span>
+            <select id="gWidth"><option value="320">320</option><option value="480" selected>480</option><option value="640">640</option></select>
+          </label>
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>Start time (seconds)</span>
+            <input type="number" id="gStart" min="0" step="0.5" value="0">
+          </label>
+          <label class="field field-narrow" data-grp="gif" hidden>
+            <span>Duration (seconds)</span>
+            <input type="number" id="gDur" min="0.5" step="0.5" value="5">
+          </label>
+
+          <!-- Frame extraction -->
+          <label class="field field-narrow" data-grp="frames" hidden>
+            <span>Extraction mode</span>
+            <select id="fMode">
+              <option value="interval">By interval (every N seconds)</option>
+              <option value="point">Single time point</option>
+            </select>
+          </label>
+          <label class="field field-narrow" data-grp="frames" id="fIntervalField" hidden>
+            <span>Interval (seconds)</span>
+            <input type="number" id="fInterval" min="0.2" step="0.5" value="2">
+          </label>
+          <label class="field field-narrow" data-grp="frames" id="fPointField" hidden>
+            <span>Time point (seconds)</span>
+            <input type="number" id="fPoint" min="0" step="0.5" value="0">
+          </label>
+          <label class="field field-narrow" data-grp="frames" hidden>
+            <span>Image format</span>
+            <select id="fFormat"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option></select>
+          </label>
+
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="reset" disabled>Reset</button>
+            <button class="btn" id="downloadAll" disabled>Download all</button>
+            <button class="btn btn-primary" id="run" disabled>Start</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">Preparing…</span>
+        </div>
+      </section>
+
+      <div class="result-head">
+        <h2>Result</h2>
+        <span class="muted" id="summary">No video loaded yet</span>
+      </div>
+      <div class="empty" id="empty"><p id="emptyText">Upload a video, set your options, then click "Start" to generate the result</p></div>
+
+      <section class="card" id="resultCard" hidden>
+        <div class="card-title">Result preview</div>
+        <div class="preview-box" id="previewBox"></div>
+        <div class="stat-row" id="stats"></div>
+        <div class="toolbar">
+          <button class="btn btn-primary" id="download" disabled>Download</button>
+        </div>
+      </section>
+
+      <div class="grid grid-pages" id="frameList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/video-convert.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.freeconvertbox.com/en/video-convert.html#webpage",
+      "url": "https://www.freeconvertbox.com/en/video-convert.html",
+      "name": "Video Converter - FreeConvertBox",
+      "description": "Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/en/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Converters", "item": "https://www.freeconvertbox.com/en/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "Video Converter", "item": "https://www.freeconvertbox.com/en/video-convert.html" }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

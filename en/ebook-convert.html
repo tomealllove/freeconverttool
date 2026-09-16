@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ebook Converter - FreeConvertBox Online File Toolbox</title>
+<meta name="description" content="EPUB to TXT converter: convert EPUB, TXT, HTML to PDF online. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="ebook converter,epub to txt converter,epub to pdf,txt to epub,online ebook converter,convert epub,epub to html,ebook format converter">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="FreeConvertBox">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://www.freeconvertbox.com/en/ebook-convert.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/ebook-convert.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/ebook-convert.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/ebook-convert.html">
+
+<!-- Performance: preconnect third party CDNs to improve Core Web Vitals -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+<!-- Open Graph / social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:title" content="Ebook Converter - FreeConvertBox Online File Toolbox">
+<meta property="og:description" content="EPUB to TXT converter: convert EPUB, TXT, HTML to PDF online. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:url" content="https://www.freeconvertbox.com/en/ebook-convert.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox - Ebook Converter">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ebook Converter - FreeConvertBox Online File Toolbox">
+<meta name="twitter:description" content="EPUB to TXT converter: convert EPUB, TXT, HTML to PDF online. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Ebook Converter</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">Converters / Ebook Converter</div>
+        <h1 class="page-title">Ebook Converter</h1>
+        <p class="page-desc">Convert EPUB / TXT / HTML online for free: extract EPUB text, merge chapters into a single HTML page, build a minimal EPUB from TXT, or reflow the text into a PDF.</p>
+      </header>
+
+      <div id="tips"></div>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>Upload ebook</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Select or drop an ebook file here">
+          <input type="file" id="file" accept=".epub,.txt,.html,.htm,application/epub+zip,text/plain,text/html" hidden>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">Click to select files, or drag &amp; drop them here</p>
+          <p class="dz-sub">Supports EPUB / TXT / HTML, up to 100MB per file (MOBI / AZW3 not supported)</p>
+        </div>
+        <div class="file-chips" id="fileInfo"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>Conversion settings</div>
+        <div class="toolbar tight">
+          <label class="field field-wide">
+            <span>Direction</span>
+            <select id="direction">
+              <option value="epub-txt">EPUB → TXT (extract plain text)</option>
+              <option value="epub-html">EPUB → HTML (merge into one page)</option>
+              <option value="txt-epub">TXT / HTML → EPUB (build a minimal ebook)</option>
+              <option value="to-pdf">EPUB / TXT / HTML → PDF (reflowed text)</option>
+            </select>
+          </label>
+          <label class="field field-narrow">
+            <span>Text encoding</span>
+            <label class="checkline"><input type="checkbox" id="gbk">Decode as GBK</label>
+          </label>
+
+          <label class="field field-narrow" data-grp="pdf" hidden>
+            <span>Font size</span>
+            <select id="pFontSize"><option value="12">12</option><option value="14" selected>14</option><option value="16">16</option><option value="18">18</option></select>
+          </label>
+          <label class="field field-narrow" data-grp="pdf" hidden>
+            <span>Margin (pt)</span>
+            <select id="pMargin"><option value="36">36</option><option value="48" selected>48</option><option value="64">64</option></select>
+          </label>
+          <label class="field field-narrow" data-grp="pdf" hidden>
+            <span>Line height</span>
+            <select id="pLineHeight"><option value="1.4">1.4</option><option value="1.6" selected>1.6</option><option value="1.8">1.8</option></select>
+          </label>
+
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="reset" disabled>Reset</button>
+            <button class="btn btn-primary" id="convert" disabled>Convert</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">Preparing…</span>
+        </div>
+      </section>
+
+      <div class="result-head">
+        <h2>Conversion result</h2>
+        <span class="muted" id="summary">No ebook loaded yet</span>
+      </div>
+      <div class="empty" id="empty"><p id="emptyText">Upload an ebook, pick a direction, then click "Convert" to generate the result</p></div>
+
+      <section class="card" id="resultCard" hidden>
+        <div class="card-title">Content preview</div>
+        <div class="stat-row" id="stats"></div>
+        <pre class="text-result" id="preview"></pre>
+        <div class="toolbar">
+          <button class="btn btn-primary" id="download" disabled>Download</button>
+          <button class="btn btn-ghost" id="copyText" disabled>Copy</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/ebook-convert.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.freeconvertbox.com/en/ebook-convert.html#webpage",
+      "url": "https://www.freeconvertbox.com/en/ebook-convert.html",
+      "name": "Ebook Converter - FreeConvertBox",
+      "description": "EPUB to TXT converter: convert EPUB, TXT, HTML to PDF online. No uploads, no retention. Your privacy is fully protected.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/en/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Converters", "item": "https://www.freeconvertbox.com/en/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "Ebook Converter", "item": "https://www.freeconvertbox.com/en/ebook-convert.html" }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

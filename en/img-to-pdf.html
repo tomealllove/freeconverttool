@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Images to PDF - FreeConvertBox Online File Toolbox</title>
+<meta name="description" content="Merge images into a PDF online, with page size and margin. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="images to PDF,convert images to PDF,JPG to PDF,merge images into PDF,photo to PDF,online PDF creator">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="FreeConvertBox">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://www.freeconvertbox.com/en/img-to-pdf.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-to-pdf.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-to-pdf.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-to-pdf.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:title" content="Images to PDF - FreeConvertBox Online File Toolbox">
+<meta property="og:description" content="Merge images into a PDF online, with page size and margin. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:url" content="https://www.freeconvertbox.com/en/img-to-pdf.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Images to PDF - FreeConvertBox Online File Toolbox">
+<meta name="twitter:description" content="Merge images into a PDF online, with page size and margin. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .item.page-card { cursor: grab; }
+  .icon-btn.act:hover { background: var(--accent-soft); color: var(--accent); }
+  .icon-btn:disabled { opacity: .3; cursor: not-allowed; }
+  .item-head .grow { margin-left: auto; }
+  .opt-line { margin-top: 10px; }
+  /* .field / .progress ship with display:flex, which overrides the browser default for [hidden]; this local rule fixes it */
+  .field[hidden], .progress[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Images to PDF</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">Image Tools / Images to PDF</div>
+        <h1 class="page-title">Images to PDF</h1>
+        <p class="page-desc">Combine multiple images into a single PDF in order, with page size, margin and image fit settings, and reorder pages by moving or dragging. Free and fast. No uploads, no retention. Your privacy is fully protected.</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>Upload Images</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Select or drag images here">
+          <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,.png,.jpg,.jpeg,.webp,.gif,.bmp" multiple hidden>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">Click to select images, or drag &amp; drop them here</p>
+          <p class="dz-sub">Supports PNG / JPG / WebP / GIF / BMP, up to 20MB per image, 60 images max</p>
+        </div>
+        <div class="file-chips" id="chips"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>Settings</div>
+        <div class="toolbar tight">
+          <label class="field">
+            <span>Page size</span>
+            <select id="pageSize">
+              <option value="a4p">A4 portrait</option>
+              <option value="a4l">A4 landscape</option>
+              <option value="auto">Follow first image</option>
+            </select>
+          </label>
+          <label class="field field-narrow">
+            <span>Margin</span>
+            <select id="margin">
+              <option value="0">None</option>
+              <option value="5" selected>Small (5mm)</option>
+              <option value="10">Medium (10mm)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Image fit</span>
+            <select id="fit">
+              <option value="contain">Fit and center</option>
+              <option value="cover">Fill page</option>
+            </select>
+          </label>
+          <label class="field field-range">
+            <span>JPEG recompression quality <b id="qualityVal">85%</b></span>
+            <input type="range" id="quality" min="50" max="100" step="1" value="85">
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="clear" disabled>Clear</button>
+            <button class="btn btn-primary" id="build" disabled>Build PDF</button>
+          </div>
+        </div>
+        <div class="checkline opt-line">
+          <input type="checkbox" id="recompress">
+          <span>Recompress every image to JPEG at this quality (smaller file; transparent PNG areas turn white)</span>
+        </div>
+        <p class="helper">WebP / GIF / BMP cannot be written to a PDF directly, so they are converted to JPEG at this quality first; when checked, JPG / PNG files are recompressed as well.</p>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">Preparing…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <section class="card" id="outCard" hidden>
+        <div class="card-title">Output</div>
+        <div class="stat-row" id="outStats"></div>
+        <div class="toolbar tight">
+          <div class="toolbar-actions">
+            <button class="btn btn-primary" id="download" disabled>Download PDF</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="result-head">
+        <h2>Image Order</h2>
+        <span class="muted" id="summary">No images added yet</span>
+      </div>
+      <div class="empty" id="empty">
+        <p>After uploading, a thumbnail of every image appears here. Use move up / move down or drag to reorder — the order becomes the PDF page order</p>
+      </div>
+      <div class="grid grid-pages" id="list"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/img-to-pdf.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.freeconvertbox.com/en/img-to-pdf.html#webpage",
+      "url": "https://www.freeconvertbox.com/en/img-to-pdf.html",
+      "name": "Images to PDF - FreeConvertBox",
+      "description": "Merge images into a PDF online, with page size and margin. No uploads, no retention. Your privacy is fully protected.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Image Tools", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "Images to PDF", "item": "https://www.freeconvertbox.com/en/img-to-pdf.html" }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

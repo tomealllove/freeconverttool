@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  External links configuration for the bottom of the home page
+  Note: XML comments must not contain consecutive hyphens, so please do not add separator lines.
+  · Location: bottom of the home page, up to 12 links are shown (max attribute), the rest are ignored.
+  · Each external link is one <item>:
+      <name> display name (left empty to use the domain automatically)
+      <url>  link address (required; left empty means this entry is not shown)
+  · To enable an entry: fill in name and url in one of the reserved empty <item> blocks below.
+  · To disable an entry: clear its <url> (or delete the content of <name> / <url>).
+  · The scheme may be omitted from url, https:// is added automatically (for example: example.com).
+  · Reload the page after editing (a hard refresh with Ctrl+F5 is recommended to clear the cache).
+-->
+<links max="12">
+  <item>
+    <name>Google</name>
+    <url>https://www.google.com</url>
+  </item>
+  <item>
+    <name>Baidu</name>
+    <url>https://www.baidu.com</url>
+  </item>
+  <item>
+    <name>Bing</name>
+    <url>https://www.bing.com</url>
+  </item>
+
+  <!-- The 9 entries below are reserved slots and appear automatically once filled in -->
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+  <item>
+    <name></name>
+    <url></url>
+  </item>
+</links>

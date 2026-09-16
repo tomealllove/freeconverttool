@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Images to GIF - FreeConvertBox Online File Toolbox</title>
+<meta name="description" content="Turn images into an animated GIF: frame delay, size, loop. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="images to GIF,animated GIF maker,online GIF creator,make a GIF,photos to GIF,GIF maker">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="FreeConvertBox">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://www.freeconvertbox.com/en/img-to-gif.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-to-gif.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-to-gif.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-to-gif.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:title" content="Images to GIF - FreeConvertBox Online File Toolbox">
+<meta property="og:description" content="Turn images into an animated GIF: frame delay, size, loop. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:url" content="https://www.freeconvertbox.com/en/img-to-gif.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Images to GIF - FreeConvertBox Online File Toolbox">
+<meta name="twitter:description" content="Turn images into an animated GIF: frame delay, size, loop. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .item.page-card { cursor: grab; }
+  .icon-btn.act:hover { background: var(--accent-soft); color: var(--accent); }
+  .icon-btn:disabled { opacity: .3; cursor: not-allowed; }
+  .item-head .grow { margin-left: auto; }
+  /* .field / .progress ship with display:flex, which overrides the browser default for [hidden]; this local rule fixes it */
+  .field[hidden], .progress[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Images to GIF</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">Image Tools / Images to GIF</div>
+        <h1 class="page-title">Images to GIF</h1>
+        <p class="page-desc">Combine multiple images into an animated GIF in order, with canvas size, frame delay and loop count, encoded instantly in your browser. Free and fast. No uploads, no retention. Your privacy is fully protected.</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>Upload Images</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Select or drag images here">
+          <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,.png,.jpg,.jpeg,.webp,.gif,.bmp" multiple hidden>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">Click to select images, or drag &amp; drop them here</p>
+          <p class="dz-sub">Supports PNG / JPG / WebP / GIF / BMP, up to 20MB per image, 60 images max</p>
+        </div>
+        <div class="file-chips" id="chips"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>Settings</div>
+        <div class="toolbar tight">
+          <label class="field">
+            <span>Canvas size</span>
+            <select id="sizeMode">
+              <option value="auto">Follow first image</option>
+              <option value="custom">Custom size</option>
+            </select>
+          </label>
+          <label class="field field-narrow" id="wField" hidden>
+            <span>Width (px)</span>
+            <input type="number" id="gifW" min="16" max="1600" step="1" value="480">
+          </label>
+          <label class="field field-narrow" id="hField" hidden>
+            <span>Height (px)</span>
+            <input type="number" id="gifH" min="16" max="1600" step="1" value="480">
+          </label>
+          <label class="field field-narrow">
+            <span>Frame delay (ms)</span>
+            <input type="number" id="delay" min="50" max="2000" step="10" value="500">
+          </label>
+          <label class="field field-narrow">
+            <span>Loop count</span>
+            <select id="loop">
+              <option value="0" selected>Infinite loop</option>
+              <option value="1">1 time</option>
+              <option value="3">3 times</option>
+              <option value="5">5 times</option>
+            </select>
+          </label>
+          <label class="field field-range">
+            <span>Output quality <b id="qualityVal">10</b></span>
+            <input type="range" id="quality" min="1" max="30" step="1" value="10">
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="clear" disabled>Clear</button>
+            <button class="btn btn-primary" id="build" disabled>Build GIF</button>
+          </div>
+        </div>
+        <p class="helper">Quality ranges from 1 to 30: a lower value looks better but encodes more slowly, and the default is 10. GIF does not support transparency, so transparent areas are filled with white. Larger images and more frames take longer to encode.</p>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">Preparing…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <section class="card" id="outCard" hidden>
+        <div class="card-title">Output</div>
+        <div class="preview-box"><img id="preview" alt="GIF preview" data-zoom></div>
+        <div class="stat-row" id="outStats"></div>
+        <div class="toolbar tight">
+          <div class="toolbar-actions">
+            <button class="btn btn-primary" id="download" disabled>Download GIF</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="result-head">
+        <h2>Frame Order</h2>
+        <span class="muted" id="summary">No images added yet</span>
+      </div>
+      <div class="empty" id="empty">
+        <p>After uploading, a thumbnail of every frame appears here in order. Drag to reorder — the order is the GIF playback order</p>
+      </div>
+      <div class="grid grid-pages" id="list"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/img-to-gif.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.freeconvertbox.com/en/img-to-gif.html#webpage",
+      "url": "https://www.freeconvertbox.com/en/img-to-gif.html",
+      "name": "Images to GIF - FreeConvertBox",
+      "description": "Turn images into an animated GIF: frame delay, size, loop. No uploads, no retention. Your privacy is fully protected.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Image Tools", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "Images to GIF", "item": "https://www.freeconvertbox.com/en/img-to-gif.html" }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

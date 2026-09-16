@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Traditional &amp; Simplified Chinese Converter - FreeConvertBox Online File Toolbox</title>
+<meta name="description" content="Convert traditional Chinese to simplified online, free. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="traditional to simplified, simplified to traditional, chinese text converter, convert chinese online, opencc, taiwan standard, hong kong traditional">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="FreeConvertBox">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://www.freeconvertbox.com/en/zh-convert.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/zh-convert.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/zh-convert.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/zh-convert.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:title" content="Traditional &amp; Simplified Chinese Converter - FreeConvertBox Online File Toolbox">
+<meta property="og:description" content="Convert traditional Chinese to simplified online, free. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:url" content="https://www.freeconvertbox.com/en/zh-convert.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Traditional &amp; Simplified Chinese Converter - FreeConvertBox Online File Toolbox">
+<meta name="twitter:description" content="Convert traditional Chinese to simplified online, free. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Traditional &amp; Simplified Chinese Converter</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">Chinese Text Tools / Traditional &amp; Simplified Chinese Converter</div>
+        <h1 class="page-title">Traditional &amp; Simplified Chinese Converter</h1>
+        <p class="page-desc">Phrase-level conversion between Simplified and Traditional Chinese based on the full OpenCC lexicon, including Taiwan and Hong Kong regional wording. No uploads, no retention. Your privacy is fully protected.</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>Input text</div>
+        <textarea id="src" placeholder="Paste or type the Chinese text you want to convert… (you can also upload a .txt file)"></textarea>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Select or drop a TXT file here" style="margin-top:12px;padding:18px">
+          <input type="file" id="file" accept=".txt,text/plain" hidden>
+          <p class="dz-title">Click to select files, or drag &amp; drop them here</p>
+          <p class="dz-sub">A single .txt file up to 5MB; its content is loaded into the box above</p>
+        </div>
+        <div class="file-chips" id="fileInfo"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>Conversion settings</div>
+        <div class="toolbar tight">
+          <label class="field field-wide">
+            <span>Conversion direction</span>
+            <select id="dir">
+              <option value="cn-t">Simplified → Traditional</option>
+              <option value="t-cn">Traditional → Simplified</option>
+              <option value="cn-tw">Simplified → Taiwan standard</option>
+              <option value="cn-hk">Simplified → Hong Kong Traditional</option>
+              <option value="twp-cn">Traditional → Simplified (Taiwan wording)</option>
+              <option value="hk-cn">Traditional → Simplified (Hong Kong wording)</option>
+            </select>
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="clear">Clear</button>
+            <button class="btn btn-primary" id="convert">Convert</button>
+          </div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">Preparing…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <div class="result-head">
+        <h2>Conversion result</h2>
+        <span class="muted" id="summary">Not converted yet</span>
+      </div>
+      <div class="empty" id="empty"><p>Enter your text, choose a direction and click Convert — the result shows up here</p></div>
+
+      <div id="result" hidden>
+        <div class="stat-row">
+          <div class="stat"><div class="k">Input characters</div><div class="v" id="statIn">0</div></div>
+          <div class="stat"><div class="k">Output characters</div><div class="v" id="statOut">0</div></div>
+          <div class="stat"><div class="k">Time</div><div class="v" id="statTime">—</div></div>
+          <div class="stat"><div class="k">Direction</div><div class="v" id="statDir">—</div></div>
+        </div>
+        <div class="toolbar tight">
+          <div class="toolbar-actions">
+            <button class="btn btn-sm" id="copy" disabled>Copy result</button>
+            <button class="btn btn-sm" id="download" disabled>Download .txt</button>
+            <button class="btn btn-sm" id="reverse">Swap direction and convert back</button>
+          </div>
+        </div>
+        <pre class="text-result" id="out"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/opencc-js@1.0.5/dist/umd/full.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/zh-convert.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.freeconvertbox.com/en/zh-convert.html#webpage",
+      "url": "https://www.freeconvertbox.com/en/zh-convert.html",
+      "name": "Traditional & Simplified Chinese Converter - FreeConvertBox",
+      "description": "Convert traditional Chinese to simplified online with phrase-level OpenCC accuracy, including Taiwan and Hong Kong regional wording.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Chinese Text Tools", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "Traditional & Simplified Chinese Converter", "item": "https://www.freeconvertbox.com/en/zh-convert.html" }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

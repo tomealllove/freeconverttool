@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Image Compressor - FreeConvertBox Online File Toolbox</title>
+<meta name="description" content="Compress PNG, JPG and WebP by quality or target file size. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="image compressor,compress images online,reduce image size,PNG compression,JPG compression,image optimizer,shrink photos">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="FreeConvertBox">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://www.freeconvertbox.com/en/img-compress.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-compress.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-compress.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-compress.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:title" content="Image Compressor - FreeConvertBox Online File Toolbox">
+<meta property="og:description" content="Compress PNG, JPG and WebP by quality or target file size. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:url" content="https://www.freeconvertbox.com/en/img-compress.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image Compressor - FreeConvertBox Online File Toolbox">
+<meta name="twitter:description" content="Compress PNG, JPG and WebP by quality or target file size. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M9 21l5-12 4 8 2-4h3%27 stroke=%27white%27 stroke-width=%272.2%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .item .stat { min-width: 84px; padding: 6px 10px; }
+  /* .field / .stat-row / .progress ship with display:flex, which overrides the browser default for [hidden]; this local rule fixes it */
+  .field[hidden], .stat-row[hidden], .progress[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Image Compressor</b>
+    </div>
+
+    <div class="content-inner">
+      <header class="page-head">
+        <div class="page-crumb">Image Tools / Image Compressor</div>
+        <h1 class="page-title">Image Compressor</h1>
+        <p class="page-desc">Compress images by quality or target file size, with JPG / WebP output and size limits, batch processing and ZIP download, plus a side-by-side before-and-after comparison. No uploads, no retention. Your privacy is fully protected.</p>
+      </header>
+
+      <section class="card">
+        <div class="card-title"><span class="step">1</span>Upload Images</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Select or drag images here">
+          <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,.png,.jpg,.jpeg,.webp,.gif,.bmp" multiple hidden>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">Click to select images, or drag &amp; drop them here</p>
+          <p class="dz-sub">Supports PNG / JPG / WebP / GIF / BMP, up to 20MB per image, multiple selection allowed</p>
+        </div>
+        <div class="file-chips" id="chips"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-title"><span class="step">2</span>Settings</div>
+        <div class="toolbar tight">
+          <label class="field">
+            <span>Compression mode</span>
+            <select id="mode">
+              <option value="quality">Quality mode</option>
+              <option value="target">Target size mode</option>
+            </select>
+          </label>
+          <label class="field field-range" id="qualityField">
+            <span>Output quality <b id="qualityVal">75%</b></span>
+            <input type="range" id="quality" min="10" max="100" step="1" value="75">
+          </label>
+          <label class="field" id="formatField">
+            <span>Output format</span>
+            <select id="format">
+              <option value="keep">Keep original format</option>
+              <option value="image/jpeg">JPG</option>
+              <option value="image/webp">WebP</option>
+            </select>
+          </label>
+          <label class="field field-narrow" id="maxWField">
+            <span>Max side length</span>
+            <select id="maxW">
+              <option value="0" selected>Original size</option>
+              <option value="1920">1920 px</option>
+              <option value="1280">1280 px</option>
+              <option value="800">800 px</option>
+            </select>
+          </label>
+          <label class="field field-narrow" id="targetField" hidden>
+            <span>Target size (KB)</span>
+            <input type="number" id="targetKb" min="10" max="20480" step="10" value="200">
+          </label>
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="clear" disabled>Clear</button>
+            <button class="btn" id="downloadAll" disabled>Download ZIP</button>
+            <button class="btn btn-primary" id="compressAll" disabled>Compress All</button>
+          </div>
+        </div>
+        <p class="helper" id="modeTip">Quality mode: re-encode at a fixed quality — fast and predictable. Target size mode: binary-search the target size automatically, up to 6 iterations.</p>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-bar"><i></i></div>
+          <span class="progress-text">Preparing…</span>
+        </div>
+      </section>
+
+      <div id="tips"></div>
+
+      <div class="result-head">
+        <h2>Compression Result</h2>
+        <span class="muted" id="summary">No images added yet</span>
+      </div>
+      <div class="stat-row" id="stats" hidden></div>
+      <div class="empty" id="empty">
+        <p>After uploading images, this area shows the before-and-after comparison and the size reduction ratio</p>
+      </div>
+      <div class="grid" id="list"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pages/img-compress.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.freeconvertbox.com/en/img-compress.html#webpage",
+      "url": "https://www.freeconvertbox.com/en/img-compress.html",
+      "name": "Image Compressor - FreeConvertBox",
+      "description": "Compress PNG, JPG and WebP by quality or target file size. No uploads, no retention. Your privacy is fully protected.",
+      "inLanguage": "en-US",
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Image Tools", "item": "https://www.freeconvertbox.com/index.html" },
+        { "@type": "ListItem", "position": 3, "name": "Image Compressor", "item": "https://www.freeconvertbox.com/en/img-compress.html" }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>
