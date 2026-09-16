@@ -136,6 +136,49 @@
     var topTitle = document.getElementById('topTitle');
     var h1 = document.querySelector('.page-title');
     if (topTitle && h1) topTitle.textContent = h1.textContent;
+
+    FT.mountLangSwitch();
+  };
+
+  /* ---------- Language switch (Chinese ⇄ English) ---------- */
+
+  FT.mountLangSwitch = function () {
+    if (document.querySelector('.lang-switch')) return;
+
+    var isEn = /(^|\/)en\//.test(String(location.pathname).replace(/\\/g, '/'));
+    var file = String(location.pathname).split('/').pop() || 'index.html';
+    if (!/\.html?$/i.test(file)) file = 'index.html';
+    var href = isEn ? '../' + file : 'en/' + file;
+    var tip = isEn ? '切换为简体中文版' : 'Switch to English version';
+
+    var bar = document.createElement('div');
+    bar.className = 'lang-bar';
+
+    var a = document.createElement('a');
+    a.className = 'lang-switch';
+    a.href = href;
+    a.title = tip;
+    a.setAttribute('aria-label', tip);
+    a.innerHTML = '<span class="ls-opt' + (isEn ? '' : ' on') + '">简体中文</span>' +
+      '<span class="ls-opt' + (isEn ? ' on' : '') + '">English</span>';
+    a.addEventListener('click', function () {
+      try { localStorage.setItem('ft-lang', isEn ? 'zh' : 'en'); } catch (e) {}
+    });
+
+    bar.appendChild(a);
+
+    /* 优先放在页脚右下角、版权行上方；无页脚的页面退回到内容区底部 */
+    var footer = document.querySelector('.footer-inner') || document.querySelector('.site-footer');
+    if (footer) {
+      var copy = footer.querySelector('.footer-copy');
+      if (copy) footer.insertBefore(bar, copy);
+      else footer.appendChild(bar);
+    } else {
+      var host = document.querySelector('.content-inner') || document.querySelector('.content');
+      if (host) host.appendChild(bar);
+    }
+
+    try { localStorage.setItem('ft-lang', isEn ? 'en' : 'zh'); } catch (e) {}
   };
 
   /* ====================== 小工具 ====================== */
