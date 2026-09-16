@@ -28,14 +28,24 @@ npx serve .
 
 ```
 file-tools/
-├── index.html                  首页 · 工具总览
+├── index.html                  首页 · 工具总览（中文）
 ├── assets/
 │   ├── css/style.css           全站统一样式（含侧栏布局与组件）
+│   ├── data/links.xml          首页底部外链配置（12 个位置）
+│   ├── img/og-cover.png        社交分享封面（中文）
 │   └── js/
-│       ├── common.js           公共层：侧栏导航、Toast、进度、拖拽上传、ZIP、Canvas、pdf.js 封装
+│       ├── common.js           公共层：侧栏导航、Toast、进度、拖拽上传、ZIP、Canvas、pdf.js 封装、语言切换
 │       └── pages/              15 个页面各自的逻辑
-└── 15 个工具页面 .html
+├── en/                         英文版（自包含镜像：16 个 HTML + 英文 assets）
+│   ├── index.html              英文首页
+│   ├── assets/img/og-cover.png 社交分享封面（英文）
+│   └── assets/js/              英文版公共层与页面逻辑
+└── 15 个工具页面 .html（中文，与 en/ 同名页面一一对应）
 ```
+
+## 语言切换
+
+每页内容区右上角有「中文 | EN」按钮，点击跳转对方语言的同名页面；英文版位于 `en/` 目录，中英版本相互独立。中英页面互挂 hreflang，`sitemap.xml` 含全部 32 个 URL（16 中文 + 16 英文）。
 
 ## 15 个页面
 

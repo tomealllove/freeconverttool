@@ -1,104 +1,291 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  网站地图 sitemap.xml — 在线文件工具站
-  域名：https://www.freeconvertbox.com
-  格式遵循 sitemap.org 标准，可被搜索引擎直接抓取。
--->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.freeconvertbox.com/index.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/img-convert.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/img-to-pdf.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/img-to-gif.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/img-compress.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/pdf-to-word.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/pdf-merge.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/pdf-compress.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/pdf-to-img.html</loc>
-    <lastmod>2026-09-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.freeconvertbox.com/audio-convert.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/audio-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/audio-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/audio-convert.html"/>
   </url>
   <url>
-    <loc>https://www.freeconvertbox.com/video-convert.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://www.freeconvertbox.com/en/audio-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/audio-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/audio-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/audio-convert.html"/>
   </url>
   <url>
     <loc>https://www.freeconvertbox.com/ebook-convert.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/ebook-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/ebook-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/ebook-convert.html"/>
   </url>
   <url>
-    <loc>https://www.freeconvertbox.com/zh-convert.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://www.freeconvertbox.com/en/ebook-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/ebook-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/ebook-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/ebook-convert.html"/>
   </url>
   <url>
     <loc>https://www.freeconvertbox.com/han-case.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/han-case.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/han-case.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/han-case.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/han-case.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/han-case.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/han-case.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/han-case.html"/>
   </url>
   <url>
     <loc>https://www.freeconvertbox.com/id-photo.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/id-photo.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/id-photo.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/id-photo.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/id-photo.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/id-photo.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/id-photo.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/id-photo.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/img-compress.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-compress.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/img-compress.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-compress.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/img-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-convert.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/img-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-convert.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/img-to-gif.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-to-gif.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-to-gif.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-to-gif.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/img-to-gif.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-to-gif.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-to-gif.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-to-gif.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/img-to-pdf.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-to-pdf.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-to-pdf.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-to-pdf.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/img-to-pdf.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/img-to-pdf.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/img-to-pdf.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/img-to-pdf.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/index.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/index.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/index.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/index.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/pdf-compress.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-compress.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/pdf-compress.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-compress.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-compress.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/pdf-merge.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-merge.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-merge.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-merge.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/pdf-merge.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-merge.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-merge.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-merge.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/pdf-to-img.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-to-img.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-to-img.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-to-img.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/pdf-to-img.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-to-img.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-to-img.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-to-img.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/pdf-to-word.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-to-word.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-to-word.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-to-word.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/pdf-to-word.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/pdf-to-word.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/pdf-to-word.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/pdf-to-word.html"/>
   </url>
   <url>
     <loc>https://www.freeconvertbox.com/qrcode.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/qrcode.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/qrcode.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/qrcode.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/qrcode.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/qrcode.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/qrcode.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/qrcode.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/video-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/video-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/video-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/video-convert.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/video-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/video-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/video-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/video-convert.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/zh-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/zh-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/zh-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/zh-convert.html"/>
+  </url>
+  <url>
+    <loc>https://www.freeconvertbox.com/en/zh-convert.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/zh-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/zh-convert.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/zh-convert.html"/>
   </url>
 </urlset>
