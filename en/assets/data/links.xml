@@ -12,6 +12,14 @@
   · Reload the page after editing (a hard refresh with Ctrl+F5 is recommended to clear the cache).
 -->
 <links max="12">
+ <item>
+    <name>中文资讯中心</name>
+    <url>http://www.freeconvertbox.com/News/ch/1newslist.html</url>
+  </item>
+   <item>
+    <name>Resource Center</name>
+    <url>https://www.freeconvertbox.com/News/en/1Englishlist.html</url>
+  </item>
   <item>
     <name>Google</name>
     <url>https://www.google.com</url>
