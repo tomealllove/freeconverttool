@@ -16,6 +16,10 @@
     <name>中文资讯中心</name>
     <url>http://www.freeconvertbox.com/News/ch/1newslist.html</url>
   </item>
+   <item>
+    <name>Resource Center</name>
+    <url>https://www.freeconvertbox.com/News/en/1Englishlist.html</url>
+  </item>
   <item>
     <name>Baidu</name>
     <url>https://www.baidu.com</url>
