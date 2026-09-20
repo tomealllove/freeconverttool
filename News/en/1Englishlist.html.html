@@ -1,69 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf‑8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resource Center - Free Converter Toolbox</title>
 <style>
-/* 增加段落、标题之间空隙 */
-h2 {
-  margin‑top:30px;
-  margin‑bottom:18px;
+body {
+    margin: 0;
+    padding: 0 0 32px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+    background-color: #f2f5f9;
+    -webkit-text-size-adjust: 100%;
 }
-p {
-  margin‑top:16px;
-  margin‑bottom:16px;
+.wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+a { color: #2f80ed; }
+
+/* 顶部 / 底部横幅 */
+.banner {
+    margin: 0 0 22px;
+    padding: 0;
+    border: none;
+    line-height: 0;
+}
+.banner img {
+    width: 100%;
+    max-width: 1440px;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+/* 标题 */
+.page-title {
+    margin: 6px 0 4px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1f2d3d;
+    text-align: center;
+    letter-spacing: .3px;
+}
+.page-sub {
+    margin: 0 0 26px;
+    font-size: 14px;
+    color: #7b8794;
+    text-align: center;
+}
+.title-rule {
+    width: 56px;
+    height: 3px;
+    margin: 0 auto 26px;
+    border: none;
+    background: #2f80ed;
+    border-radius: 3px;
+}
+
+/* 卡片容器 */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 26px 30px 30px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 12px rgba(31,45,61,.07);
+}
+.card-title {
+    margin: 0 0 18px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1f2d3d;
+    padding-left: 10px;
+    border-left: 4px solid #2f80ed;
+    line-height: 1.3;
+}
+
+/* 文章列表 */
+.article-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.article-list li { margin: 0; }
+.article-list a {
+    display: block;
+    padding: 14px 16px 14px 14px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #263445;
+    text-decoration: none;
+    background: #f8fafc;
+    border: 1px solid #eaf0f6;
+    border-radius: 8px;
+    transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease, color .18s ease;
+}
+.article-list a:last-child { margin-bottom: 0; }
+.article-list a:hover {
+    background: #fff;
+    color: #2f80ed;
+    border-color: #cfe1fb;
+    box-shadow: 0 4px 14px rgba(47,128,237,.12);
+    transform: translateX(3px);
+}
+.article-list .bullet {
+    display: inline-block;
+    width: 20px;
+    color: #2f80ed;
+    font-weight: 700;
+}
+
+/* 底部工具导航：纯文字，与 0920Convert PNG&JPG.html 保持一致 */
+.tool-nav {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #555;
+    padding-left: 10px;
+}
+.tool-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin: 4px 0;
+}
+.tool-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-right: 6px;
+    white-space: nowrap;
+}
+.tool-nav a {
+    font-size: 13px;
+    color: #3498db;
+    text-decoration: none;
+    margin-right: 14px;
+    white-space: nowrap;
+}
+.tool-nav a:hover {
+    color: #217dbb;
+    text-decoration: underline;
+}
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+    .card { padding: 20px 18px 22px; }
+    .page-title { font-size: 24px; }
+    .article-list a { font-size: 14px; }
 }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<h2 style="padding-left: 10px;"><a title=" Free Converter Toolbox" href="https://www.freeconvertbox.com/en/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="Free Converter Toolbox   Image Format Converter, PDF to Word" />style="width:100%;max-width:1440px;height:auto;display:block;margin:0 auto;"/></a></h2>
+<!-- 顶部横幅 -->
+<h2 class="banner"><a title="Free Converter Toolbox" href="https://www.freeconvertbox.com/en/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="Free Converter Toolbox   Image Format Converter, PDF to Word" /></a></h2>
 
-<h1 style="padding-left: 80px;"><span style="font-family: times new roman, times, serif;">Resource Center</span></h1>
-<hr />
-<ul>
-<li style="list-style-type: none;">
-<ul>
+<h1 class="page-title">Resource Center</h1>
+<p class="page-sub">Practical guides and tutorials for image, PDF, audio and document tools</p>
+<hr class="title-rule" />
 
-<li><a title="Convert PNG, JPG, WebP and BMP Images" href="https://www.freeconvertbox.com/News/en/0920Convert PNG&JPG.html" target="_blank" rel="noopener">
-  Convert PNG, JPG, WebP and BMP Images Entirely on the Front-End&nbsp;</a></li>
-<br>
+<!-- 文章列表 -->
+<div class="card">
+    <h2 class="card-title">Latest Articles</h2>
+    <ul class="article-list">
+        <li><a title="Convert PNG, JPG, WebP and BMP Images" href="https://www.freeconvertbox.com/News/en/0920Convert%20PNG%26JPG.html" target="_blank" rel="noopener"><span class="bullet">&rsaquo;</span>Convert PNG, JPG, WebP and BMP Images Entirely on the Front-End</a></li>
+    </ul>
+</div>
 
+<!-- 底部工具导航 -->
 
+<div class="tool-nav" style="font-size: 13px; line-height: 1.9; color: #555; padding-left: 10px;">
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">Image Tools：</strong>
+    <a title="Image Format Converter" href="https://www.freeconvertbox.com/en/img-convert" target="_blank" rel="noopener">Image Format Converter</a>
+    <a title="Images to PDF" href="https://www.freeconvertbox.com/en/img-to-pdf" target="_blank" rel="noopener">Images to PDF</a>
+    <a title="Images to GIF Image Compressor" href="https://www.freeconvertbox.com/en/img-to-gif" target="_blank" rel="noopener">Images to GIF</a>
+    <a title="Image Compressor" href="https://www.freeconvertbox.com/en/img-compress" target="_blank" rel="noopener">Image Compressor</a>
+  </p>
 
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">PDF Tools：</strong>
+    <a title="Free PDF to Word" href="https://www.freeconvertbox.com/en/pdf-to-word" target="_blank" rel="noopener">PDF to Word</a>
+    <a title="Free Merge & Split PDF" href="https://www.freeconvertbox.com/en/pdf-merge" target="_blank" rel="noopener">Merge &amp; Split PDF</a>
+    <a title="Free PDF Compressor" href="https://www.freeconvertbox.com/en/pdf-compress" target="_blank" rel="noopener">PDF Compressor</a>
+    <a title="Free PDF to Images" href="https://www.freeconvertbox.com/en/pdf-to-img" target="_blank" rel="noopener">PDF to Images</a>
+  </p>
 
-</ul>
-</li>
-</ul>
-<hr />
-<p style="padding-left: 80px;"><strong>Image Tools</strong>： 
-  <a title="Image Format Converter" href="https://www.freeconvertbox.com/en/img-convert" target="_blank" rel="noopener">Image Format Converter&nbsp;</a> 
-  &nbsp; &nbsp; &nbsp;<a title="Images to PDF" href="https://www.freeconvertbox.com/en/img-to-pdf" target="_blank" rel="noopener">Images to PDF&nbsp;</a> 
-  &nbsp; &nbsp; &nbsp;<a title="Images to GIF Image Compressor " href="https://www.freeconvertbox.com/en/img-to-gif">Images to GIF  Image Compressor&nbsp;</a> &nbsp; &nbsp;
-  <a title="Image Compressor" href="https://www.freeconvertbox.com/en/img-compress" target="_blank" rel="noopener">Image Compressor</a></p>
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">Converter：</strong>
+    <a title="Free Audio Converter" href="https://www.freeconvertbox.com/en/audio-convert" target="_blank" rel="noopener">Audio Converter</a>
+    <a title="Free Video Converter" href="https://www.freeconvertbox.com/en/video-convert" target="_blank" rel="noopener">Video Converter</a>
+    <a title="Free Ebook Converter" href="https://www.freeconvertbox.com/en/ebook-convert" target="_blank" rel="noopener">Ebook Converter</a>
+    
+  </p>
+ <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+  <strong class="tool-label" style="font-size: 13px; ">ID Photo &amp; QR Code：</strong>
+    <a title="Free ID Photo Maker" href="https://www.freeconvertbox.com/en/id-photo" target="_blank" rel="noopener">ID Photo Maker</a>
+    <a title="Free QR Code Generator" href="https://www.freeconvertbox.com/en/qrcode" target="_blank" rel="noopener">QR Code Generator</a>
+  </p>
 
-<p style="padding-left: 80px;"><strong>PDF Tools：</strong> 
-  <a title="Free PDF to Word" href="https://www.freeconvertbox.com/en/pdf-to-word" target="_blank" rel="noopener">PDF to Word&nbsp;</a> 
-  &nbsp; &nbsp;<a title="Free Merge & Split PDF" href="https://www.freeconvertbox.com/en/pdf-merge" target="_blank" rel="noopener">Merge & Split PDF </a>
-  &nbsp; &nbsp; &nbsp;<a title="Free PDF Compressor " href="https://www.freeconvertbox.com/en/pdf-compress" target="_blank" rel="noopener">PDF Compressor</a>
-  &nbsp; &nbsp; &nbsp; <a title="&nbsp;Free PDF to Images" href="https://www.freeconvertbox.com/en/pdf-to-img">&nbsp;PDF to Images</a></p>
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">Chinese Text Tools：</strong>
+    <a title="Free Traditional & Simplified Chinese" href="https://www.freeconvertbox.com/en/zh-convert" target="_blank" rel="noopener">Traditional &amp; Simplified Chinese</a>
+    <a title="Free Chinese Number Converter" href="https://www.freeconvertbox.com/en/han-case" target="_blank" rel="noopener">Chinese Number Converter</a>
+  </p>
+</div>
+<!-- 底部横幅 -->
+<h2 class="banner"><a title="Free Converter Toolbox" href="https://www.freeconvertbox.com/en/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="Free Converter Toolbox   Image Format Converter, PDF to Word" /></a></h2>
 
-<p style="padding-left: 80px;"><strong>Converter：</strong>
-   <a title="Free Audio Converter " href="https://www.freeconvertbox.com/en/audio-convert" target="_blank" rel="noopener">Audio Converter</a> 
-   &nbsp; <a title="Free Video Converter" href="https://www.freeconvertbox.com/en/video-convert" target="_blank" rel="noopener">Video Converter</a>
-   &nbsp; &nbsp; &nbsp;<a title="Free Ebook Converter" href="https://www.freeconvertbox.com/en/ebook-convert" target="_blank" rel="noopener">Ebook Converter</a>
-
-   <strong>&nbsp; &nbsp;ID Photo & QR Code：</strong>
-    <a title="Free ID Photo Maker" href="https://www.freeconvertbox.com/en/id-photo" target="_blank" rel="noopener">ID Photo Maker</a> &nbsp;
-    <a title="Free QR Code Generator " href="https://www.freeconvertbox.com/en/qrcode" target="_blank" rel="noopener">QR Code Generator</a></p>
-<p style="padding-left: 80px;"><strong>Chinese Text Tools：:&nbsp; </strong>
-
-    <a title="Free Traditional & Simplified Chinese" href="https://www.freeconvertbox.com/en/zh-convert">Traditional & Simplified Chinese</a>&nbsp; &nbsp;
-    <a title="Free Chinese Number Converter" href="https://www.freeconvertbox.com/en/han-case" target="_blank" rel="noopener"> Chinese Number Converter</a>
-    &nbsp; 
-<br /><br />
-
-<h2 style="padding-left: 10px;"><a title=" Free Converter Toolbox" href="https://www.freeconvertbox.com/en/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="Free Converter Toolbox   Image Format Converter, PDF to Word" />style="width:100%;max-width:1440px;height:auto;display:block;margin:0 auto;"/></a></h2>
-
-<p>&nbsp;</p>
+</div>
 </body>
 </html>
