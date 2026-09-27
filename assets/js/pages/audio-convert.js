@@ -5,7 +5,16 @@
   FT.mountShell('audio-convert');
 
   var MAX_SIZE = 200 * 1024 * 1024;
-  var FFMPEG_CORE = 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js';
+  /* 自托管优先：先用自己的服务器加载内核，失败时自动回退公共 CDN */
+  var FF_VENDOR = /(^|\/)en\//.test(String(location.pathname).replace(/\\/g, '/'))
+    ? '../assets/vendor/ffmpeg/'
+    : 'assets/vendor/ffmpeg/';
+  /* 必须是绝对地址：worker 内部按模块说明符解析，传相对路径会报 Failed to resolve module specifier */
+  var FF_BASE = new URL(FF_VENDOR, location.href).href;
+  var FFMPEG_CORE = FF_BASE + 'ffmpeg-core.js';
+  var FFMPEG_WASM = FF_BASE + 'ffmpeg-core.wasm';
+  var FFMPEG_CORE_CDN = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js';
+  var FFMPEG_WASM_CDN = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm';
   var AUDIO_MIME = {
     mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg',
     m4a: 'audio/mp4', flac: 'audio/flac'
@@ -222,17 +231,22 @@
   function ensureFfmpeg() {
     if (ff) return Promise.resolve(ff);
     if (ffLoading) return ffLoading;
-    if (typeof FFmpeg === 'undefined') {
+    if (typeof FFmpegWASM === 'undefined' || !FFmpegWASM.FFmpeg) {
       return Promise.reject(new Error('转换引擎（ffmpeg.wasm）未加载，请检查网络后刷新页面'));
     }
     FT.busyProgress(progress, '正在加载转换引擎（约 30MB，仅首次）…');
     var inst;
     try {
-      inst = FFmpeg.createFFmpeg({ corePath: FFMPEG_CORE, log: false });
+      inst = new FFmpegWASM.FFmpeg();
     } catch (e) {
       return Promise.reject(new Error('转换引擎初始化失败：' + (e && e.message || e)));
     }
-    ffLoading = inst.load().then(function () {
+    ffLoading = inst.load({ coreURL: FFMPEG_CORE, wasmURL: FFMPEG_WASM })
+      .catch(function (e1) {
+        // 本地内核不可用时回退 CDN
+        return inst.load({ coreURL: FFMPEG_CORE_CDN, wasmURL: FFMPEG_WASM_CDN });
+      })
+      .then(function () {
       ff = inst;
       return ff;
     }).catch(function (e) {
@@ -249,26 +263,29 @@
       var outName = 'output.' + targetFmt;
       FT.busyProgress(progress, '正在读取音频…');
       return FT.readArrayBuffer(file).then(function (buf) {
-        ff.FS('writeFile', inName, new Uint8Array(buf));
+        return ff.writeFile(inName, new Uint8Array(buf));
+      }).then(function () {
         var args = ['-i', inName, '-vn'];
         if (['mp3', 'ogg', 'm4a'].indexOf(targetFmt) >= 0) args.push('-b:a', kbps + 'k');
         args.push(outName);
 
         try {
-          ff.setProgress(function (p) {
-            if (p && typeof p.ratio === 'number' && p.ratio >= 0 && p.ratio <= 1) {
-              FT.setProgress(progress, p.ratio, Math.round(p.ratio * 100) + '%');
+          ff.on('progress', function (ev) {
+            var p = ev && ev.progress;
+            if (typeof p === 'number' && p >= 0 && p <= 1) {
+              FT.setProgress(progress, p, Math.round(p * 100) + '%');
             }
           });
         } catch (e) { /* 旧版本可能无此 API */ }
 
         FT.busyProgress(progress, '转换中，请耐心等待…');
-        return ff.run.apply(ff, args).then(function () {
-          var data = ff.FS('readFile', outName);
-          try { ff.FS('unlink', inName); } catch (e) {}
-          try { ff.FS('unlink', outName); } catch (e) {}
+        return ff.exec(args).then(function () {
+          return ff.readFile(outName);
+        }).then(function (data) {
+          try { ff.deleteFile(inName); } catch (e) {}
+          try { ff.deleteFile(outName); } catch (e) {}
           if (!data || !data.length) throw new Error('转换输出为空，可能是源文件编码不受支持');
-          return new Blob([data.buffer], { type: AUDIO_MIME[targetFmt] || 'application/octet-stream' });
+          return new Blob([data], { type: AUDIO_MIME[targetFmt] || 'application/octet-stream' });
         });
       });
     });

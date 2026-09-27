@@ -62,22 +62,12 @@
   }
   FT.svg = svg;
 
-  /* ====================== 侧边导航 ====================== */
-
-  var COLLAPSE_KEY = 'ft-nav-collapsed';
-
-  function loadCollapsed() {
-    try { return JSON.parse(localStorage.getItem(COLLAPSE_KEY)) || []; } catch (e) { return []; }
-  }
-  function saveCollapsed(list) {
-    try { localStorage.setItem(COLLAPSE_KEY, JSON.stringify(list)); } catch (e) { /* file:// 下可能不可用 */ }
-  }
+  /* ====================== 顶部导航 ====================== */
 
   FT.mountShell = function (activeKey) {
     var side = document.getElementById('sidebar');
     if (!side) return;
 
-    var collapsed = loadCollapsed();
     var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     var html = '' +
       '<a class="sidebar-brand" href="index.html">' +
@@ -87,10 +77,7 @@
       '<nav class="nav">';
 
     FT.NAV.forEach(function (group) {
-      var isCollapsed = collapsed.indexOf(group.key) >= 0;
-      var countOpen = group.items.some(function (it) { return it.key === activeKey; });
-      if (isCollapsed && countOpen) isCollapsed = false;
-      html += '<div class="nav-group' + (isCollapsed ? ' collapsed' : '') + '" data-group="' + group.key + '">' +
+      html += '<div class="nav-group" data-group="' + group.key + '">' +
         '<button class="nav-group-title" type="button">' +
           '<span class="gicon">' + svg(group.icon, 15) + '</span>' +
           '<span>' + group.name + '</span>' +
@@ -109,16 +96,26 @@
     html += '</nav><div class="sidebar-foot">即开即用不留存，隐私安全有保障</div>';
     side.innerHTML = html;
 
+    // 下拉菜单：点击分组开合（桌面端同时支持悬停）
+    function closeAll(except) {
+      var groups = side.querySelectorAll('.nav-group.open');
+      Array.prototype.forEach.call(groups, function (g) {
+        if (g !== except) g.classList.remove('open');
+      });
+    }
     side.addEventListener('click', function (e) {
       var btn = e.target.closest('.nav-group-title');
       if (!btn) return;
       var group = btn.parentNode;
-      var key = group.getAttribute('data-group');
-      var nowCollapsed = !group.classList.contains('collapsed');
-      group.classList.toggle('collapsed', nowCollapsed);
-      var list = loadCollapsed().filter(function (k) { return k !== key; });
-      if (nowCollapsed) list.push(key);
-      saveCollapsed(list);
+      var willOpen = !group.classList.contains('open');
+      closeAll(group);
+      group.classList.toggle('open', willOpen);
+    });
+    document.addEventListener('click', function (e) {
+      if (!side.contains(e.target)) closeAll();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAll();
     });
 
     // 移动端抽屉
@@ -167,15 +164,22 @@
 
     bar.appendChild(a);
 
-    /* 优先放在页脚右下角、版权行上方；无页脚的页面退回到内容区底部 */
-    var footer = document.querySelector('.footer-inner') || document.querySelector('.site-footer');
-    if (footer) {
-      var copy = footer.querySelector('.footer-copy');
-      if (copy) footer.insertBefore(bar, copy);
-      else footer.appendChild(bar);
+    /* 放进顶部导航栏最右侧（侧栏存在时）；否则退回页脚/内容区 */
+    var side = document.getElementById('sidebar');
+    if (side) {
+      var foot = side.querySelector('.sidebar-foot');
+      if (foot) side.insertBefore(bar, foot);
+      else side.appendChild(bar);
     } else {
-      var host = document.querySelector('.content-inner') || document.querySelector('.content');
-      if (host) host.appendChild(bar);
+      var footer = document.querySelector('.footer-inner') || document.querySelector('.site-footer');
+      if (footer) {
+        var copy = footer.querySelector('.footer-copy');
+        if (copy) footer.insertBefore(bar, copy);
+        else footer.appendChild(bar);
+      } else {
+        var host = document.querySelector('.content-inner') || document.querySelector('.content');
+        if (host) host.appendChild(bar);
+      }
     }
 
     try { localStorage.setItem('ft-lang', isEn ? 'en' : 'zh'); } catch (e) {}
@@ -632,15 +636,16 @@
     return typeof pdfjsLib !== 'undefined';
   };
   var PDFJS_CDN = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@' + FT.PDFJS_VERSION + '/build/';
+  /* 本地优先：英文页在 /en/ 下，内核文件只在根目录，用 ../ 回指 */
+  var PDFJS_LOCAL = new URL(/(^|\/)en\//.test(String(location.pathname).replace(/\\/g, '/'))
+    ? '../assets/vendor/pdfjs/'
+    : 'assets/vendor/pdfjs/', location.href).href;
   var workerReady = null;
 
   // 优先把 worker 代码抓成本地 Blob 再注入：
   // file:// 下跨域 worker 会被拦截，部分环境直连 CDN worker 也会静默挂起
-  function ensureWorker() {
-    if (workerReady) return workerReady;
-    var url = PDFJS_CDN + 'pdf.worker.min.js';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = url;
-    workerReady = fetch(url)
+  function fetchAsBlobWorker(url) {
+    return fetch(url)
       .then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return r.text();
@@ -649,13 +654,45 @@
         var blobUrl = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
         pdfjsLib.GlobalWorkerOptions.workerSrc = blobUrl;
         return blobUrl;
+      });
+  }
+
+  function ensureWorker() {
+    if (workerReady) return workerReady;
+    var localUrl = PDFJS_LOCAL + 'pdf.worker.min.js';
+    var cdnUrl = PDFJS_CDN + 'pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = localUrl;
+    // 每一步都要带超时：worker 抓取一旦拖住，下面的解析超时就永远等不到启动，
+    // 页面会停在「正在解析…」既不成功也不报错
+    workerReady = withTimeout(fetchAsBlobWorker(localUrl), 8000, 'worker timeout')
+      .catch(function () {
+        // 本地内核不可用（未上传 / 路径不对）时回退 CDN
+        pdfjsLib.GlobalWorkerOptions.workerSrc = cdnUrl;
+        return withTimeout(fetchAsBlobWorker(cdnUrl), 12000, 'worker timeout');
       })
       .catch(function () {
-        // 抓不到（离线 / 无 CORS）就退回直连 CDN，由下面的超时兜底
-        pdfjsLib.GlobalWorkerOptions.workerSrc = url;
-        return url;
+        // 都抓不到（离线 / 无 CORS / 超时）就交回主线程解析，不无限等待
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+        return '';
       });
     return workerReady;
+  }
+
+  // 本地 pdf.min.js 未随包上传时的补载兜底
+  var pdfjsLoading = null;
+  function ensurePdfjsLib() {
+    if (typeof pdfjsLib !== 'undefined') return Promise.resolve(true);
+    if (pdfjsLoading) return pdfjsLoading;
+    pdfjsLoading = new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = PDFJS_CDN + 'pdf.min.js';
+      s.onload = function () { resolve(typeof pdfjsLib !== 'undefined'); };
+      s.onerror = function () { resolve(false); };
+      document.head.appendChild(s);
+    });
+    // 补载本身也可能卡住，超时后按失败处理，交给页面给出明确提示
+    pdfjsLoading = withTimeout(pdfjsLoading, 15000, 'pdfjs lib timeout').catch(function () { return false; });
+    return pdfjsLoading;
   }
 
   function withTimeout(promise, ms, msg) {
@@ -674,10 +711,14 @@
    * @param {{timeout?: number}} [opts] timeout 默认 25 秒
    */
   FT.loadPdf = function (bytes, opts) {
-    if (typeof pdfjsLib === 'undefined') {
-      return Promise.reject(new Error('PDF 组件未加载，请检查网络后刷新页面'));
-    }
     var timeout = (opts && opts.timeout) || 25000;
+    if (typeof pdfjsLib === 'undefined') {
+      // 本地脚本缺失时尝试从 CDN 补载一次
+      return ensurePdfjsLib().then(function (ok) {
+        if (!ok) throw new Error('PDF 组件未加载，请检查网络后刷新页面');
+        return FT.loadPdf(bytes, opts);
+      });
+    }
     var src = bytes;
     return ensureWorker().then(function () {
       return withTimeout(

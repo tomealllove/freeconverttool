@@ -6,6 +6,10 @@
 
   var MAX_SIZE = 20 * 1024 * 1024;
   var MAX_COUNT = 60;
+  /* 自托管优先：英文页在 /en/ 下，worker 文件只在根目录，用 ../ 回指 */
+  var WORKER_LOCAL = new URL(/(^|\/)en\//.test(String(location.pathname).replace(/\\/g, '/'))
+    ? '../assets/vendor/gifjs/gif.worker.js'
+    : 'assets/vendor/gifjs/gif.worker.js', location.href).href;
   var WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js';
   var EXT_MAP = {
     png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg',
@@ -176,17 +180,26 @@
 
   /* ---------------- 合成 GIF ---------------- */
 
-  // 跨域 Worker 会被浏览器拦截，先把脚本取回同域 blob 再用；取不到则退回 CDN 直连
-  function workerUrl() {
-    return fetch(WORKER)
+  // 跨域 Worker 会被浏览器拦截，先把脚本取回同域 blob 再用；本地取不到再退回 CDN
+  function fetchWorkerBlob(url) {
+    return fetch(url)
       .then(function (r) {
         if (!r.ok) throw new Error('worker 下载失败');
         return r.text();
       })
       .then(function (code) {
         return URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
-      })
-      .catch(function () { return WORKER; });
+      });
+  }
+
+  function workerUrl() {
+    return fetchWorkerBlob(WORKER_LOCAL)
+      .catch(function () { return fetchWorkerBlob(WORKER); })
+      .catch(function () {
+        // 走到这里说明本地和 CDN 都拿不到 worker，再把 https 地址交给 gif.js
+        // 也会因跨域被拒（file:// 下是 origin 'null'），不如直接给出可操作的提示
+        throw new Error('GIF 编码器（Worker）无法加载。请通过本地服务器打开页面（在站点目录执行 python -m http.server 8000），或检查网络后重试。');
+      });
   }
 
   function readSize() {
