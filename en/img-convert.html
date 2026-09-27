@@ -109,7 +109,13 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="../assets/vendor/jszip/jszip.min.js"></script>
+<script>
+  /* 本地库未随包上传时，同步回退公共 CDN 补载（解析期 document.write 可靠且阻塞） */
+  if (typeof JSZip === 'undefined') {
+    document.write('<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"><\/script>');
+  }
+</script>
 <script src="assets/js/common.js"></script>
 <script src="assets/js/pages/img-convert.js"></script>
 <script type="application/ld+json">
