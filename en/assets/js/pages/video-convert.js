@@ -6,7 +6,16 @@
 
   var MAX_SIZE = 200 * 1024 * 1024;
   var MAX_FRAMES = 60;
-  var FFMPEG_CORE = 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js';
+  /* 自托管优先：先用自己的服务器加载内核，失败时自动回退公共 CDN */
+  var FF_VENDOR = /(^|\/)en\//.test(String(location.pathname).replace(/\\/g, '/'))
+    ? '../assets/vendor/ffmpeg/'
+    : 'assets/vendor/ffmpeg/';
+  /* 必须是绝对地址：worker 内部按模块说明符解析，传相对路径会报 Failed to resolve module specifier */
+  var FF_BASE = new URL(FF_VENDOR, location.href).href;
+  var FFMPEG_CORE = FF_BASE + 'ffmpeg-core.js';
+  var FFMPEG_WASM = FF_BASE + 'ffmpeg-core.wasm';
+  var FFMPEG_CORE_CDN = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js';
+  var FFMPEG_WASM_CDN = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm';
 
   var drop = FT.$('#drop');
   var input = FT.$('#file');
@@ -78,17 +87,22 @@
   function ensureFfmpeg() {
     if (ff) return Promise.resolve(ff);
     if (ffLoading) return ffLoading;
-    if (typeof FFmpeg === 'undefined') {
+    if (typeof FFmpegWASM === 'undefined' || !FFmpegWASM.FFmpeg) {
       return Promise.reject(new Error('The conversion engine (ffmpeg.wasm) is not loaded, please check your connection and reload the page'));
     }
     FT.busyProgress(progress, 'Loading the conversion engine (~30 MB, first run only)…');
     var inst;
     try {
-      inst = FFmpeg.createFFmpeg({ corePath: FFMPEG_CORE, log: false });
+      inst = new FFmpegWASM.FFmpeg();
     } catch (e) {
       return Promise.reject(new Error('Conversion engine initialization failed: ' + (e && e.message || e)));
     }
-    ffLoading = inst.load().then(function () {
+    ffLoading = inst.load({ coreURL: FFMPEG_CORE, wasmURL: FFMPEG_WASM })
+      .catch(function (e1) {
+        // 本地内核不可用时回退 CDN
+        return inst.load({ coreURL: FFMPEG_CORE_CDN, wasmURL: FFMPEG_WASM_CDN });
+      })
+      .then(function () {
       ff = inst;
       return ff;
     }).catch(function (e) {
@@ -184,16 +198,16 @@
     var srcExt = FT.extName(state.file.name) || 'mp4';
     var inName = 'input.' + srcExt;
     return FT.readArrayBuffer(state.file).then(function (buf) {
-      ff.FS('writeFile', inName, new Uint8Array(buf));
-      return inName;
+      return ff.writeFile(inName, new Uint8Array(buf)).then(function () { return inName; });
     });
   }
 
   function bindFfmpegProgress() {
     try {
-      ff.setProgress(function (p) {
-        if (p && typeof p.ratio === 'number' && p.ratio >= 0 && p.ratio <= 1) {
-          FT.setProgress(progress, p.ratio, Math.round(p.ratio * 100) + '%');
+      ff.on('progress', function (ev) {
+        var p = ev && ev.progress;
+        if (typeof p === 'number' && p >= 0 && p <= 1) {
+          FT.setProgress(progress, p, Math.round(p * 100) + '%');
         }
       });
     } catch (e) { /* ignore */ }
@@ -225,13 +239,14 @@
 
       bindFfmpegProgress();
       FT.busyProgress(progress, 'Transcoding, please be patient…');
-      return ff.run.apply(ff, args).then(function () {
-        var data = ff.FS('readFile', outName);
-        try { ff.FS('unlink', inName); } catch (e) {}
-        try { ff.FS('unlink', outName); } catch (e) {}
+      return ff.exec(args).then(function () {
+        return ff.readFile(outName);
+      }).then(function (data) {
+        try { ff.deleteFile(inName); } catch (e) {}
+        try { ff.deleteFile(outName); } catch (e) {}
         if (!data || !data.length) throw new Error('Transcode output is empty, the source codec may not be supported');
         var mime = fmt === 'webm' ? 'video/webm' : (fmt === 'mov' ? 'video/quicktime' : 'video/mp4');
-        return { blob: new Blob([data.buffer], { type: mime }), ext: fmt, kind: 'video' };
+        return { blob: new Blob([data], { type: mime }), ext: fmt, kind: 'video' };
       });
     }).then(function (res2) {
       showMediaResult(res2, { 'Target format': fmt.toUpperCase(), 'CRF': String(crf), 'Resolution': res ? res + 'p' : 'Original' });
@@ -253,12 +268,13 @@
         '-vf', 'fps=' + fps + ',scale=' + width + ':-1:flags=lanczos', outName];
       bindFfmpegProgress();
       FT.busyProgress(progress, 'Generating GIF…');
-      return ff.run.apply(ff, args).then(function () {
-        var data = ff.FS('readFile', outName);
-        try { ff.FS('unlink', inName); } catch (e) {}
-        try { ff.FS('unlink', outName); } catch (e) {}
+      return ff.exec(args).then(function () {
+        return ff.readFile(outName);
+      }).then(function (data) {
+        try { ff.deleteFile(inName); } catch (e) {}
+        try { ff.deleteFile(outName); } catch (e) {}
         if (!data || !data.length) throw new Error('GIF output is empty');
-        return { blob: new Blob([data.buffer], { type: 'image/gif' }), ext: 'gif', kind: 'image' };
+        return { blob: new Blob([data], { type: 'image/gif' }), ext: 'gif', kind: 'image' };
       });
     }).then(function (res) {
       showMediaResult(res, { 'FPS': String(fps), 'Width': width + 'px', 'Clip': start + 's ~ ' + (start + dur) + 's' });

@@ -6,6 +6,10 @@
 
   var MAX_SIZE = 20 * 1024 * 1024;
   var MAX_COUNT = 60;
+  /* Self-hosted first: English pages live under /en/, the worker file only sits at the root, so point back with ../ */
+  var WORKER_LOCAL = new URL(/(^|\/)en\//.test(String(location.pathname).replace(/\\/g, '/'))
+    ? '../assets/vendor/gifjs/gif.worker.js'
+    : 'assets/vendor/gifjs/gif.worker.js', location.href).href;
   var WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js';
   var EXT_MAP = {
     png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg',
@@ -176,17 +180,27 @@
 
   /* ---------------- Build the GIF ---------------- */
 
-  // A cross-origin Worker is blocked by the browser, so fetch the script into a same-origin blob first; if that fails, fall back to the CDN URL
-  function workerUrl() {
-    return fetch(WORKER)
+  // A cross-origin Worker is blocked by the browser, so fetch the script into a same-origin blob first; local first, then the CDN
+  function fetchWorkerBlob(url) {
+    return fetch(url)
       .then(function (r) {
         if (!r.ok) throw new Error('Failed to download worker');
         return r.text();
       })
       .then(function (code) {
         return URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
-      })
-      .catch(function () { return WORKER; });
+      });
+  }
+
+  function workerUrl() {
+    return fetchWorkerBlob(WORKER_LOCAL)
+      .catch(function () { return fetchWorkerBlob(WORKER); })
+      .catch(function () {
+        // Reaching here means neither local nor CDN could supply the worker; handing the https
+        // URL to gif.js would be rejected as cross-origin anyway (origin 'null' on file://),
+        // so surface an actionable message instead
+        throw new Error('The GIF encoder (worker) could not be loaded. Open the page through a local server (run python -m http.server 8000 in the site folder), or check your network and retry.');
+      });
   }
 
   function readSize() {
