@@ -288,28 +288,4 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/en/zh-convert.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/zh-convert.html"/>
   </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/AboutUs.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/AboutUs.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/AboutUs.html"/>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/Terms-and-Conditions.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/Terms-and-Conditions.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/Terms-and-Conditions.html"/>
-  </url>
-  <url>
-    <loc>https://www.freeconvertbox.com/privacy-policy.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/privacy-policy.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/privacy-policy.html"/>
-  </url>
 </urlset>

@@ -154,14 +154,8 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/vendor/lamejs/lame.min.js"></script>
-<script>
-  /* 本地库未随包上传时，同步回退公共 CDN 补载（解析期 document.write 可靠且阻塞） */
-  if (typeof lamejs === 'undefined') {
-    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"><\/script>');
-  }
-</script>
-<script src="assets/vendor/ffmpeg/ffmpeg.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
 <script src="assets/js/common.js"></script>
 <script src="assets/js/pages/audio-convert.js"></script>
 <script type="application/ld+json">
