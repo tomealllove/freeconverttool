@@ -657,24 +657,65 @@
       });
   }
 
+  // Probe whether the worker file is reachable (HEAD first, fall back to GET),
+  // used on http/https to choose local vs CDN.
+  function probeWorker(url) {
+    function head() {
+      var c = new AbortController();
+      var t = setTimeout(function () { c.abort(); }, 8000);
+      return fetch(url, { method: 'HEAD', signal: c.signal }).then(function (r) {
+        clearTimeout(t); return r.ok;
+      }, function () { clearTimeout(t); return false; });
+    }
+    function get() {
+      var c = new AbortController();
+      var t = setTimeout(function () { c.abort(); }, 8000);
+      return fetch(url, { method: 'GET', signal: c.signal }).then(function (r) {
+        clearTimeout(t); return r.ok;
+      }, function () { clearTimeout(t); return false; });
+    }
+    return head().then(function (ok) { return ok ? true : get(); });
+  }
+
   function ensureWorker() {
     if (workerReady) return workerReady;
     var localUrl = PDFJS_LOCAL + 'pdf.worker.min.js';
     var cdnUrl = PDFJS_CDN + 'pdf.worker.min.js';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = localUrl;
-    // Every step needs a timeout: if the worker fetch stalls, the parse timeout
-    // below never even starts and the page hangs on "Parsing..." forever
-    workerReady = withTimeout(fetchAsBlobWorker(localUrl), 8000, 'worker timeout')
-      .catch(function () {
-        // local worker missing (not uploaded / wrong path) -> CDN
-        pdfjsLib.GlobalWorkerOptions.workerSrc = cdnUrl;
-        return withTimeout(fetchAsBlobWorker(cdnUrl), 12000, 'worker timeout');
-      })
-      .catch(function () {
-        // nothing usable (offline / no CORS / timeout) -> parse on the main thread
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '';
-        return '';
+    var isFile = location.protocol === 'file:';
+
+    if (isFile) {
+      // file://: local fetch is blocked, use CDN blob worker; fail with a clear message
+      workerReady = fetchAsBlobWorker(cdnUrl)
+        .catch(function () { return fetchAsBlobWorker(localUrl); })
+        .then(function (src) {
+          pdfjsLib.GlobalWorkerOptions.workerSrc = src;
+          return src;
+        }, function () {
+          workerReady = null;
+          throw new Error('PDF component failed to load: offline file:// cannot initialize, please go online or serve the site from a local server');
+        });
+      return workerReady;
+    }
+
+    // http/https: local first (real URL, CSP-friendly), fall back to CDN real URL.
+    // Key: never leave workerSrc empty — an empty value triggers pdf.js's fake worker,
+    // and the legacy build has no modular WorkerMessageHandler, so it always fails with
+    // "Setting up fake worker failed: …WorkerMessageHandler" and cannot work.
+    workerReady = probeWorker(localUrl).then(function (ok) {
+      if (ok) return localUrl;
+      return probeWorker(cdnUrl).then(function (ok2) {
+        if (ok2) return cdnUrl;
+        throw new Error('noworker');
       });
+    }).then(function (src) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = src;
+      return src;
+    }, function () {
+      // neither local nor CDN reachable: still try the local URL (let pdf.js throw its native error) and give a clear hint
+      pdfjsLib.GlobalWorkerOptions.workerSrc = localUrl;
+      workerReady = null;
+      throw new Error('PDF worker failed to load: make sure assets/vendor/pdfjs/pdf.worker.min.js was uploaded, or the server can reach jsdelivr CDN, then reload');
+    });
     return workerReady;
   }
 
@@ -719,24 +760,18 @@
         return FT.loadPdf(bytes, opts);
       });
     }
-    var src = bytes;
+    // if the worker is unavailable, ensureWorker throws a clear error instead of triggering the fake worker
     return ensureWorker().then(function () {
       return withTimeout(
-        pdfjsLib.getDocument({ data: src.slice(0) }).promise,
+        pdfjsLib.getDocument({ data: bytes.slice(0) }).promise,
         timeout,
         'PDF parsing timed out, check your network and try again'
       );
     }).catch(function (err) {
-      // First failure: drop the worker cache and retry once on the main thread
-      workerReady = null;
-      try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '';
-        return withTimeout(
-          pdfjsLib.getDocument({ data: src.slice(0), disableWorker: true }).promise,
-          timeout,
-          'PDF parsing timed out, check your network and try again'
-        );
-      } catch (e) { /* ignore */ }
+      // surface a clearer message for worker-related failures
+      if (err && /worker/i.test(String(err.message))) {
+        err.message = 'PDF worker failed to initialize: make sure assets/vendor/pdfjs/pdf.worker.min.js was uploaded, or the server can reach jsdelivr CDN';
+      }
       throw err;
     });
   };
