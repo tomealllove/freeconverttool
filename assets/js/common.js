@@ -657,24 +657,64 @@
       });
   }
 
+  // 探测 worker 文件是否可达（HEAD 优先，失败回退 GET），用于 http/https 下选择本地或 CDN
+  function probeWorker(url) {
+    function head() {
+      var c = new AbortController();
+      var t = setTimeout(function () { c.abort(); }, 8000);
+      return fetch(url, { method: 'HEAD', signal: c.signal }).then(function (r) {
+        clearTimeout(t); return r.ok;
+      }, function () { clearTimeout(t); return false; });
+    }
+    function get() {
+      var c = new AbortController();
+      var t = setTimeout(function () { c.abort(); }, 8000);
+      return fetch(url, { method: 'GET', signal: c.signal }).then(function (r) {
+        clearTimeout(t); return r.ok;
+      }, function () { clearTimeout(t); return false; });
+    }
+    return head().then(function (ok) { return ok ? true : get(); });
+  }
+
   function ensureWorker() {
     if (workerReady) return workerReady;
     var localUrl = PDFJS_LOCAL + 'pdf.worker.min.js';
     var cdnUrl = PDFJS_CDN + 'pdf.worker.min.js';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = localUrl;
-    // 每一步都要带超时：worker 抓取一旦拖住，下面的解析超时就永远等不到启动，
-    // 页面会停在「正在解析…」既不成功也不报错
-    workerReady = withTimeout(fetchAsBlobWorker(localUrl), 8000, 'worker timeout')
-      .catch(function () {
-        // 本地内核不可用（未上传 / 路径不对）时回退 CDN
-        pdfjsLib.GlobalWorkerOptions.workerSrc = cdnUrl;
-        return withTimeout(fetchAsBlobWorker(cdnUrl), 12000, 'worker timeout');
-      })
-      .catch(function () {
-        // 都抓不到（离线 / 无 CORS / 超时）就交回主线程解析，不无限等待
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '';
-        return '';
+    var isFile = location.protocol === 'file:';
+
+    if (isFile) {
+      // file:// 下本地 fetch 被浏览器拦截，直接用 CDN blob worker；都失败则给出明确提示
+      workerReady = fetchAsBlobWorker(cdnUrl)
+        .catch(function () { return fetchAsBlobWorker(localUrl); })
+        .then(function (src) {
+          pdfjsLib.GlobalWorkerOptions.workerSrc = src;
+          return src;
+        }, function () {
+          workerReady = null;
+          throw new Error('PDF 组件加载失败：file:// 离线时无法初始化，请联网或将站点部署到本地服务器后打开');
+        });
+      return workerReady;
+    }
+
+    // http/https：本地优先（真实 URL，兼容 CSP），不可达再回退 CDN 真实 URL。
+    // 关键：绝不把 workerSrc 置空——空值会触发 pdf.js 的 fake worker，而 legacy 构建
+    // 没有模块化的 WorkerMessageHandler，必然报
+    // “Setting up fake worker failed: …WorkerMessageHandler”，且无法工作。
+    workerReady = probeWorker(localUrl).then(function (ok) {
+      if (ok) return localUrl;
+      return probeWorker(cdnUrl).then(function (ok2) {
+        if (ok2) return cdnUrl;
+        throw new Error('noworker');
       });
+    }).then(function (src) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = src;
+      return src;
+    }, function () {
+      // 本地与 CDN 都不可达：仍尝试用本地 URL（让 pdf.js 抛出原生错误），并给出清晰提示
+      pdfjsLib.GlobalWorkerOptions.workerSrc = localUrl;
+      workerReady = null;
+      throw new Error('PDF 解析组件（worker）加载失败：请确认 assets/vendor/pdfjs/pdf.worker.min.js 已随包上传，或服务器可访问 jsdelivr CDN 后刷新');
+    });
     return workerReady;
   }
 
@@ -719,24 +759,18 @@
         return FT.loadPdf(bytes, opts);
       });
     }
-    var src = bytes;
+    // worker 不可用时 ensureWorker 会直接抛出清晰错误，不会走到这里触发 fake worker
     return ensureWorker().then(function () {
       return withTimeout(
-        pdfjsLib.getDocument({ data: src.slice(0) }).promise,
+        pdfjsLib.getDocument({ data: bytes.slice(0) }).promise,
         timeout,
         'PDF 解析超时，请检查网络后重试'
       );
     }).catch(function (err) {
-      // 首次失败：清掉 worker 缓存，改用主线程兜底重试一次
-      workerReady = null;
-      try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '';
-        return withTimeout(
-          pdfjsLib.getDocument({ data: src.slice(0), disableWorker: true }).promise,
-          timeout,
-          'PDF 解析超时，请检查网络后重试'
-        );
-      } catch (e) { /* ignore */ }
+      // 解析阶段若属 worker 相关错误，补一句可操作提示
+      if (err && /worker/i.test(String(err.message))) {
+        err.message = 'PDF 解析组件初始化失败：请确认 assets/vendor/pdfjs/pdf.worker.min.js 已上传，或服务器可访问 jsdelivr CDN';
+      }
       throw err;
     });
   };
