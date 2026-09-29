@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>前端小技巧：利用浏览器原生能力实现图片转GIF</title>
-    <style>
+    <base href="https://www.freeconvertbox.com/">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.8;
@@ -70,14 +72,61 @@
             height: auto;
             display: block;
         }
-    </style>
+            /* ===== 图片自适应：防止 HTML 里硬写的 width/height 撑破布局 ===== */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* 底部「返回列表」图标：锁定合适宽度，按原始比例显示，避免拉伸模糊 */
+        img[src*="rego.png"] {
+            width: 220px;
+            max-width: 100%;
+        }
+        /* ===== 移动端适配 ===== */
+        @media (max-width: 640px) {
+            body { padding: 12px 10px; }
+            .container { padding: 10px 16px 24px; }
+            [style*="padding-left"] { padding-left: 0 !important; }
+            h1 { font-size: 21px; margin-bottom: 20px; }
+            h2 { font-size: 18px; }
+        }
+</style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5597138176163669" crossorigin="anonymous"></script>
+<link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/imgAll/favicon/icon-32x32.png">
+<link rel="apple-touch-icon" href="/imgAll/favicon/apple-touch-icon.png">
+<meta name="description" content="前端也能合成 GIF。本文拆解逐帧绘制加编码打包的原理，讲清 gif.js 在帧率、尺寸与颜色量化上的取舍，附体积控制的实用建议。">
+<link rel="canonical" href="https://www.freeconvertbox.com/News/ch/%E5%9B%BE%E7%89%87%E8%BD%ACGIF0917.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/News/ch/%E5%9B%BE%E7%89%87%E8%BD%ACGIF0917.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/News/en/10ConvertImagestoGIF.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/News/ch/%E5%9B%BE%E7%89%87%E8%BD%ACGIF0917.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="前端小技巧：利用浏览器原生能力实现图片转GIF">
+<meta property="og:description" content="前端也能合成 GIF。本文拆解逐帧绘制加编码打包的原理，讲清 gif.js 在帧率、尺寸与颜色量化上的取舍，附体积控制的实用建议。">
+<meta property="og:url" content="https://www.freeconvertbox.com/News/ch/%E5%9B%BE%E7%89%87%E8%BD%ACGIF0917.html">
+<meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
+<meta property="article:published_time" content="2026-09-17">
+<meta property="article:modified_time" content="2026-09-29">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="前端小技巧：利用浏览器原生能力实现图片转GIF">
+<meta name="twitter:description" content="前端也能合成 GIF。本文拆解逐帧绘制加编码打包的原理，讲清 gif.js 在帧率、尺寸与颜色量化上的取舍，附体积控制的实用建议。">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "前端小技巧：利用浏览器原生能力实现图片转GIF", "description": "前端也能合成 GIF。本文拆解逐帧绘制加编码打包的原理，讲清 gif.js 在帧率、尺寸与颜色量化上的取舍，附体积控制的实用建议。", "image": "https://www.freeconvertbox.com/assets/img/og-cover.png", "url": "https://www.freeconvertbox.com/News/ch/%E5%9B%BE%E7%89%87%E8%BD%ACGIF0917.html", "inLanguage": "zh-CN", "datePublished": "2026-09-17", "dateModified": "2026-09-29", "publisher": {"@type": "Organization", "name": "FreeConvertBox", "logo": {"@type": "ImageObject", "url": "https://www.freeconvertbox.com/imgAll/favicon/icon-512x512.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/ch/%E5%9B%BE%E7%89%87%E8%BD%ACGIF0917.html"}, "translationOfWork": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/en/10ConvertImagestoGIF.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/"}, {"@type": "ListItem", "position": 2, "name": "资讯中心", "item": "https://www.freeconvertbox.com/News/ch/1newslist.html.html"}, {"@type": "ListItem", "position": 3, "name": "前端小技巧：利用浏览器原生能力实现图片转GIF", "item": "https://www.freeconvertbox.com/News/ch/%E5%9B%BE%E7%89%87%E8%BD%ACGIF0917.html"}]}]}</script>
 </head>
 <body>
+<aside class="sidebar" id="sidebar"></aside>
+
     <div class="container">
 
         <!-- ========== 顶部横幅 ========== -->
-        <h2 class="banner"><a title="FreeBox佛博士 免费转化工具箱" href="https://www.freeconvertbox.com/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/TopComm.png" alt="图片转化就选&middot;FreeBox佛博士    PDF转Word就选&middot;佛博士" width="1440" height="160" /></a></h2>
+        <div class="banner"><a title="FreeBox佛博士 免费转化工具箱" href="https://www.freeconvertbox.com/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/TopComm.png" alt="图片转化就选&middot;FreeBox佛博士    PDF转Word就选&middot;佛博士" width="1440" height="160" /></a></div>
 
         <h1>前端小技巧：利用浏览器原生能力实现图片转GIF</h1>
 
@@ -112,8 +161,8 @@
         <!-- ========== 底部区域 ========== -->
         <hr />
 
-        <h2 style="padding-left: 80px;"><a title="" href="http://www.freeconvertbox.com/News/ch/1newslist.html" target="_blank" rel="noopener">
-          <img src="https://www.freeconvertbox.com/News/tongyong/rego.png" alt="图片转化就选&middot;FreeBox佛博士    PDF转Word就选&middot;佛博士"/></a></h2>
+        <div style="padding-left: 80px;"><a title="" href="https://www.freeconvertbox.com/News/ch/1newslist.html.html" target="_blank" rel="noopener">
+          <img src="https://www.freeconvertbox.com/News/tongyong/rego.png" alt="图片转化就选&middot;FreeBox佛博士    PDF转Word就选&middot;佛博士"/></a></div>
 
         <hr />
 
@@ -124,5 +173,18 @@
         <p class="banner"><a title="FreeBox佛博士  免费还高效精准" href="https://www.freeconvertbox.com/"><img src="https://www.freeconvertbox.com/News/tongyong/TopComm.png" alt="FreeBox佛博士 免费转化工具箱" width="1440" height="160" /></a></p>
 
     </div>
+<script src="assets/js/common.js"></script>
+<script>
+  FT.mountShell(null);
+  /* 新闻文章没有同名英文版：语言切换改指到英文资讯中心 */
+  (function () {
+    var a = document.querySelector('.lang-switch');
+    if (a) {
+      a.href = 'https://www.freeconvertbox.com/News/en/1Englishlist.html.html';
+      a.title = 'English Resource Hub';
+      a.setAttribute('aria-label', 'English Resource Hub');
+    }
+  })();
+</script>
 </body>
 </html>
