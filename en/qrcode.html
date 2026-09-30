@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>QR Code Generator - FreeConvertBox Online File Toolbox</title>
-<meta name="description" content="Free QR code generator for text, URLs and WiFi. No uploads, no retention. Your privacy is fully protected.">
-<meta name="keywords" content="qr code generator, free qr code, qr code maker, custom qr code, url to qr code, wifi qr code, qr code png, qr code svg">
+<title>QR Code Generator Free - Text, URL, WiFi - FreeConvertBox</title>
+<meta name="description" content="Create QR codes free for text, URLs, WiFi and vCards. Set error correction, size, colors and a center logo. Export PNG or SVG. No uploads, no retention.">
+<meta name="keywords" content="qr code generator,free qr code maker,url to qr code,text to qr code,wifi qr code,qr code with logo,qr code png svg,custom qr code">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="QR Code Generator - FreeConvertBox Online File Toolbox">
-<meta property="og:description" content="Free QR code generator for text, URLs and WiFi. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:title" content="QR Code Generator Free - Text, URL, WiFi - FreeConvertBox">
+<meta property="og:description" content="Create QR codes free for text, URLs, WiFi and vCards. Set error correction, size, colors and a center logo. Export PNG or SVG. No uploads, no retention.">
 <meta property="og:url" content="https://www.freeconvertbox.com/en/qrcode.html">
 <meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
 <meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="QR Code Generator - FreeConvertBox Online File Toolbox">
-<meta name="twitter:description" content="Free QR code generator for text, URLs and WiFi. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:title" content="QR Code Generator Free - Text, URL, WiFi - FreeConvertBox">
+<meta name="twitter:description" content="Create QR codes free for text, URLs, WiFi and vCards. Set error correction, size, colors and a center logo. Export PNG or SVG. No uploads, no retention.">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -102,8 +103,8 @@
             <input type="color" id="bg" value="#ffffff">
           </label>
           <label class="field field-range">
-            <span>Margin (modules)<b id="marginVal">4</b></span>
-            <input type="range" id="margin" min="0" max="8" step="1" value="4">
+            <span>Margin (modules, min 4)<b id="marginVal">4</b></span>
+            <input type="range" id="margin" min="4" max="8" step="1" value="4">
           </label>
         </div>
         <div class="toolbar">
@@ -143,6 +144,32 @@
           </div>
         </div>
       </div>
+
+      <section class="card">
+        <h2 class="card-title">How to create a QR code</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>Type your content - Chinese is supported - or use the URL, WiFi and vCard templates to fill the format in one click.</li>
+          <li>Set the options: keep error correction at M by default, raise it to H when adding a logo, and pick a larger size for sharper output.</li>
+          <li>Optional: upload a center logo. Keep the foreground dark, the background light, and the margin at 4 modules or more.</li>
+          <li>Click Generate, then download PNG, download SVG, or copy the image straight to your clipboard.</li>
+        </ol>
+      </section>
+
+
+      <section class="card">
+        <h2 class="card-title">FAQ</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">Why can't WeChat scan my QR code?</h3>
+        <p class="page-desc">It is almost always one of three things: contrast too low or inverted colors (go back to black on white), too little quiet zone (keep the margin at 4 modules or more), or content so long the modules get too dense (lower error correction to L or use a short link).</p>
+        <h3 class="card-title" style="margin-bottom:6px">Can QR codes contain Chinese text?</h3>
+        <p class="page-desc">Yes. Content is written as UTF-8, so WeChat and most other scanners read the Chinese correctly.</p>
+        <h3 class="card-title" style="margin-bottom:6px">Does a center logo affect scanning?</h3>
+        <p class="page-desc">It covers part of the code. Set error correction to H when using a logo, keep the logo simple, and always test the result with your phone.</p>
+        <h3 class="card-title" style="margin-bottom:6px">Is my content uploaded anywhere?</h3>
+        <p class="page-desc">No. No uploads, no retention. Your privacy is fully protected.</p>
+
+        <p class="page-desc">Related tools:<a href="id-photo.html">ID Photo Maker</a> · <a href="img-convert.html">Image Converter</a> · <a href="pdf-to-img.html">PDF to Images</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -151,26 +178,111 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/pages/qrcode.js"></script>
+<script src="assets/js/pages/qrcode.js?v=20260930c"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "en"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/en/qrcode.html#webpage",
       "url": "https://www.freeconvertbox.com/en/qrcode.html",
-      "name": "QR Code Generator - FreeConvertBox",
-      "description": "Free online QR code generator for text, URLs, WiFi and vCards, with error correction level, size, colors, margin and center logo. Export PNG or SVG.",
-      "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+      "name": "QR Code Generator Free - Text, URL, WiFi - FreeConvertBox",
+      "description": "Create QR codes free for text, URLs, WiFi and vCards. Set error correction, size, colors and a center logo. Export PNG or SVG. No uploads, no retention.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "ID Photo & QR Code", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "QR Code Generator", "item": "https://www.freeconvertbox.com/en/qrcode.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "QR Code Generator Free - Text, URL, WiFi - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/en/qrcode.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to create a QR code",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Type your content - Chinese is supported - or use the URL, WiFi and vCard templates to fill the format in one click."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Set the options: keep error correction at M by default, raise it to H when adding a logo, and pick a larger size for sharper output."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Optional: upload a center logo. Keep the foreground dark, the background light, and the margin at 4 modules or more."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Step 4",
+          "text": "Click Generate, then download PNG, download SVG, or copy the image straight to your clipboard."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why can't WeChat scan my QR code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is almost always one of three things: contrast too low or inverted colors (go back to black on white), too little quiet zone (keep the margin at 4 modules or more), or content so long the modules get too dense (lower error correction to L or use a short link)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can QR codes contain Chinese text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Content is written as UTF-8, so WeChat and most other scanners read the Chinese correctly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a center logo affect scanning?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It covers part of the code. Set error correction to H when using a logo, keep the logo simple, and always test the result with your phone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my content uploaded anywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. No uploads, no retention. Your privacy is fully protected."
+          }
+        }
       ]
     }
   ]

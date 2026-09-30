@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ID Photo Maker - FreeConvertBox Online File Toolbox</title>
-<meta name="description" content="Make ID photo online with size presets and background colors. No uploads, no retention. Your privacy is fully protected.">
-<meta name="keywords" content="id photo maker, passport photo, visa photo, id photo size, make id photo online, change photo background, print id photo, photo background color">
+<title>ID Photo Maker - Resize &amp; Background Online - FreeConvertBox</title>
+<meta name="description" content="Make ID, passport and visa photos online with size presets and background colors. Print sheets included. Privacy protected.">
+<meta name="keywords" content="id photo maker,passport photo maker,visa photo size,make id photo online,change photo background,white to blue background,print id photo">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="ID Photo Maker - FreeConvertBox Online File Toolbox">
-<meta property="og:description" content="Make ID photo online with size presets and background colors. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:title" content="ID Photo Maker - Resize &amp; Background Online - FreeConvertBox">
+<meta property="og:description" content="Make ID, passport and visa photos online with size presets and background colors. Print sheets included. Privacy protected.">
 <meta property="og:url" content="https://www.freeconvertbox.com/en/id-photo.html">
 <meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
 <meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ID Photo Maker - FreeConvertBox Online File Toolbox">
-<meta name="twitter:description" content="Make ID photo online with size presets and background colors. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:title" content="ID Photo Maker - Resize &amp; Background Online - FreeConvertBox">
+<meta name="twitter:description" content="Make ID, passport and visa photos online with size presets and background colors. Print sheets included. Privacy protected.">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -136,11 +137,11 @@
             <span>Cutout method</span>
             <select id="matte">
               <option value="none">No background change (crop only)</option>
-              <option value="color">Auto cutout · solid-color tolerance</option>
+              <option value="color" selected>Auto cutout · solid-color tolerance</option>
               <option value="ai">AI portrait segmentation (loads a model online)</option>
             </select>
           </label>
-          <label class="field field-range" id="tolField" hidden>
+          <label class="field field-range" id="tolField">
             <span>Tolerance <b id="tolVal">60</b></span>
             <input type="range" id="tol" min="10" max="120" step="1" value="60">
           </label>
@@ -186,6 +187,32 @@
           </div>
         </div>
       </div>
+
+      <section class="card">
+        <h2 class="card-title">How to make an ID photo</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>Upload any photo (a front-facing shot with even lighting and a plain background works best).</li>
+          <li>Choose a size preset such as 1-inch or 2-inch, then pick white, blue, red or a custom background color.</li>
+          <li>Leave matting on the default &quot;auto · solid color tolerance&quot;; adjust tolerance if the hairline looks rough.</li>
+          <li>Click Generate, download the single photo, or lay several out onto a 5x6 print sheet.</li>
+        </ol>
+      </section>
+
+
+      <section class="card">
+        <h2 class="card-title">FAQ</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">Why did my clothes or hair change color too?</h3>
+        <p class="page-desc">The tolerance is too high. Lower it from the default 60 to around 30-40 and regenerate - especially when wearing light clothing.</p>
+        <h3 class="card-title" style="margin-bottom:6px">Which sizes are supported?</h3>
+        <p class="page-desc">Common presets such as 1-inch and 2-inch are built in, and you can set a custom pixel size. Always confirm the official requirement for your visa or exam application.</p>
+        <h3 class="card-title" style="margin-bottom:6px">Can I print it directly?</h3>
+        <p class="page-desc">Yes. Lay multiple copies out onto a 5x6 sheet, then print at a photo lab or at home and cut them apart.</p>
+        <h3 class="card-title" style="margin-bottom:6px">Is my photo uploaded anywhere?</h3>
+        <p class="page-desc">No. No uploads, no retention. Your privacy is fully protected.</p>
+
+        <p class="page-desc">Related tools:<a href="qrcode.html">QR Code Generator</a> · <a href="pdf-to-img.html">PDF to Images</a> · <a href="img-compress.html">Image Compressor</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -199,20 +226,105 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "en"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/en/id-photo.html#webpage",
       "url": "https://www.freeconvertbox.com/en/id-photo.html",
-      "name": "ID Photo Maker - FreeConvertBox",
-      "description": "Free online ID photo maker: crop portraits to one-inch, two-inch, visa and passport sizes, change the background color and lay out prints on 5-inch photo paper.",
-      "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+      "name": "ID Photo Maker - Resize & Background Online - FreeConvertBox",
+      "description": "Make ID, passport and visa photos online with size presets and background colors. Print sheets included. Privacy protected.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "ID Photo & QR Code", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "ID Photo Maker", "item": "https://www.freeconvertbox.com/en/id-photo.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ID Photo Maker - Resize & Background Online - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/en/id-photo.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to make an ID photo",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Upload any photo (a front-facing shot with even lighting and a plain background works best)."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Choose a size preset such as 1-inch or 2-inch, then pick white, blue, red or a custom background color."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Leave matting on the default \"auto · solid color tolerance\"; adjust tolerance if the hairline looks rough."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Step 4",
+          "text": "Click Generate, download the single photo, or lay several out onto a 5x6 print sheet."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why did my clothes or hair change color too?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tolerance is too high. Lower it from the default 60 to around 30-40 and regenerate - especially when wearing light clothing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which sizes are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Common presets such as 1-inch and 2-inch are built in, and you can set a custom pixel size. Always confirm the official requirement for your visa or exam application."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I print it directly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Lay multiple copies out onto a 5x6 sheet, then print at a photo lab or at home and cut them apart."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my photo uploaded anywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. No uploads, no retention. Your privacy is fully protected."
+          }
+        }
       ]
     }
   ]
