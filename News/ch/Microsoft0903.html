@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word 2609 漏洞：PDF 存进本地缓存而非 SharePoint - FreeConvertBox</title>
+<base href="https://www.freeconvertbox.com/" />
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    line-height: 1.8;
+    color: #333;
+    background-color: #f9f9f9;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 10px 40px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+h1 {
+    font-size: 26px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 20px;
+    color: #34495e;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #3498db;
+}
+h3 {
+    font-size: 16px;
+    color: #34495e;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+strong {
+    color: #e74c3c;
+}
+code {
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 14px;
+    color: #d63384;
+}
+/* Scoped to the article container so the nav's ul.nav-list is not affected */
+.container ol, .container ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+.container li {
+    margin-bottom: 10px;
+}
+.banner {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.banner img {
+    width: 100%;
+    max-width: 1440px;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+}
+/* 正文内插图：限制在正文宽度内，避免宽图突破容器 */
+.container > img,
+.container figure img {
+    max-width: 100%;
+    height: auto !important;
+    display: block;
+    margin: 20px auto;
+    border-radius: 6px;
+}
+/* 底部工具导航：统一缩小字号，避免上传到服务器后偏大 */
+.tool-nav {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #555;
+    padding-left: 10px;
+}
+.tool-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin: 4px 0;
+}
+.tool-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-right: 6px;
+    white-space: nowrap;
+}
+.tool-nav a {
+    font-size: 13px;
+    color: #3498db;
+    text-decoration: none;
+    margin-right: 14px;
+    white-space: nowrap;
+}
+.tool-nav a:hover {
+    color: #217dbb;
+    text-decoration: underline;
+}
+</style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5597138176163669" crossorigin="anonymous"></script>
+<link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/imgAll/favicon/icon-32x32.png">
+<link rel="apple-touch-icon" href="/imgAll/favicon/apple-touch-icon.png">
+<meta name="keywords" content="Word 导出 PDF 丢失, SharePoint Online, Word 2609, INetCache Content.MSO, 微软 365 故障, PDF 保存失败, Word 另存为 PDF">
+<meta name="description" content="微软 Word 2609 版出现漏洞：用「保存 / 另存为」导出 PDF 到 SharePoint Online 时，文件会被存进隐藏的本地缓存文件夹，且没有任何提示。本文讲清触发条件、排查方法与可用的规避办法。">
+<link rel="canonical" href="https://www.freeconvertbox.com/News/ch/Microsoft0903.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/News/ch/Microsoft0903.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/News/en/Microsoft0903.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/News/ch/Microsoft0903.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="Word 2609 漏洞：PDF 存进本地缓存而非 SharePoint - FreeConvertBox">
+<meta property="og:description" content="微软 Word 2609 版出现漏洞：用「保存 / 另存为」导出 PDF 到 SharePoint Online 时，文件会被存进隐藏的本地缓存文件夹，且没有任何提示。本文讲清触发条件、排查方法与可用的规避办法。">
+<meta property="og:url" content="https://www.freeconvertbox.com/News/ch/Microsoft0903.html">
+<meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox 免费在线文件工具箱">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Word 2609 漏洞：PDF 存进本地缓存而非 SharePoint - FreeConvertBox">
+<meta name="twitter:description" content="微软 Word 2609 版出现漏洞：用「保存 / 另存为」导出 PDF 到 SharePoint Online 时，文件会被存进隐藏的本地缓存文件夹，且没有任何提示。本文讲清触发条件、排查方法与可用的规避办法。">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Word 2609 漏洞：PDF 存进本地缓存而非 SharePoint - FreeConvertBox", "description": "微软 Word 2609 版出现漏洞：用「保存 / 另存为」导出 PDF 到 SharePoint Online 时，文件会被存进隐藏的本地缓存文件夹，且没有任何提示。本文讲清触发条件、排查方法与可用的规避办法。", "image": "https://www.freeconvertbox.com/assets/img/og-cover.png", "url": "https://www.freeconvertbox.com/News/ch/Microsoft0903.html", "inLanguage": "zh-CN", "datePublished": "2026-10-01", "dateModified": "2026-10-01", "author": {"@type": "Organization", "name": "FreeConvertBox", "url": "https://www.freeconvertbox.com/"}, "publisher": {"@type": "Organization", "name": "FreeConvertBox", "logo": {"@type": "ImageObject", "url": "https://www.freeconvertbox.com/imgAll/favicon/icon-512x512.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/ch/Microsoft0903.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/zh-CN/"}, {"@type": "ListItem", "position": 2, "name": "资源中心", "item": "https://www.freeconvertbox.com/News/ch/1newslist.html.html"}, {"@type": "ListItem", "position": 3, "name": "Word 2609 漏洞：PDF 存进本地缓存而非 SharePoint - FreeConvertBox", "item": "https://www.freeconvertbox.com/News/ch/Microsoft0903.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "哪些 Word 版本会触发这个 PDF 保存漏洞？", "acceptedAnswer": {"@type": "Answer", "text": "微软已确认 Windows 端 Word 2609 版本存在该问题。它只在使用「保存」或「另存为」、手动选择 PDF 格式，并把保存位置指向 SharePoint Online 时才会触发，其余方式均正常。"}}, {"@type": "Question", "name": "怎么判断我的 PDF 是不是被存进了缓存文件夹？", "acceptedAnswer": {"@type": "Answer", "text": "保存后立刻打开目标 SharePoint 文档库，确认文件是否在列表中。如果找不到，就去 C:\\Users\\[用户名]\\AppData\\Local\\Microsoft\\Windows\\INetCache\\Content.MSO 目录查看，导出的文件会以随机字符串命名存放在那里。"}}, {"@type": "Question", "name": "改用「导出」功能能避开这个问题吗？", "acceptedAnswer": {"@type": "Answer", "text": "可以。使用 Word 自带的「导出」功能生成 PDF 完全正常；先保存到本地桌面或硬盘，再手动上传到 SharePoint 同样可行。"}}, {"@type": "Question", "name": "微软什么时候发布修复补丁？", "acceptedAnswer": {"@type": "Answer", "text": "微软已公开确认该问题，但尚未给出正式时间表。在补丁发布前，建议使用「导出」生成 PDF、先存本地再上传，或将 Word 回退到上一个版本。"}}]}]}</script>
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">资源中心</b>
+    </header>
+
+    <main class="content-inner">
+<div class="container">
+
+<!-- 顶部横幅 -->
+<div class="banner"><a title="免费转换器工具箱" href="https://www.freeconvertbox.com/zh-CN/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="免费转换器工具箱 Word 导出 PDF 故障、图片格式转换" /></a></div>
+
+<h1>微软 Word 出现漏洞：PDF 文件被存到本地缓存，而非 SharePoint 在线库</h1>
+
+<p>如果你的团队日常高度依赖 SharePoint Online 开展文档协作，还经常需要从 Windows 版 Word 导出 PDF，那你可得留意微软 365 用户近期碰到的这个恼人新故障。一款刚被曝光的软件缺陷，会让 Word 把导出的 PDF 文档丢进电脑的隐藏本地缓存文件夹，而不是保存到你选定的 SharePoint 文档库。不少职场人翻遍云端，却怎么也找不到本该上传成功的文件。</p>
+
+<h2>问题到底出在哪</h2>
+
+<p>微软已经公开证实，Windows 端 <code>2609</code> 版本 Word 存在这一异常，它严重打乱了办公流程——大家本指望借助云文档库有序管理项目资料。你点击另存为 PDF，选定 SharePoint 文件夹，以为文件已经安全存到云端，可结果完全是另一回事。</p>
+
+<h3>文件被塞进隐藏的缓存目录</h3>
+
+<p>文档会被悄无声息地保存到 <code>C:\Users\[用户名]\AppData\Local\Microsoft\Windows\INetCache\Content.MSO</code> 这个路径下，文件名还是一串毫无意义的随机字符。Windows 系统默认隐藏 AppData 目录，普通员工几乎不会主动点开这里。</p>
+
+<h3>全程没有任何提示</h3>
+
+<p>更让人火大的是，Word 不会弹出任何提示框或报错警告。你完全得不到操作失败的提醒，绝大多数用户压根意识不到出了岔子，直到登录 SharePoint 才发现 PDF 踪迹全无，真正的麻烦这才找上门。</p>
+
+<h3>触发条件很特定</h3>
+
+<p>根据微软技术支持的公开说明，该故障的触发条件十分特定：只有使用<strong>「保存 / 另存为」</strong>功能、选择 <strong>PDF</strong> 格式，并且把存储目标指定为 <strong>SharePoint Online</strong> 位置时，问题才会出现。其他组合都正常。</p>
+
+<h2>现在就能用的规避办法</h2>
+
+<p>在官方补丁问世前，有三个办法可以保证文件去到该去的地方：</p>
+
+<ul>
+    <li><strong>改用「导出」功能。</strong>用 Word 自带的「导出」生成 PDF，而不是走常规保存菜单，操作完全正常。</li>
+    <li><strong>先存本地，再上传。</strong>先把 PDF 保存到桌面或硬盘，之后手动上传到 SharePoint。</li>
+    <li><strong>回退版本。</strong>不少受影响用户在社区论坛反馈，把 Word 回退到上一版更新就能彻底解决。企业如果条件允许，暂时不升级 2609 版本即可避开这个保存 bug。</li>
+</ul>
+
+<p>科技媒体曾联系微软，希望了解官方修复补丁的推出时间，但微软至今没有给出正式回复。除微软内部技术团队外，没人清楚这个麻烦什么时候能彻底解决。</p>
+
+<h2>为什么缓存目录这么坑人</h2>
+
+<p>就算找到了目录，系统自动生成的随机文件名也完全看不出文档原本的标题。你可能要翻几十个毫无标识的缓存文件，才能找到半小时前导出的 PDF。如果没能第一时间发现故障，找回文件的过程会十分折磨人。</p>
+
+<h2>微软企业级软件近期的连环状况</h2>
+
+<p>这次 PDF 存储错位漏洞，只是微软企业级软件近期众多糟心事的其中一件。过去几周，微软多款付费商业软件接连翻车。</p>
+
+<h3>Excel 复制粘贴故障</h3>
+<p>Excel 出现复制粘贴故障，搅乱了大量公司财务部门的数据处理工作。</p>
+
+<h3>Office 2016 / 2019 授权失效</h3>
+<p>一次看似无关紧要的 Microsoft 365 后端更新，意外导致许多 Office 2016、2019 版本授权失效，老用户被锁在已经付费购买的软件之外。</p>
+
+<h3>数据被提前删除</h3>
+<p>微软还承认发生过一起事故：部分用户的 Microsoft 365 数据，在数据保留期尚未结束的情况下被提前删除。这件事让很多负责合规和档案管理的 IT 团队捏了一把冷汗。</p>
+
+<h3>9 月 Windows 系统更新</h3>
+<p>9 月的 Windows 月度补丁带来多起严重故障，微软不得不紧急推送非计划的应急更新，可这份应急修复包本身又催生新问题：大量电脑持续存在音频故障，加入域的企业设备出现奇怪的连接问题，依赖 Windows 文件历史备份功能的用户无法新建或更新系统备份。微软已在 9 月 22 日的预览累积更新中修复了备份故障，但音频异常、域设备相关问题依旧困扰着不少使用者。</p>
+
+<h2>IT 团队承受的实际压力</h2>
+
+<p>对于要维护几十乃至上百台办公设备的 IT 管理员来说，一连串 bug 带来实打实的运维压力。员工要耗费大量时间钻进隐藏缓存文件夹寻找丢失的 PDF，或是重新执行导出操作——他们一开始根本不知道保存动作并未同步到 SharePoint。如果员工向客户、合作方提交的文档缺失、不全，会导致项目延期，产生不必要的沟通矛盾。</p>
+
+<p>很多中小企业 IT 人手紧张，根本没有多余精力去处理这些本该通过微软质量测试的软件缺陷。</p>
+
+<h2>团队可以采取的实操手段</h2>
+
+<ol>
+    <li><strong>告知全体同事。</strong>先把这个漏洞同步给整个团队。</li>
+    <li><strong>每次保存后核对。</strong>养成操作完成后立刻核对 SharePoint 文件的习惯，不要单纯相信 Word 显示的保存成功提示。</li>
+    <li><strong>改用「导出」菜单</strong>生成 PDF，直到微软推出永久修复补丁。</li>
+    <li><strong>暂停推送 2609 版本</strong>——如果故障反复出现，IT 管理人员可以通过组织更新策略暂停企业内部升级。</li>
+</ol>
+
+<h2>这类问题为什么能绕过测试</h2>
+
+<p>很多人不禁疑惑，为什么这类问题没有经过微软测试就推送给付费用户。当云端保存逻辑与 Windows 本地缓存机制交互时，确实容易出现测试难以覆盖的边缘场景。但即便如此，企业用户仍然期待「保存 PDF 至 SharePoint」这类核心功能稳定运行。由于微软迟迟不公布补丁排期，IT 团队陷入被动，只能靠临时方案维持业务运转。</p>
+
+<p>几乎每周都能看到微软生态爆出新故障，用户的不满情绪完全可以理解。企业花钱订阅 Microsoft 365，就是指望软件稳定可靠、支撑核心业务办公。可一次次更新带来本可避免的漏洞，干扰日常办公流程，也在不断消磨用户的信任感。</p>
+
+<h2>常见问题</h2>
+
+<h3 class="card-title">哪些 Word 版本会触发这个 PDF 保存漏洞？</h3>
+<p>微软已确认 Windows 端 Word 2609 版本存在该问题。它只在使用「保存」或「另存为」、手动选择 PDF 格式，并把保存位置指向 SharePoint Online 时才会触发，其余方式均正常。</p>
+
+<h3 class="card-title">怎么判断我的 PDF 是不是被存进了缓存文件夹？</h3>
+<p>保存后立刻打开目标 SharePoint 文档库，确认文件是否在列表中。如果找不到，就去 <code>C:\Users\[用户名]\AppData\Local\Microsoft\Windows\INetCache\Content.MSO</code> 目录查看，导出的文件会以随机字符串命名存放在那里。</p>
+
+<h3 class="card-title">改用「导出」功能能避开这个问题吗？</h3>
+<p>可以。使用 Word 自带的「导出」功能生成 PDF 完全正常；先保存到本地桌面或硬盘，再手动上传到 SharePoint 同样可行。</p>
+
+<h3 class="card-title">微软什么时候发布修复补丁？</h3>
+<p>微软已公开确认该问题，但尚未给出正式时间表。在补丁发布前，建议使用「导出」生成 PDF、先存本地再上传，或将 Word 回退到上一个版本。</p>
+
+<p>如果你只是想要一份干净的 PDF，不必和 Word 的保存对话框较劲：FreeConvertBox 完全在浏览器里运行，<a title="图片转 PDF" href="https://www.freeconvertbox.com/zh-CN/img-to-pdf" target="_blank" rel="noopener">图片转 PDF</a>可以把图片合成 PDF，<a title="PDF 转 Word" href="https://www.freeconvertbox.com/zh-CN/pdf-to-word" target="_blank" rel="noopener">PDF 转 Word</a>把 PDF 还原成可编辑文档，<a title="PDF 压缩" href="https://www.freeconvertbox.com/zh-CN/pdf-compress" target="_blank" rel="noopener">PDF 压缩</a>能在上传前先瘦身。即开即用不留存，隐私安全有保障。</p>
+
+<p style="font-size: 0.9em; color: #888; margin-top: 40px;"><em>说明：部分素材由 AI 辅助生成。</em></p>
+
+<!-- 底部区域 -->
+<hr />
+
+<div><a title="" href="https://www.freeconvertbox.com/News/ch/1newslist.html.html" target="_blank" rel="noopener">
+  <img src="https://www.freeconvertbox.com/News/tongyong/back.png" alt="免费转换器工具箱 Word 导出 PDF 故障、图片格式转换"/></a></div>
+
+<hr />
+
+<div class="tool-nav" style="font-size: 13px; line-height: 1.9; color: #555; padding-left: 10px;">
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">图片工具：</strong>
+    <a title="图片格式转换" href="https://www.freeconvertbox.com/zh-CN/img-convert" target="_blank" rel="noopener">图片格式转换</a>
+    <a title="图片转 PDF" href="https://www.freeconvertbox.com/zh-CN/img-to-pdf" target="_blank" rel="noopener">图片转 PDF</a>
+    <a title="图片转 GIF" href="https://www.freeconvertbox.com/zh-CN/img-to-gif" target="_blank" rel="noopener">图片转 GIF</a>
+    <a title="图片压缩" href="https://www.freeconvertbox.com/zh-CN/img-compress" target="_blank" rel="noopener">图片压缩</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">PDF 工具：</strong>
+    <a title="免费 PDF 转 Word" href="https://www.freeconvertbox.com/zh-CN/pdf-to-word" target="_blank" rel="noopener">PDF 转 Word</a>
+    <a title="免费合并与拆分 PDF" href="https://www.freeconvertbox.com/zh-CN/pdf-merge" target="_blank" rel="noopener">合并与拆分 PDF</a>
+    <a title="免费 PDF 压缩" href="https://www.freeconvertbox.com/zh-CN/pdf-compress" target="_blank" rel="noopener">PDF 压缩</a>
+    <a title="免费 PDF 转图片" href="https://www.freeconvertbox.com/zh-CN/pdf-to-img" target="_blank" rel="noopener">PDF 转图片</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">格式转换：</strong>
+    <a title="免费音频转换" href="https://www.freeconvertbox.com/zh-CN/audio-convert" target="_blank" rel="noopener">音频转换</a>
+    <a title="免费视频转换" href="https://www.freeconvertbox.com/zh-CN/video-convert" target="_blank" rel="noopener">视频转换</a>
+    <a title="免费电子书转换" href="https://www.freeconvertbox.com/zh-CN/ebook-convert" target="_blank" rel="noopener">电子书转换</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">证件照与二维码：</strong>
+    <a title="免费证件照制作" href="https://www.freeconvertbox.com/zh-CN/id-photo" target="_blank" rel="noopener">证件照制作</a>
+    <a title="免费二维码生成" href="https://www.freeconvertbox.com/zh-CN/qrcode" target="_blank" rel="noopener">二维码生成</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">中文文本工具：</strong>
+    <a title="免费简繁转换" href="https://www.freeconvertbox.com/zh-CN/zh-convert" target="_blank" rel="noopener">简繁转换</a>
+    <a title="免费中文数字转换" href="https://www.freeconvertbox.com/zh-CN/han-case" target="_blank" rel="noopener">中文数字转换</a>
+  </p>
+</div>
+<br /><br />
+<div class="banner"><a title="免费转换器工具箱" href="https://www.freeconvertbox.com/zh-CN/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="免费转换器工具箱 Word 导出 PDF 故障、图片格式转换" /></a></div>
+</div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/assets/js/common.js"></script>
+<script>
+  FT.mountShell(null);
+  /* 中文文章：语言切换指向英文对应页 */
+  (function () {
+    var a = document.querySelector('.lang-switch');
+    if (a) {
+      a.href = 'https://www.freeconvertbox.com/News/en/Microsoft0903.html';
+      a.title = 'English Resource Center';
+      a.setAttribute('aria-label', 'English Resource Center');
+    }
+  })();
+</script>
+</body>
+</html>
