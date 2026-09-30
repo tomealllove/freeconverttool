@@ -11,12 +11,11 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.8;
     color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
     background-color: #f9f9f9;
 }
 .container {
+    max-width: 800px;
+    margin: 0 auto;
     background-color: #fff;
     padding: 10px 40px 40px;
     border-radius: 8px;
@@ -59,11 +58,12 @@ code {
     font-size: 14px;
     color: #d63384;
 }
-ol, ul {
+/* Scoped to the article container so the nav's ul.nav-list is not affected */
+.container ol, .container ul {
     margin-bottom: 20px;
     padding-left: 20px;
 }
-li {
+.container li {
     margin-bottom: 10px;
 }
 .banner {
@@ -140,8 +140,19 @@ li {
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "How to Convert PDF to Images with pdf.js and Canvas", "description": "Turn PDF pages into images with pdf.js and Canvas. This guide covers rendering resolution, multi-page batch export and the errors that break conversion.", "image": "https://www.freeconvertbox.com/assets/img/og-cover.png", "url": "https://www.freeconvertbox.com/News/en/11ConvertPDFtoImages.html", "inLanguage": "en", "datePublished": "2026-09-20", "dateModified": "2026-09-29", "publisher": {"@type": "Organization", "name": "FreeConvertBox", "logo": {"@type": "ImageObject", "url": "https://www.freeconvertbox.com/imgAll/favicon/icon-512x512.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/en/11ConvertPDFtoImages.html"}, "translationOfWork": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/ch/PDF%E8%BD%AC%E5%9B%BE%E7%89%870917.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Resource Center", "item": "https://www.freeconvertbox.com/News/en/1Englishlist.html.html"}, {"@type": "ListItem", "position": 3, "name": "How to Convert PDF to Images with pdf.js and Canvas", "item": "https://www.freeconvertbox.com/News/en/11ConvertPDFtoImages.html"}]}]}</script>
 </head>
 <body>
-<aside class="sidebar" id="sidebar"></aside>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
 
+  <div class="content">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Resource Center</b>
+    </header>
+
+    <main class="content-inner">
 <div class="container">
 
 <!-- 顶部横幅 -->
@@ -229,7 +240,7 @@ li {
 <!-- 底部区域 -->
 <hr />
 
-<div style="padding-left: 80px;"><a title="" href="https://www.freeconvertbox.com/News/en/1Englishlist.html.html" target="_blank" rel="noopener">
+<div><a title="" href="https://www.freeconvertbox.com/News/en/1Englishlist.html.html" target="_blank" rel="noopener">
   <img src="https://www.freeconvertbox.com/News/tongyong/back.png" alt="Free Converter Toolbox   PDF to Images"/></a></div>
 
 <hr />
@@ -273,6 +284,12 @@ li {
 <br /><br />
 <div class="banner"><a title=" Free Converter Toolbox" href="https://www.freeconvertbox.com/en/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="Free Converter Toolbox   PDF to Images" /></a></div>
 </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script src="assets/js/common.js"></script>
 <script>
   FT.mountShell(null);
