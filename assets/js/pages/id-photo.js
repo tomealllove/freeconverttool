@@ -268,16 +268,29 @@
 
   // 取边缘像素的中位数作为背景色估计，比直接取四角更抗头发/衣领干扰
   function estimateBg(d, w, h) {
+    var votes = {};
     var rs = [], gs = [], bs = [];
     function px(x, y) {
       if (x < 0 || y < 0 || x >= w || y >= h) return;
       var i = (y * w + x) * 4;
-      rs.push(d[i]); gs.push(d[i + 1]); bs.push(d[i + 2]);
+      if (d[i + 3] < 250) return;            // 跳过透明：取景框内照片没覆盖到的空白
+      var r = d[i], g = d[i + 1], b = d[i + 2];
+      var key = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4);
+      var v = votes[key] || (votes[key] = { n: 0, r: 0, g: 0, b: 0 });
+      v.n++; v.r += r; v.g += g; v.b += b;
+      rs.push(r); gs.push(g); bs.push(b);
     }
     var step = Math.max(1, Math.floor(Math.min(w, h) / 40));
     var b = Math.max(1, Math.min(8, Math.floor(Math.min(w, h) * 0.04)));
     for (var x = 0; x < w; x += step) { for (var k = 0; k < b; k++) { px(x, k); px(x, h - 1 - k); } }
     for (var y = 0; y < h; y += step) { for (var k2 = 0; k2 < b; k2++) { px(k2, y); px(w - 1 - k2, y); } }
+
+    // 取边框上出现次数最多的颜色（按 16 级分桶），比中位数更抗头发 / 衣领 / 深色衣服干扰
+    var best = null, key2;
+    for (key2 in votes) { if (votes.hasOwnProperty(key2) && (!best || votes[key2].n > best.n)) best = votes[key2]; }
+    if (best && best.n >= Math.max(1, rs.length * 0.15)) {
+      return { r: Math.round(best.r / best.n), g: Math.round(best.g / best.n), b: Math.round(best.b / best.n) };
+    }
     function med(arr) {
       if (!arr.length) return 255;
       arr.sort(function (p, q) { return p - q; });
@@ -298,9 +311,14 @@
     var outer = tolerance * 1.3;
     var span = Math.max(1, outer - inner);
     for (var i = 0; i < d.length; i += 4) {
-      var dr = d[i] - est.r, dg = d[i + 1] - est.g, db = d[i + 2] - est.b;
-      var dist = Math.sqrt(dr * dr + dg * dg + db * db);
-      var a = dist <= inner ? 0 : (dist >= outer ? 1 : (dist - inner) / span);
+      var a;
+      if (d[i + 3] === 0) {
+        a = 0;                               // 照片没覆盖到的空白，直接填成背景色
+      } else {
+        var dr = d[i] - est.r, dg = d[i + 1] - est.g, db = d[i + 2] - est.b;
+        var dist = Math.sqrt(dr * dr + dg * dg + db * db);
+        a = dist <= inner ? 0 : (dist >= outer ? 1 : (dist - inner) / span);
+      }
       if (keepAlpha) {
         d[i + 3] = Math.round(a * 255);
       } else {
@@ -525,8 +543,13 @@
 
     FT.nextFrame().then(function () {
       var canvas = cropTo(t.w, t.h);
-      if (matte === 'none' || bgMode === 'keep') {
-        return { canvas: canvas, note: bgMode === 'keep' ? '保留原背景' : '仅裁剪' };
+      var note = '';
+      if (bgMode === 'keep') {
+        return { canvas: canvas, note: '保留原背景' };
+      }
+      if (matte === 'none') {
+        matte = 'color';                     // 选了底色却没选抠图方式：自动按纯色容差换底
+        note = '纯色容差（未选抠图方式，已自动启用）';
       }
       if (matte === 'ai') {
         FT.busyProgress(progress, '正在加载 AI 模型（约 1.9MB）…');
@@ -543,7 +566,7 @@
       }
       FT.setProgress(progress, 0.55, '正在抠图换底…');
       colorKey(canvas, bgHex, Number(tol.value), keepAlpha);
-      return { canvas: canvas, note: '纯色容差' };
+      return { canvas: canvas, note: note || '纯色容差' };
     }).then(function (r) {
       var canvas = r.canvas;
       if (fmt === 'image/jpeg') {

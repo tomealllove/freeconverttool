@@ -68,23 +68,49 @@
     }
   }
 
+  /* ---------- 扫码可靠性防护：静默区 / 码点密度 / 配色对比度 ---------- */
+  var MIN_QUIET_ZONE = 4;   // QR 规范要求四周留 4 个模块，少于此值微信等扫码器常识别失败
+  var MIN_MODULE_PX = 3;    // 每个码点至少 3 像素，否则密集码会粘连糊成一团
+
+  function parseHex(hex) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+    if (!m) return null;
+    var v = parseInt(m[1], 16);
+    return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+  }
+
+  function luminance(rgb) {
+    var c = rgb.map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+
+  function contrastRatio(a, b) {
+    var la = luminance(a), lb = luminance(b);
+    return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+  }
+
   function drawQr(q, n, size, margin, fg, bg) {
     var total = n + margin * 2;
     var canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     var c = canvas.getContext('2d');
+    c.imageSmoothingEnabled = false;
     c.fillStyle = bg;
     c.fillRect(0, 0, size, size);
     c.fillStyle = fg;
     var s = size / total;
+    // 统一向下取整：本格终点恰为下一格起点，避免相邻码点互相侵占导致点阵变形扫不出来
     for (var r = 0; r < n; r++) {
       for (var col = 0; col < n; col++) {
         if (!q.isDark(r, col)) continue;
-        var x0 = Math.round((col + margin) * s);
-        var y0 = Math.round((r + margin) * s);
-        var x1 = Math.round((col + margin + 1) * s);
-        var y1 = Math.round((r + margin + 1) * s);
+        var x0 = Math.floor((col + margin) * s);
+        var y0 = Math.floor((r + margin) * s);
+        var x1 = Math.floor((col + margin + 1) * s);
+        var y1 = Math.floor((r + margin + 1) * s);
         c.fillRect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
       }
     }
@@ -127,7 +153,7 @@
       FT.toast('二维码组件未加载，请联网后刷新页面', 'err');
       return;
     }
-    var text = textEl.value;
+    var text = textEl.value.replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
     if (!text) {
       FT.toast('请输入要编码的内容', 'err');
       textEl.focus();
@@ -151,11 +177,13 @@
         throw e;
       }
       var n = q.getModuleCount();
-      var size = Number(sizeEl.value) || 256;
-      var margin = Number(marginEl.value) || 0;
+      var asked = Number(sizeEl.value) || 256;
+      var margin = Math.max(MIN_QUIET_ZONE, Number(marginEl.value) || 0);
+      // 内容越长码点越多，若仍按原尺寸输出会导致每个码点不足 3px 而糊成一团，这里自动放大画布
+      var size = Math.max(asked, (n + margin * 2) * MIN_MODULE_PX);
       var canvas = drawQr(q, n, size, margin, fgEl.value, bgEl.value);
       var svg = buildSvg(q, n, size, margin, fgEl.value, bgEl.value);
-      return { q: q, n: n, size: size, canvas: canvas, svg: svg, level: levelEl.value };
+      return { q: q, n: n, size: size, asked: asked, margin: margin, canvas: canvas, svg: svg, level: levelEl.value };
     }).then(function (r) {
       lastCanvas = r.canvas;
       lastSvg = r.svg;
@@ -183,9 +211,32 @@
       FT.toast('二维码已生成', 'ok');
       setTimeout(function () { FT.resetProgress(progress); }, 1200);
 
+      if (Number(marginEl.value) < MIN_QUIET_ZONE) {
+        FT.alert(tips, 'warn', '<b>边距已自动补到 ' + MIN_QUIET_ZONE + ' 个模块</b>' +
+          '<p>二维码四周必须留白（静默区），少于 ' + MIN_QUIET_ZONE + ' 个模块时微信等扫码器常常识别失败。</p>', true);
+      }
+      if (r.size > r.asked) {
+        FT.alert(tips, 'warn', '<b>输出尺寸已自动放大到 ' + r.size + '×' + r.size + ' px</b>' +
+          '<p>当前内容需要 ' + r.n + '×' + r.n + ' 个码点，按你选的 ' + r.asked + ' px 输出时每个码点不足 ' +
+          MIN_MODULE_PX + ' 像素，会糊成一团导致扫不出来，因此自动提高了输出尺寸。</p>', true);
+      }
+      var fgRgb = parseHex(fgEl.value), bgRgb = parseHex(bgEl.value);
+      if (fgRgb && bgRgb) {
+        if (luminance(fgRgb) > luminance(bgRgb)) {
+          FT.alert(tips, 'err', '<b>配色是反色的（前景比背景还亮）</b>' +
+            '<p>微信等绝大多数扫码器无法识别反色二维码。请把前景色调深、背景色调浅，推荐使用默认的前景 #000000 + 背景 #ffffff。</p>', true);
+        } else if (contrastRatio(fgRgb, bgRgb) < 4.5) {
+          FT.alert(tips, 'warn', '<b>前景与背景对比度不足</b>' +
+            '<p>当前对比度约 ' + contrastRatio(fgRgb, bgRgb).toFixed(1) + ':1，低于扫码器稳妥识别所需的 4.5:1，建议把前景色调深一些。</p>', true);
+        }
+      }
+      if (/^www\./i.test(textEl.value.replace(/^\s+/, ''))) {
+        FT.alert(tips, 'warn', '<b>网址缺少 http(s):// 前缀</b>' +
+          '<p>以 www. 开头的内容扫出来只是普通文本，不会被识别为可点击链接，建议改成 https:// 开头。</p>', true);
+      }
       if (logoImg && r.level !== 'H') {
         FT.alert(tips, 'warn', '<b>已添加中心 Logo，建议把容错等级调到 H</b>' +
-          '<p>Logo 会遮挡一部分码点，容错等级越高越不容易影响识别。</p>');
+          '<p>Logo 会遮挡一部分码点，容错等级越高越不容易影响识别。</p>', true);
       }
     }).catch(function (err) {
       console.error(err);
