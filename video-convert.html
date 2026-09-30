@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>视频格式互转 - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线视频格式转换与压缩，支持短视频转码、视频转 GIF、抽帧截图，基于 WebAssembly 加速，即开即用不留存，隐私安全有保障。">
-<meta name="keywords" content="视频转换,视频格式转换,MP4转换,在线视频转换,视频转GIF,视频压缩">
+<title>在线视频格式转换（MP4 / WebM / MOV）- FreeConvertBox 在线文件工具箱</title>
+<meta name="description" content="免费在线视频格式转换，支持 MP4 / WebM / MOV 互转，基于浏览器原生 WebCodecs，速度快、画质无损。无需注册，即开即用不留存，隐私安全有保障。">
+<meta name="keywords" content="视频转换,视频格式转换,MP4转换,WebM转换,MOV转换,在线视频转换">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="视频格式互转 - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线视频格式转换与压缩，支持短视频转码、视频转 GIF、抽帧截图，基于 WebAssembly 加速，即开即用不留存，隐私安全有保障。">
+<meta property="og:title" content="在线视频格式转换（MP4 / WebM / MOV）- FreeConvertBox 在线文件工具箱">
+<meta property="og:description" content="免费在线视频格式转换，支持 MP4 / WebM / MOV 互转，基于浏览器原生 WebCodecs，速度快、画质无损。无需注册，即开即用不留存，隐私安全有保障。">
 <meta property="og:url" content="https://www.freeconvertbox.com/video-convert.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="视频格式互转 - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线视频格式转换与压缩，支持短视频转码、视频转 GIF、抽帧截图，基于 WebAssembly 加速，即开即用不留存，隐私安全有保障。">
+<meta name="twitter:title" content="在线视频格式转换（MP4 / WebM / MOV）- FreeConvertBox 在线文件工具箱">
+<meta name="twitter:description" content="免费在线视频格式转换，支持 MP4 / WebM / MOV 互转，基于浏览器原生 WebCodecs，速度快、画质无损。无需注册，即开即用不留存，隐私安全有保障。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -54,7 +55,8 @@
       <header class="page-head">
         <div class="page-crumb">转换工具 / 视频格式互转</div>
         <h1 class="page-title">视频格式互转</h1>
-        <p class="page-desc">在线完成短视频转码、转 GIF 与抽帧截图。转码 / 转 GIF 使用 ffmpeg.wasm，抽帧使用浏览器原生解码。佛博士·免费快速处理</p>
+        <p class="page-desc">在线把短视频转换为 MP4 / WebM / MOV。基于浏览器原生 WebCodecs，速度快、画质无损。佛博士·免费快速处理</p>
+        <p class="page-desc"><b>仅支持 Chrome / Edge / Safari 新版本（需浏览器 WebCodecs 支持）。</b></p>
       </header>
 
       <div id="tips"></div>
@@ -75,17 +77,8 @@
       <section class="card">
         <div class="card-title"><span class="step">2</span>参数设置</div>
         <div class="toolbar tight">
-          <label class="field field-narrow">
-            <span>任务类型</span>
-            <select id="task">
-              <option value="transcode">格式转码</option>
-              <option value="gif">转 GIF</option>
-              <option value="frames">抽帧截图（原生）</option>
-            </select>
-          </label>
-
           <!-- 转码 -->
-          <label class="field field-narrow" data-grp="transcode">
+          <label class="field field-narrow">
             <span>目标格式</span>
             <select id="tFormat">
               <option value="mp4">MP4（H.264）</option>
@@ -93,70 +86,10 @@
               <option value="mov">MOV（H.264）</option>
             </select>
           </label>
-          <label class="field field-narrow" data-grp="transcode">
-            <span>分辨率</span>
-            <select id="tRes">
-              <option value="0">原始</option>
-              <option value="720">720p</option>
-              <option value="480">480p</option>
-            </select>
-          </label>
-          <label class="field field-narrow" data-grp="transcode">
-            <span>画质（CRF）</span>
-            <select id="tCrf">
-              <option value="18">高清（18）</option>
-              <option value="23" selected>标准（23）</option>
-              <option value="28">小体积（28）</option>
-            </select>
-          </label>
-          <label class="field field-narrow" data-grp="transcode">
-            <span>音轨</span>
-            <label class="checkline"><input type="checkbox" id="tNoAudio">去除音轨</label>
-          </label>
-
-          <!-- 转 GIF -->
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>帧率 FPS</span>
-            <select id="gFps"><option value="10">10</option><option value="15" selected>15</option><option value="24">24</option></select>
-          </label>
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>宽度</span>
-            <select id="gWidth"><option value="320">320</option><option value="480" selected>480</option><option value="640">640</option></select>
-          </label>
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>起始时间（秒）</span>
-            <input type="number" id="gStart" min="0" step="0.5" value="0">
-          </label>
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>时长（秒）</span>
-            <input type="number" id="gDur" min="0.5" step="0.5" value="5">
-          </label>
-
-          <!-- 抽帧 -->
-          <label class="field field-narrow" data-grp="frames" hidden>
-            <span>抽帧方式</span>
-            <select id="fMode">
-              <option value="interval">按间隔（每 N 秒）</option>
-              <option value="point">单个时间点</option>
-            </select>
-          </label>
-          <label class="field field-narrow" data-grp="frames" id="fIntervalField" hidden>
-            <span>间隔（秒）</span>
-            <input type="number" id="fInterval" min="0.2" step="0.5" value="2">
-          </label>
-          <label class="field field-narrow" data-grp="frames" id="fPointField" hidden>
-            <span>时间点（秒）</span>
-            <input type="number" id="fPoint" min="0" step="0.5" value="0">
-          </label>
-          <label class="field field-narrow" data-grp="frames" hidden>
-            <span>图片格式</span>
-            <select id="fFormat"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option></select>
-          </label>
 
           <div class="toolbar-actions">
             <button class="btn btn-ghost" id="reset" disabled>重置</button>
-            <button class="btn" id="downloadAll" disabled>打包下载</button>
-            <button class="btn btn-primary" id="run" disabled>开始处理</button>
+            <button class="btn btn-primary" id="run" disabled>开始转换</button>
           </div>
         </div>
         <div class="progress" id="progress" hidden>
@@ -169,7 +102,7 @@
         <h2>处理结果</h2>
         <span class="muted" id="summary">还没有加载视频</span>
       </div>
-      <div class="empty" id="empty"><p id="emptyText">上传视频后设置参数，点击「开始处理」生成结果</p></div>
+      <div class="empty" id="empty"><p id="emptyText">上传视频并选择目标格式，点击「开始转换」</p></div>
 
       <section class="card" id="resultCard" hidden>
         <div class="card-title">结果预览</div>
@@ -180,27 +113,55 @@
         </div>
       </section>
 
-      <div class="grid grid-pages" id="frameList"></div>
+      <section class="card">
+        <h2 class="card-title">如何使用视频格式互转</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>点击上传区选择视频，或把文件直接拖拽到虚线框内（建议 200MB 以内）。</li>
+          <li>在「目标格式」中选择要输出的格式：MP4、WebM 或 MOV。</li>
+          <li>点击「开始转换」，进度走完后点「下载」保存文件。</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">转换会损失画质吗？</h3>
+        <p class="page-desc">MP4 与 MOV 互转通常直接拷贝视频流，不重新编码，画质与音质无损；转为 WebM（VP9）需要重新编码，画质基本保持一致，文件体积通常更小。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">我的视频会上传到服务器吗？</h3>
+        <p class="page-desc">不会。全部转换在你的浏览器本地完成，即开即用不留存，隐私安全有保障。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">为什么提示浏览器不支持？</h3>
+        <p class="page-desc">本工具基于浏览器原生 WebCodecs 加速，目前支持 Chrome / Edge / Safari 新版本，Firefox 暂不支持，请换用上述浏览器。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">支持哪些输入格式？</h3>
+        <p class="page-desc">常见视频格式均可作为输入，包括 MP4、WebM、MOV、MKV、AVI、M4V、OGV 等；输出格式为 MP4 / WebM / MOV。单个文件建议不超过 200MB，时长越短速度越快。</p>
+
+        <p class="page-desc">相关工具：<a href="audio-convert.html">音频格式转换</a> · <a href="img-to-gif.html">图片转 GIF</a> · <a href="pdf-to-img.html">PDF 转图片</a></p>
+      </section>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="assets/js/common.js"></script>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><script src="assets/js/common.js"></script>
 <script src="assets/js/pages/video-convert.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/video-convert.html#webpage",
       "url": "https://www.freeconvertbox.com/video-convert.html",
       "name": "视频格式互转 - FreeConvertBox",
-      "description": "在线视频格式转换与压缩，支持短视频转码、视频转 GIF、抽帧截图，基于 WebAssembly 加速，即开即用不留存，隐私安全有保障。",
+      "description": "免费在线视频格式转换，支持 MP4 / WebM / MOV 互转，基于浏览器原生 WebCodecs，速度快、画质无损。无需注册，即开即用不留存，隐私安全有保障。",
       "inLanguage": "zh-CN",
       "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
     },
@@ -208,8 +169,42 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "转换工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "视频格式互转", "item": "https://www.freeconvertbox.com/video-convert.html" }
+        { "@type": "ListItem", "position": 2, "name": "视频格式互转", "item": "https://www.freeconvertbox.com/video-convert.html" }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何使用视频格式互转",
+      "description": "上传视频、选择目标格式、开始转换并下载。",
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "上传视频", "text": "点击上传区选择视频，或把文件拖拽到虚线框内（建议 200MB 以内）。" },
+        { "@type": "HowToStep", "position": 2, "name": "选择目标格式", "text": "在「目标格式」中选择 MP4、WebM 或 MOV。" },
+        { "@type": "HowToStep", "position": 3, "name": "开始转换并下载", "text": "点击「开始转换」，完成后点「下载」保存文件。" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "转换会损失画质吗？",
+          "acceptedAnswer": { "@type": "Answer", "text": "MP4 与 MOV 互转通常直接拷贝视频流，不重新编码，画质与音质无损；转为 WebM（VP9）需要重新编码，画质基本保持一致，文件体积通常更小。" }
+        },
+        {
+          "@type": "Question",
+          "name": "我的视频会上传到服务器吗？",
+          "acceptedAnswer": { "@type": "Answer", "text": "不会。全部转换在你的浏览器本地完成，即开即用不留存，隐私安全有保障。" }
+        },
+        {
+          "@type": "Question",
+          "name": "为什么提示浏览器不支持？",
+          "acceptedAnswer": { "@type": "Answer", "text": "本工具基于浏览器原生 WebCodecs 加速，目前支持 Chrome / Edge / Safari 新版本，Firefox 暂不支持，请换用上述浏览器。" }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些输入格式？",
+          "acceptedAnswer": { "@type": "Answer", "text": "常见视频格式均可作为输入，包括 MP4、WebM、MOV、MKV、AVI、M4V、OGV 等；输出格式为 MP4 / WebM / MOV。单个文件建议不超过 200MB，时长越短速度越快。" }
+        }
       ]
     }
   ]
