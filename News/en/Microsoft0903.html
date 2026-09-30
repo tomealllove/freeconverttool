@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word PDF Bug: Files Sent to Local Cache | FreeConvertBox</title>
+<base href="https://www.freeconvertbox.com/en/" />
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.8;
+    color: #333;
+    background-color: #f9f9f9;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 10px 40px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+h1 {
+    font-size: 26px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 20px;
+    color: #34495e;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #3498db;
+}
+h3 {
+    font-size: 16px;
+    color: #34495e;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+strong {
+    color: #e74c3c;
+}
+code {
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 14px;
+    color: #d63384;
+}
+/* Scoped to the article container so the nav's ul.nav-list is not affected */
+.container ol, .container ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+.container li {
+    margin-bottom: 10px;
+}
+.banner {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.banner img {
+    width: 100%;
+    max-width: 1440px;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+}
+/* Article images: keep them inside the text column */
+.container > img,
+.container figure img {
+    max-width: 100%;
+    height: auto !important;
+    display: block;
+    margin: 20px auto;
+    border-radius: 6px;
+}
+/* 底部工具导航：统一缩小字号，避免上传到服务器后偏大 */
+.tool-nav {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #555;
+    padding-left: 10px;
+}
+.tool-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin: 4px 0;
+}
+.tool-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-right: 6px;
+    white-space: nowrap;
+}
+.tool-nav a {
+    font-size: 13px;
+    color: #3498db;
+    text-decoration: none;
+    margin-right: 14px;
+    white-space: nowrap;
+}
+.tool-nav a:hover {
+    color: #217dbb;
+    text-decoration: underline;
+}
+</style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5597138176163669" crossorigin="anonymous"></script>
+<link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/imgAll/favicon/icon-32x32.png">
+<link rel="apple-touch-icon" href="/imgAll/favicon/apple-touch-icon.png">
+<meta name="keywords" content="Word PDF bug, SharePoint Online, Word 2609, INetCache Content.MSO, Word export PDF missing, Microsoft 365, save as PDF not working">
+<meta name="description" content="Word 2609 saves exported PDFs to a hidden Windows cache folder instead of SharePoint Online, with no warning. Here are the workarounds that work.">
+<link rel="canonical" href="https://www.freeconvertbox.com/News/en/Microsoft0903.html">
+<link rel="alternate" hreflang="en" href="https://www.freeconvertbox.com/News/en/Microsoft0903.html">
+<link rel="alternate" hreflang="zh-CN" href="https://www.freeconvertbox.com/News/ch/Microsoft0903.html">
+<link rel="alternate" hreflang="x-default" href="https://www.freeconvertbox.com/News/en/Microsoft0903.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="FreeConvertBox">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:title" content="Word PDF Bug: Files Sent to Local Cache | FreeConvertBox">
+<meta property="og:description" content="Word 2609 saves exported PDFs to a hidden Windows cache folder instead of SharePoint Online, with no warning. Here are the workarounds that work.">
+<meta property="og:url" content="https://www.freeconvertbox.com/News/en/Microsoft0903.html">
+<meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
+<meta property="article:published_time" content="2026-10-01">
+<meta property="article:modified_time" content="2026-10-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Word PDF Bug: Files Sent to Local Cache | FreeConvertBox">
+<meta name="twitter:description" content="Word 2609 saves exported PDFs to a hidden Windows cache folder instead of SharePoint Online, with no warning. Here are the workarounds that work.">
+<meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Word PDF Bug: Files Sent to Local Cache | FreeConvertBox", "description": "Word 2609 saves exported PDFs to a hidden Windows cache folder instead of SharePoint Online, with no warning. Here are the workarounds that work.", "image": "https://www.freeconvertbox.com/assets/img/og-cover.png", "url": "https://www.freeconvertbox.com/News/en/Microsoft0903.html", "inLanguage": "en", "datePublished": "2026-10-01", "dateModified": "2026-10-01", "author": {"@type": "Organization", "name": "FreeConvertBox", "url": "https://www.freeconvertbox.com/"}, "publisher": {"@type": "Organization", "name": "FreeConvertBox", "logo": {"@type": "ImageObject", "url": "https://www.freeconvertbox.com/imgAll/favicon/icon-512x512.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/en/Microsoft0903.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Resource Center", "item": "https://www.freeconvertbox.com/News/en/1Englishlist.html.html"}, {"@type": "ListItem", "position": 3, "name": "Word PDF Bug: Files Sent to Local Cache | FreeConvertBox", "item": "https://www.freeconvertbox.com/News/en/Microsoft0903.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which Word versions are affected by the PDF save bug?", "acceptedAnswer": {"@type": "Answer", "text": "Microsoft has confirmed the behaviour on Word build 2609 for Windows. It only appears when you use Save or Save As, pick PDF as the output format, and point the destination at a SharePoint Online location."}}, {"@type": "Question", "name": "How do I know whether my PDF landed in the cache folder?", "acceptedAnswer": {"@type": "Answer", "text": "Open the target SharePoint library right after saving and check that the file is listed. If it is missing, look inside C:\\Users\\[username]\\AppData\\Local\\Microsoft\\Windows\\INetCache\\Content.MSO, where the export is stored under a random filename."}}, {"@type": "Question", "name": "Does the Export menu avoid the problem?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Using Word's Export function instead of the regular Save menu produces the PDF normally, and saving locally first and uploading to SharePoint afterwards also works."}}, {"@type": "Question", "name": "When will Microsoft ship a fix?", "acceptedAnswer": {"@type": "Answer", "text": "Microsoft has acknowledged the issue but has not given a public timeline. Until a patch arrives, use the Export route, save locally and upload, or roll Word back to the previous build."}}]}]}</script>
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="content">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">Resource Center</b>
+    </header>
+
+    <main class="content-inner">
+<div class="container">
+
+<!-- 顶部横幅 -->
+<div class="banner"><a title="Free Converter Toolbox" href="https://www.freeconvertbox.com/en/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="Free Converter Toolbox   Word PDF bug, PDF and image converters" /></a></div>
+
+<h1>Microsoft Word Bug Sends PDF Files to Random Local Cache Instead of SharePoint Online</h1>
+
+<p>If your team leans hard on SharePoint Online for day-to-day document collaboration and you work heavily with PDF exports out of Word for Windows, this new glitch is worth your attention. A recently uncovered software flaw makes Word dump exported PDF documents into a hidden local cache folder rather than saving them straight to your target SharePoint library, leaving people hunting for files that never arrived.</p>
+
+<h2>What Actually Goes Wrong</h2>
+
+<p>Microsoft has publicly acknowledged the quirk affecting Word version <code>2609</code> on Windows PCs, and it throws a real wrench into office workflows for anyone who relies on cloud-hosted document libraries. You click save as PDF, pick your SharePoint folder, and walk away assuming the file is safely stored in the cloud.</p>
+
+<h3>The File Lands in a Hidden Cache Folder</h3>
+
+<p>Instead, the document ends up buried inside <code>C:\Users\[username]\AppData\Local\Microsoft\Windows\INetCache\Content.MSO</code>, saved under a random string of characters as its filename. The AppData directory is hidden by default on Windows installations, so most everyday users would never think to look there.</p>
+
+<h3>No Warning at All</h3>
+
+<p>To make matters worse, Word does not show any warning dialog or error alert. You get zero indication that the export failed, so most people have no clue anything went wrong until they open SharePoint and find the PDF is nowhere to be seen. That is when the real headache starts.</p>
+
+<h3>When the Bug Triggers</h3>
+
+<p>According to notes shared by Microsoft support teams, the bug fires only under a specific combination: you use <strong>Save or Save As</strong>, manually select <strong>PDF</strong> as the output format, and point the destination at a <strong>SharePoint Online</strong> location. Anything outside that combination behaves normally.</p>
+
+<h2>Workarounds You Can Use Right Now</h2>
+
+<p>While everyone waits for a formal patch, three options get your document where it needs to go:</p>
+
+<ul>
+    <li><strong>Use Export instead of Save.</strong> Switch to Word's built-in Export function to generate the PDF rather than the regular save menu. Everything behaves as expected on this route.</li>
+    <li><strong>Save locally, then upload.</strong> Save the PDF to your desktop or hard drive first, then upload the finished file to SharePoint yourself.</li>
+    <li><strong>Roll back the update.</strong> Plenty of affected users on community forums report that reverting Word to the previous release removes the behaviour entirely. If your business can hold off on build 2609, this kills the problem outright.</li>
+</ul>
+
+<p>Tech outlets have asked Microsoft for a timeline on an official fix, but the company has not sent a formal response yet. Nobody outside Microsoft's internal support circles knows when this will be sorted out for good.</p>
+
+<h2>Why the Cache Folder Is Such a Bad Place to End Up</h2>
+
+<p>Even for users who know where to navigate, those auto-generated random filenames give zero clues about what document each file actually corresponds to. You may end up scrolling through dozens of nameless cached files trying to find the PDF you exported half an hour ago, which makes recovery a slog if you do not catch the bug right away.</p>
+
+<h2>A Rough Stretch for Microsoft's Product Line</h2>
+
+<p>This PDF misdirection bug is only one item in a rough patch for Microsoft's enterprise-grade lineup. Over the past few weeks the stack has seen one mishap after another hit paying business customers.</p>
+
+<h3>Excel Copy-Paste Failures</h3>
+<p>A copy-paste failure inside Excel disrupted data workflows for finance teams across a large number of companies.</p>
+
+<h3>Office 2016 and 2019 Activation Outage</h3>
+<p>A Microsoft 365 backend update accidentally knocked out activation status for many Office 2016 and Office 2019 licences, locking long-time users out of software they had already paid for.</p>
+
+<h3>Premature Data Deletion</h3>
+<p>Microsoft also acknowledged an incident in which some Microsoft 365 stored data was erased before the established retention window had run its full course, which raised eyebrows among IT teams worried about compliance and record-keeping.</p>
+
+<h3>September Windows Updates</h3>
+<p>The September Windows patches shipped with multiple serious defects, forcing an emergency out-of-band update that itself introduced fresh problems: persistent audio glitches, connectivity hiccups on domain-joined devices, and a broken Windows File History that could not create or refresh backups. Microsoft resolved the File History failure in the September 22 preview cumulative update, but audio and domain-device issues linger for many users.</p>
+
+<h2>Why This Hurts IT Teams</h2>
+
+<p>For IT admins supporting dozens or hundreds of office workers, cascading bugs like these create real operational stress. Staff waste hours digging through hidden cache folders for missing PDFs, or re-run whole export jobs because they never realised the first save never reached SharePoint. If team members share incomplete or missing documentation with clients or stakeholders, the mix-up can sink deadlines and create avoidable miscommunication.</p>
+
+<p>A lot of small-business IT departments simply do not have the bandwidth to chase down application defects that slip through Microsoft's quality checks.</p>
+
+<h2>Practical Steps for Your Team</h2>
+
+<ol>
+    <li><strong>Tell everyone about the flaw.</strong> Spread the word across the whole team first.</li>
+    <li><strong>Verify every save.</strong> Get people in the habit of double-checking SharePoint right after they save PDF outputs. They should not rely on Word's visual confirmation that the file was saved.</li>
+    <li><strong>Use the Export menu</strong> for PDF generation until Microsoft ships a permanent repair.</li>
+    <li><strong>Pause the rollout</strong> of Word build 2609 in your organisational update policies if problems keep surfacing.</li>
+</ol>
+
+<h2>How Does This Slip Through Testing?</h2>
+
+<p>Plenty of people are asking how this kind of error passes Microsoft's testing before reaching paying customers. When cloud-connected save workflows interact with local Windows caching mechanics, edge cases can slip through the cracks. Even so, business users expect mission-critical features such as saving PDFs to SharePoint to work reliably out of the gate. Waiting on official word about patch timelines leaves IT teams stuck implementing manual workarounds for something that should just work.</p>
+
+<p>Every passing week brings fresh reports of glitches across Microsoft's ecosystem, and customers are growing understandably frustrated. Companies pay good money for Microsoft 365 subscriptions on the expectation of stable software for core business workflows. When one update after another introduces preventable bugs, it chips away at user confidence.</p>
+
+<h2>Frequently Asked Questions</h2>
+
+<h3 class="card-title">Which Word versions are affected by the PDF save bug?</h3>
+<p>Microsoft has confirmed the behaviour on Word build 2609 for Windows. It only appears when you use Save or Save As, pick PDF as the output format, and point the destination at a SharePoint Online location.</p>
+
+<h3 class="card-title">How do I know whether my PDF landed in the cache folder?</h3>
+<p>Open the target SharePoint library right after saving and check that the file is listed. If it is missing, look inside <code>C:\Users\[username]\AppData\Local\Microsoft\Windows\INetCache\Content.MSO</code>, where the export is stored under a random filename.</p>
+
+<h3 class="card-title">Does the Export menu avoid the problem?</h3>
+<p>Yes. Using Word's Export function instead of the regular Save menu produces the PDF normally, and saving locally first and uploading to SharePoint afterwards also works.</p>
+
+<h3 class="card-title">When will Microsoft ship a fix?</h3>
+<p>Microsoft has acknowledged the issue but has not given a public timeline. Until a patch arrives, use the Export route, save locally and upload, or roll Word back to the previous build.</p>
+
+<p>Meanwhile, if you just need a clean PDF out of a document without fighting Word's save dialog, FreeConvertBox runs entirely in your browser: <a title="Images to PDF" href="https://www.freeconvertbox.com/en/img-to-pdf" target="_blank" rel="noopener">Images to PDF</a> builds a PDF from your pictures, <a title="PDF to Word" href="https://www.freeconvertbox.com/en/pdf-to-word" target="_blank" rel="noopener">PDF to Word</a> turns a PDF back into an editable document, and <a title="PDF Compressor" href="https://www.freeconvertbox.com/en/pdf-compress" target="_blank" rel="noopener">PDF Compressor</a> shrinks it before you upload. No uploads, no retention. Your privacy is fully protected.</p>
+
+<p style="font-size: 0.9em; color: #888; margin-top: 40px;"><em>Note: Some source material was AI-assisted.</em></p>
+
+<!-- 底部区域 -->
+<hr />
+
+<div><a title="" href="https://www.freeconvertbox.com/News/en/1Englishlist.html.html" target="_blank" rel="noopener">
+  <img src="https://www.freeconvertbox.com/News/tongyong/back.png" alt="Free Converter Toolbox   Word PDF bug, PDF and image converters"/></a></div>
+
+<hr />
+
+<div class="tool-nav" style="font-size: 13px; line-height: 1.9; color: #555; padding-left: 10px;">
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">Image Tools：</strong>
+    <a title="Image Format Converter" href="https://www.freeconvertbox.com/en/img-convert" target="_blank" rel="noopener">Image Format Converter</a>
+    <a title="Images to PDF" href="https://www.freeconvertbox.com/en/img-to-pdf" target="_blank" rel="noopener">Images to PDF</a>
+    <a title="Images to GIF" href="https://www.freeconvertbox.com/en/img-to-gif" target="_blank" rel="noopener">Images to GIF</a>
+    <a title="Image Compressor" href="https://www.freeconvertbox.com/en/img-compress" target="_blank" rel="noopener">Image Compressor</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">PDF Tools：</strong>
+    <a title="Free PDF to Word" href="https://www.freeconvertbox.com/en/pdf-to-word" target="_blank" rel="noopener">PDF to Word</a>
+    <a title="Free Merge &amp; Split PDF" href="https://www.freeconvertbox.com/en/pdf-merge" target="_blank" rel="noopener">Merge &amp; Split PDF</a>
+    <a title="Free PDF Compressor" href="https://www.freeconvertbox.com/en/pdf-compress" target="_blank" rel="noopener">PDF Compressor</a>
+    <a title="Free PDF to Images" href="https://www.freeconvertbox.com/en/pdf-to-img" target="_blank" rel="noopener">PDF to Images</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">Converter：</strong>
+    <a title="Free Audio Converter" href="https://www.freeconvertbox.com/en/audio-convert" target="_blank" rel="noopener">Audio Converter</a>
+    <a title="Free Video Converter" href="https://www.freeconvertbox.com/en/video-convert" target="_blank" rel="noopener">Video Converter</a>
+    <a title="Free Ebook Converter" href="https://www.freeconvertbox.com/en/ebook-convert" target="_blank" rel="noopener">Ebook Converter</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px; ">ID Photo &amp; QR Code：</strong>
+    <a title="Free ID Photo Maker" href="https://www.freeconvertbox.com/en/id-photo" target="_blank" rel="noopener">ID Photo Maker</a>
+    <a title="Free QR Code Generator" href="https://www.freeconvertbox.com/en/qrcode" target="_blank" rel="noopener">QR Code Generator</a>
+  </p>
+
+  <p class="tool-row" style="display: flex; flex-wrap: wrap; margin: 4px 0; font-size: 13px;">
+    <strong class="tool-label" style="font-size: 13px;">Chinese Text Tools：</strong>
+    <a title="Free Traditional &amp; Simplified Chinese" href="https://www.freeconvertbox.com/en/zh-convert" target="_blank" rel="noopener">Traditional &amp; Simplified Chinese</a>
+    <a title="Free Chinese Number Converter" href="https://www.freeconvertbox.com/en/han-case" target="_blank" rel="noopener">Chinese Number Converter</a>
+  </p>
+</div>
+<br /><br />
+<div class="banner"><a title="Free Converter Toolbox" href="https://www.freeconvertbox.com/en/" target="_blank" rel="noopener"><img src="https://www.freeconvertbox.com/News/tongyong/entop.png" alt="Free Converter Toolbox   Word PDF bug, PDF and image converters" /></a></div>
+</div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/common.js"></script>
+<script>
+  FT.mountShell(null);
+  /* News articles have no same-named zh counterpart: point language switch to zh hub */
+  (function () {
+    var a = document.querySelector('.lang-switch');
+    if (a) {
+      a.href = 'https://www.freeconvertbox.com/News/ch/Microsoft0903.html';
+      a.title = '简体中文';
+      a.setAttribute('aria-label', '简体中文');
+    }
+  })();
+</script>
+</body>
+</html>
