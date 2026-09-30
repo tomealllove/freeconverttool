@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Merge &amp; Split PDF - FreeConvertBox Online File Toolbox</title>
-<meta name="description" content="Merge PDF files online or split by page ranges, free. No uploads, no retention. Your privacy is fully protected.">
-<meta name="keywords" content="merge pdf, merge pdf files online, split pdf, combine pdf files, pdf splitter, extract pdf pages, online pdf merger, pdf page range">
+<title>Merge &amp; Split PDF Free Online - FreeConvertBox</title>
+<meta name="description" content="Merge PDFs into one free online and reorder pages, or split by page count or custom ranges. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="merge pdf, merge pdf files online, split pdf, combine pdf files, pdf splitter, extract pdf pages, online pdf merger, pdf page range, merge and split pdf">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="Merge &amp; Split PDF - FreeConvertBox Online File Toolbox">
-<meta property="og:description" content="Merge PDF files online or split by page ranges, free. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:title" content="Merge &amp; Split PDF Free Online - FreeConvertBox">
+<meta property="og:description" content="Merge PDFs into one free online and reorder pages, or split by page count or custom ranges. No uploads, no retention. Your privacy is fully protected.">
 <meta property="og:url" content="https://www.freeconvertbox.com/en/pdf-merge.html">
 <meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
 <meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Merge &amp; Split PDF - FreeConvertBox Online File Toolbox">
-<meta name="twitter:description" content="Merge PDF files online or split by page ranges, free. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:title" content="Merge &amp; Split PDF Free Online - FreeConvertBox">
+<meta name="twitter:description" content="Merge PDFs into one free online and reorder pages, or split by page count or custom ranges. No uploads, no retention. Your privacy is fully protected.">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -59,13 +60,16 @@
 
       <section class="card">
         <div class="card-title"><span class="step">1</span>Upload PDF</div>
-        <div class="toolbar tight">
-          <label class="field field-wide">
-            <span>Working mode</span>
-            <select id="mode">
-              <option value="merge">Merge mode: multiple PDFs → 1</option>
-              <option value="split">Split mode: 1 PDF → many</option>
-            </select>
+        <div class="mode-pick" id="modePick">
+          <label class="mode-card is-active">
+            <input type="radio" name="mode" value="merge" checked>
+            <span class="mc-title">Merge mode</span>
+            <span class="mc-sub">Multiple PDFs → 1 file, reorder freely</span>
+          </label>
+          <label class="mode-card">
+            <input type="radio" name="mode" value="split">
+            <span class="mc-title">Split mode</span>
+            <span class="mc-sub">1 PDF → many files by page count or ranges</span>
           </label>
         </div>
         <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Select or drag PDFs here">
@@ -129,6 +133,34 @@
         <div class="grid grid-files" id="splitList"></div>
         <div class="toolbar" id="outActions"></div>
       </section>
+
+      <section class="card">
+        <h2 class="card-title">How to merge or split PDF files</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>Pick Merge mode or Split mode at the top of the page - both options are shown side by side.</li>
+          <li>Merge mode: select several PDFs at once, then use the up and down arrows to reorder them or remove the ones you do not need.</li>
+          <li>Split mode: upload one PDF and choose either a fixed number of pages per part or custom page ranges such as 1-3,4-8,9-12.</li>
+          <li>Click Merge or Split, then download each file separately or grab them all in one ZIP.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Frequently asked questions</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">In what order are the files merged?</h3>
+        <p class="page-desc">Files are merged from top to bottom in the list. Use the up and down arrows to change the order, or remove files you do not want.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">How many PDFs can I merge at once?</h3>
+        <p class="page-desc">There is no fixed limit; each file must be under 100MB. The more pages you have, the longer it takes, so merging in batches is a good idea.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">How do I write page ranges?</h3>
+        <p class="page-desc">Separate ranges with commas and write each part as start-end, for example 1-3,4-8,9-12. A single number exports just that page. Each range becomes its own PDF.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">Is my file uploaded to a server?</h3>
+        <p class="page-desc">No. No uploads, no retention. Your privacy is fully protected.</p>
+
+        <p class="page-desc">Related tools: <a href="pdf-compress.html">Compress PDF</a> · <a href="pdf-to-img.html">PDF to Images</a> · <a href="pdf-to-word.html">PDF to Word</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -138,26 +170,111 @@
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/pages/pdf-merge.js"></script>
+<script src="assets/js/pages/pdf-merge.js?v=20260930"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/en/index.html#website",
+      "url": "https://www.freeconvertbox.com/en/index.html",
+      "name": "FreeConvertBox",
+      "inLanguage": "en"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/en/pdf-merge.html#webpage",
       "url": "https://www.freeconvertbox.com/en/pdf-merge.html",
-      "name": "Merge & Split PDF - FreeConvertBox",
-      "description": "Merge PDF files online or split by page ranges, free. No uploads, no retention. Your privacy is fully protected.",
-      "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+      "name": "Merge &amp; Split PDF Free Online - FreeConvertBox",
+      "description": "Merge PDFs into one free online and reorder pages, or split by page count or custom ranges. No uploads, no retention. Your privacy is fully protected.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/en/index.html#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/en/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "PDF Tools", "item": "https://www.freeconvertbox.com/en/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "Merge & Split PDF", "item": "https://www.freeconvertbox.com/en/pdf-merge.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.freeconvertbox.com/en/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Merge &amp; Split PDF Free Online - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/en/pdf-merge.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to merge or split PDF files",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Pick Merge mode or Split mode at the top of the page - both options are shown side by side."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Merge mode: select several PDFs at once, then use the up and down arrows to reorder them or remove the ones you do not need."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Split mode: upload one PDF and choose either a fixed number of pages per part or custom page ranges such as 1-3,4-8,9-12."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Step 4",
+          "text": "Click Merge or Split, then download each file separately or grab them all in one ZIP."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "In what order are the files merged?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Files are merged from top to bottom in the list. Use the up and down arrows to change the order, or remove files you do not want."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many PDFs can I merge at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There is no fixed limit; each file must be under 100MB. The more pages you have, the longer it takes, so merging in batches is a good idea."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I write page ranges?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Separate ranges with commas and write each part as start-end, for example 1-3,4-8,9-12. A single number exports just that page. Each range becomes its own PDF."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my file uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. No uploads, no retention. Your privacy is fully protected."
+          }
+        }
       ]
     }
   ]

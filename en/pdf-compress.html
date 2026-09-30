@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF Compressor - FreeConvertBox Online File Toolbox</title>
-<meta name="description" content="Compress PDF online: shrink file size, rewrite structure. No uploads, no retention. Your privacy is fully protected.">
-<meta name="keywords" content="compress pdf, pdf compressor, reduce pdf size, compress pdf online, shrink pdf file, pdf optimizer, pdf size reducer, online pdf compression">
+<title>Compress PDF Free Online - Shrink PDF Size - FreeConvertBox</title>
+<meta name="description" content="Compress PDF free: light mode rebuilds structure; reprint mode makes JPEG pages at 72-150 DPI. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="compress pdf, pdf compressor, reduce pdf size, compress pdf online, shrink pdf file, pdf optimizer, pdf size reducer, online pdf compression, compress pdf to smaller size">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="PDF Compressor - FreeConvertBox Online File Toolbox">
-<meta property="og:description" content="Compress PDF online: shrink file size, rewrite structure. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:title" content="Compress PDF Free Online - Shrink PDF Size - FreeConvertBox">
+<meta property="og:description" content="Compress PDF free: light mode rebuilds structure; reprint mode makes JPEG pages at 72-150 DPI. No uploads, no retention. Your privacy is fully protected.">
 <meta property="og:url" content="https://www.freeconvertbox.com/en/pdf-compress.html">
 <meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
 <meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox Online File Toolbox">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PDF Compressor - FreeConvertBox Online File Toolbox">
-<meta name="twitter:description" content="Compress PDF online: shrink file size, rewrite structure. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:title" content="Compress PDF Free Online - Shrink PDF Size - FreeConvertBox">
+<meta name="twitter:description" content="Compress PDF free: light mode rebuilds structure; reprint mode makes JPEG pages at 72-150 DPI. No uploads, no retention. Your privacy is fully protected.">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -83,13 +84,22 @@
           <label class="field field-narrow" id="dpiField" hidden>
             <span>Reprint resolution</span>
             <select id="dpi">
-              <option value="96">96 DPI (smaller file)</option>
-              <option value="144" selected>144 DPI (sharper)</option>
+              <option value="72">72 DPI (extreme · slightly blurry)</option>
+              <option value="96" selected>96 DPI (small file · recommended)</option>
+              <option value="120">120 DPI (fairly sharp)</option>
+              <option value="150">150 DPI (sharp · big file)</option>
+            </select>
+          </label>
+          <label class="field field-narrow" id="grayField" hidden>
+            <span>Black &amp; white</span>
+            <select id="gray">
+              <option value="0" selected>Keep original colors</option>
+              <option value="1">Convert to grayscale (20-40% smaller)</option>
             </select>
           </label>
           <label class="field field-range" id="qualityField" hidden>
-            <span>JPEG quality <b id="qualityVal">70%</b></span>
-            <input type="range" id="quality" min="50" max="80" step="1" value="70">
+            <span>JPEG quality <b id="qualityVal">55%</b></span>
+            <input type="range" id="quality" min="25" max="90" step="1" value="55">
           </label>
           <div class="toolbar-actions">
             <button class="btn btn-ghost" id="reset" disabled>Reset</button>
@@ -117,6 +127,34 @@
           <button class="btn btn-primary" id="download" disabled>Download Compressed PDF</button>
         </div>
       </section>
+
+      <section class="card">
+        <h2 class="card-title">How to compress a PDF</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>Click the upload area to pick a PDF, or drag the file into the box. Files up to 100MB are supported.</li>
+          <li>Pick a method: Light keeps the text selectable, while Reprint turns every page into a JPEG for a much bigger reduction.</li>
+          <li>In Reprint mode you can also set the resolution, switch to grayscale and tune the JPEG quality. Choose 72 DPI plus grayscale for the smallest file.</li>
+          <li>Click Compress, compare the before and after size, then download the compressed PDF.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">Frequently asked questions</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">What is the difference between the two modes?</h3>
+        <p class="page-desc">Light mode only rebuilds the PDF structure and clears title and author metadata, so text stays selectable and searchable and the saving is modest. Reprint mode renders every page as JPEG, which saves far more but turns text into an image you can no longer search.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">Why did the file get bigger?</h3>
+        <p class="page-desc">PDFs that are mostly vector text naturally grow once they are rasterized. Lower the resolution, turn on grayscale or drop the JPEG quality, or use Light mode for this kind of document.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">Will compression damage my original file?</h3>
+        <p class="page-desc">No. The original file is left untouched and the result is saved as a new file you download.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">Is my file uploaded to a server?</h3>
+        <p class="page-desc">No. No uploads, no retention. Your privacy is fully protected.</p>
+
+        <p class="page-desc">Related tools: <a href="pdf-merge.html">Merge & Split PDF</a> · <a href="pdf-to-img.html">PDF to Images</a> · <a href="pdf-to-word.html">PDF to Word</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -126,26 +164,111 @@
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/pages/pdf-compress.js"></script>
+<script src="assets/js/pages/pdf-compress.js?v=20260930b"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/en/index.html#website",
+      "url": "https://www.freeconvertbox.com/en/index.html",
+      "name": "FreeConvertBox",
+      "inLanguage": "en"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/en/pdf-compress.html#webpage",
       "url": "https://www.freeconvertbox.com/en/pdf-compress.html",
-      "name": "PDF Compressor - FreeConvertBox",
-      "description": "Compress PDF online: shrink file size, rewrite structure. No uploads, no retention. Your privacy is fully protected.",
-      "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+      "name": "Compress PDF Free Online - Shrink PDF Size - FreeConvertBox",
+      "description": "Compress PDF free: light mode rebuilds structure; reprint mode makes JPEG pages at 72-150 DPI. No uploads, no retention. Your privacy is fully protected.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/en/index.html#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/en/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "PDF Tools", "item": "https://www.freeconvertbox.com/en/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "PDF Compressor", "item": "https://www.freeconvertbox.com/en/pdf-compress.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.freeconvertbox.com/en/index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Compress PDF Free Online - Shrink PDF Size - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/en/pdf-compress.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to compress a PDF",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Click the upload area to pick a PDF, or drag the file into the box. Files up to 100MB are supported."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Pick a method: Light keeps the text selectable, while Reprint turns every page into a JPEG for a much bigger reduction."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "In Reprint mode you can also set the resolution, switch to grayscale and tune the JPEG quality. Choose 72 DPI plus grayscale for the smallest file."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Step 4",
+          "text": "Click Compress, compare the before and after size, then download the compressed PDF."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between the two modes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Light mode only rebuilds the PDF structure and clears title and author metadata, so text stays selectable and searchable and the saving is modest. Reprint mode renders every page as JPEG, which saves far more but turns text into an image you can no longer search."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why did the file get bigger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PDFs that are mostly vector text naturally grow once they are rasterized. Lower the resolution, turn on grayscale or drop the JPEG quality, or use Light mode for this kind of document."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will compression damage my original file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The original file is left untouched and the result is saved as a new file you download."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my file uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. No uploads, no retention. Your privacy is fully protected."
+          }
+        }
       ]
     }
   ]
