@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF 合并拆分 - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线合并多个 PDF 文件，或按页码范围把一个 PDF 拆分成多个文件，无需安装软件。即开即用不留存，隐私安全有保障。">
-<meta name="keywords" content="PDF合并,PDF拆分,在线PDF合并,PDF分割,PDF拆分合并,PDF分页">
+<title>PDF 合并拆分在线工具（多文件合并 · 按页拆分） - FreeConvertBox</title>
+<meta name="description" content="免费在线把多个 PDF 合并成一个，可拖动调整顺序；或按固定页数、自定义页码范围把 PDF 拆成多份。无需安装软件，即开即用不留存，隐私安全有保障。">
+<meta name="keywords" content="PDF合并,PDF拆分,在线PDF合并,PDF分割,PDF拆分合并,PDF分页,合并PDF文件,拆分PDF文件">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="PDF 合并拆分 - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线合并多个 PDF 文件，或按页码范围把一个 PDF 拆分成多个文件，无需安装软件。即开即用不留存，隐私安全有保障。">
+<meta property="og:title" content="PDF 合并拆分在线工具（多文件合并 · 按页拆分） - FreeConvertBox">
+<meta property="og:description" content="免费在线把多个 PDF 合并成一个，可拖动调整顺序；或按固定页数、自定义页码范围把 PDF 拆成多份。无需安装软件，即开即用不留存，隐私安全有保障。">
 <meta property="og:url" content="https://www.freeconvertbox.com/pdf-merge.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PDF 合并拆分 - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线合并多个 PDF 文件，或按页码范围把一个 PDF 拆分成多个文件，无需安装软件。即开即用不留存，隐私安全有保障。">
+<meta name="twitter:title" content="PDF 合并拆分在线工具（多文件合并 · 按页拆分） - FreeConvertBox">
+<meta name="twitter:description" content="免费在线把多个 PDF 合并成一个，可拖动调整顺序；或按固定页数、自定义页码范围把 PDF 拆成多份。无需安装软件，即开即用不留存，隐私安全有保障。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -59,13 +60,16 @@
 
       <section class="card">
         <div class="card-title"><span class="step">1</span>上传 PDF</div>
-        <div class="toolbar tight">
-          <label class="field field-wide">
-            <span>工作模式</span>
-            <select id="mode">
-              <option value="merge">合并模式：多个 PDF → 1 个</option>
-              <option value="split">拆分模式：1 个 PDF → 多个</option>
-            </select>
+        <div class="mode-pick" id="modePick">
+          <label class="mode-card is-active">
+            <input type="radio" name="mode" value="merge" checked>
+            <span class="mc-title">合并模式</span>
+            <span class="mc-sub">多个 PDF → 合并成 1 个，可拖动排序</span>
+          </label>
+          <label class="mode-card">
+            <input type="radio" name="mode" value="split">
+            <span class="mc-title">拆分模式</span>
+            <span class="mc-sub">1 个 PDF → 按页数或页码范围拆成多个</span>
           </label>
         </div>
         <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="选择或拖拽 PDF 到此处">
@@ -129,6 +133,34 @@
         <div class="grid grid-files" id="splitList"></div>
         <div class="toolbar" id="outActions"></div>
       </section>
+
+      <section class="card">
+        <h2 class="card-title">如何使用 PDF 合并拆分</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>在页面上方直接点选「合并模式」或「拆分模式」，两种模式并排显示，一眼可见。</li>
+          <li>合并模式：点击上传区一次选择多个 PDF，用文件卡片上的上移 / 下移调整顺序，不需要的可移除。</li>
+          <li>拆分模式：上传 1 个 PDF，选择「每段固定页数」或「自定义页码范围」（如 1-3,4-8,9-12）。</li>
+          <li>点击「开始合并」或「开始拆分」，完成后逐份下载，或用「打包下载」一次拿走 ZIP。</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">合并后的顺序怎么确定？</h3>
+        <p class="page-desc">按文件列表从上到下的顺序拼接，可用上移 / 下移随时调整，也可以移除不需要的文件。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">一次能合并多少个 PDF？</h3>
+        <p class="page-desc">数量没有硬性限制，单个文件不超过 100MB；总页数越多耗时越长，建议分批合并。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">拆分时页码范围怎么写？</h3>
+        <p class="page-desc">用逗号分隔，每段用「起-止」表示，例如 1-3,4-8,9-12；单页可只写一个数字。每一段会生成一个独立 PDF。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">我的文件会上传到服务器吗？</h3>
+        <p class="page-desc">不会。即开即用不留存，隐私安全有保障。</p>
+
+        <p class="page-desc">相关工具：<a href="pdf-compress.html">PDF 压缩</a> · <a href="pdf-to-img.html">PDF 转图片</a> · <a href="pdf-to-word.html">PDF 转 Word</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -138,26 +170,111 @@
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/pages/pdf-merge.js"></script>
+<script src="assets/js/pages/pdf-merge.js?v=20260930"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/pdf-merge.html#webpage",
       "url": "https://www.freeconvertbox.com/pdf-merge.html",
-      "name": "PDF 合并拆分 - FreeConvertBox",
-      "description": "在线合并多个 PDF 文件，或按页码范围把一个 PDF 拆分成多个文件，无需安装软件。即开即用不留存，隐私安全有保障。",
+      "name": "PDF 合并拆分在线工具（多文件合并 · 按页拆分） - FreeConvertBox",
+      "description": "免费在线把多个 PDF 合并成一个，可拖动调整顺序；或按固定页数、自定义页码范围把 PDF 拆成多份。无需安装软件，即开即用不留存，隐私安全有保障。",
       "inLanguage": "zh-CN",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "PDF 工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "PDF 合并拆分", "item": "https://www.freeconvertbox.com/pdf-merge.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF 合并拆分在线工具（多文件合并 · 按页拆分） - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/pdf-merge.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何使用 PDF 合并拆分",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "第 1 步",
+          "text": "在页面上方直接点选「合并模式」或「拆分模式」，两种模式并排显示，一眼可见。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "第 2 步",
+          "text": "合并模式：点击上传区一次选择多个 PDF，用文件卡片上的上移 / 下移调整顺序，不需要的可移除。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "第 3 步",
+          "text": "拆分模式：上传 1 个 PDF，选择「每段固定页数」或「自定义页码范围」（如 1-3,4-8,9-12）。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "第 4 步",
+          "text": "点击「开始合并」或「开始拆分」，完成后逐份下载，或用「打包下载」一次拿走 ZIP。"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "合并后的顺序怎么确定？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "按文件列表从上到下的顺序拼接，可用上移 / 下移随时调整，也可以移除不需要的文件。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "一次能合并多少个 PDF？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "数量没有硬性限制，单个文件不超过 100MB；总页数越多耗时越长，建议分批合并。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "拆分时页码范围怎么写？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "用逗号分隔，每段用「起-止」表示，例如 1-3,4-8,9-12；单页可只写一个数字。每一段会生成一个独立 PDF。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的文件会上传到服务器吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。即开即用不留存，隐私安全有保障。"
+          }
+        }
       ]
     }
   ]

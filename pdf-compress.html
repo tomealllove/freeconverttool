@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF 压缩 - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线压缩 PDF 文件体积，重写文档结构并压缩内嵌图片，提供两档压缩强度可选。即开即用不留存，隐私安全有保障。">
-<meta name="keywords" content="PDF压缩,在线压缩PDF,减小PDF体积,PDF优化,PDF瘦身">
+<title>PDF 压缩在线工具（减小体积 · 强度可调） - FreeConvertBox</title>
+<meta name="description" content="免费在线压缩 PDF 体积：轻度压缩重排结构、清除元数据并保留可选文字；重印压缩按页转为 JPEG，可调节清晰度与黑白输出。无需注册，即开即用不留存，隐私安全有保障。">
+<meta name="keywords" content="PDF压缩,在线压缩PDF,减小PDF体积,PDF优化,PDF瘦身,PDF文件太大怎么压缩,免费压缩PDF">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="PDF 压缩 - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线压缩 PDF 文件体积，重写文档结构并压缩内嵌图片，提供两档压缩强度可选。即开即用不留存，隐私安全有保障。">
+<meta property="og:title" content="PDF 压缩在线工具（减小体积 · 强度可调） - FreeConvertBox">
+<meta property="og:description" content="免费在线压缩 PDF 体积：轻度压缩重排结构、清除元数据并保留可选文字；重印压缩按页转为 JPEG，可调节清晰度与黑白输出。无需注册，即开即用不留存，隐私安全有保障。">
 <meta property="og:url" content="https://www.freeconvertbox.com/pdf-compress.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PDF 压缩 - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线压缩 PDF 文件体积，重写文档结构并压缩内嵌图片，提供两档压缩强度可选。即开即用不留存，隐私安全有保障。">
+<meta name="twitter:title" content="PDF 压缩在线工具（减小体积 · 强度可调） - FreeConvertBox">
+<meta name="twitter:description" content="免费在线压缩 PDF 体积：轻度压缩重排结构、清除元数据并保留可选文字；重印压缩按页转为 JPEG，可调节清晰度与黑白输出。无需注册，即开即用不留存，隐私安全有保障。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -83,13 +84,22 @@
           <label class="field field-narrow" id="dpiField" hidden>
             <span>重印清晰度</span>
             <select id="dpi">
-              <option value="96">96 DPI（体积更小）</option>
-              <option value="144" selected>144 DPI（较清晰）</option>
+              <option value="72">72 DPI（极限压缩 · 略糊）</option>
+              <option value="96" selected>96 DPI（体积小 · 推荐）</option>
+              <option value="120">120 DPI（较清晰）</option>
+              <option value="150">150 DPI（清晰 · 体积大）</option>
+            </select>
+          </label>
+          <label class="field field-narrow" id="grayField" hidden>
+            <span>黑白输出</span>
+            <select id="gray">
+              <option value="0" selected>保留原色</option>
+              <option value="1">转为灰度（体积再降 2~4 成）</option>
             </select>
           </label>
           <label class="field field-range" id="qualityField" hidden>
-            <span>JPEG 质量 <b id="qualityVal">70%</b></span>
-            <input type="range" id="quality" min="50" max="80" step="1" value="70">
+            <span>JPEG 质量 <b id="qualityVal">55%</b></span>
+            <input type="range" id="quality" min="25" max="90" step="1" value="55">
           </label>
           <div class="toolbar-actions">
             <button class="btn btn-ghost" id="reset" disabled>重置</button>
@@ -117,6 +127,34 @@
           <button class="btn btn-primary" id="download" disabled>下载压缩后的 PDF</button>
         </div>
       </section>
+
+      <section class="card">
+        <h2 class="card-title">如何使用 PDF 压缩</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>点击上传区选择 PDF（或把文件直接拖拽到虚线框内），单个文件不超过 100MB。</li>
+          <li>选择压缩方式：轻度压缩保留可选中的文字；重印压缩把每页转成 JPEG，体积降幅更大。</li>
+          <li>重印压缩可再调「重印清晰度」「黑白输出」「JPEG 质量」；想要最小体积选 72 DPI + 灰度 + 较低质量。</li>
+          <li>点击「开始压缩」，页面会给出压缩前后的体积对比，确认变小后再点「下载压缩后的 PDF」。</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">两种压缩方式有什么区别？</h3>
+        <p class="page-desc">轻度压缩只重排 PDF 结构并清除标题、作者等元数据，文字仍可选中可搜索，体积下降幅度有限；重印压缩把每页渲染成 JPEG，降幅大，但文字会变成图片、不可搜索。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">为什么压缩后反而变大？</h3>
+        <p class="page-desc">以矢量文字为主的 PDF 转成位图后天生会变大。页面会提示你降低清晰度、开启黑白输出或调低 JPEG 质量；这类文件更适合用轻度压缩。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">压缩会损坏原文件吗？</h3>
+        <p class="page-desc">不会。原文件保持不变，压缩结果是一个新文件，下载后另存即可。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">我的文件会上传到服务器吗？</h3>
+        <p class="page-desc">不会。即开即用不留存，隐私安全有保障。</p>
+
+        <p class="page-desc">相关工具：<a href="pdf-merge.html">PDF 合并拆分</a> · <a href="pdf-to-img.html">PDF 转图片</a> · <a href="pdf-to-word.html">PDF 转 Word</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -126,26 +164,111 @@
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/pages/pdf-compress.js"></script>
+<script src="assets/js/pages/pdf-compress.js?v=20260930b"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/pdf-compress.html#webpage",
       "url": "https://www.freeconvertbox.com/pdf-compress.html",
-      "name": "PDF 压缩 - FreeConvertBox",
-      "description": "在线压缩 PDF 文件体积，重写文档结构并压缩内嵌图片，提供两档压缩强度可选。即开即用不留存，隐私安全有保障。",
+      "name": "PDF 压缩在线工具（减小体积 · 强度可调） - FreeConvertBox",
+      "description": "免费在线压缩 PDF 体积：轻度压缩重排结构、清除元数据并保留可选文字；重印压缩按页转为 JPEG，可调节清晰度与黑白输出。无需注册，即开即用不留存，隐私安全有保障。",
       "inLanguage": "zh-CN",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "PDF 工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "PDF 压缩", "item": "https://www.freeconvertbox.com/pdf-compress.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF 压缩在线工具（减小体积 · 强度可调） - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/pdf-compress.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何使用 PDF 压缩",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "第 1 步",
+          "text": "点击上传区选择 PDF（或把文件直接拖拽到虚线框内），单个文件不超过 100MB。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "第 2 步",
+          "text": "选择压缩方式：轻度压缩保留可选中的文字；重印压缩把每页转成 JPEG，体积降幅更大。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "第 3 步",
+          "text": "重印压缩可再调「重印清晰度」「黑白输出」「JPEG 质量」；想要最小体积选 72 DPI + 灰度 + 较低质量。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "第 4 步",
+          "text": "点击「开始压缩」，页面会给出压缩前后的体积对比，确认变小后再点「下载压缩后的 PDF」。"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "两种压缩方式有什么区别？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "轻度压缩只重排 PDF 结构并清除标题、作者等元数据，文字仍可选中可搜索，体积下降幅度有限；重印压缩把每页渲染成 JPEG，降幅大，但文字会变成图片、不可搜索。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "为什么压缩后反而变大？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "以矢量文字为主的 PDF 转成位图后天生会变大。页面会提示你降低清晰度、开启黑白输出或调低 JPEG 质量；这类文件更适合用轻度压缩。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "压缩会损坏原文件吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。原文件保持不变，压缩结果是一个新文件，下载后另存即可。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的文件会上传到服务器吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。即开即用不留存，隐私安全有保障。"
+          }
+        }
       ]
     }
   ]

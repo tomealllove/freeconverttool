@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF 转 Word - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线把 PDF 转换成 Word 文档（.docx），自动提取文字与段落排版，适合文字型 PDF。即开即用不留存，隐私安全有保障。">
-<meta name="keywords" content="PDF转Word,PDF转docx,在线PDF转Word,免费PDF转换器">
+<title>PDF 转 Word 免费在线转换（保留排版 · 导出 docx） - FreeConvertBox</title>
+<meta name="description" content="免费在线把 PDF 转成可编辑的 Word 文档（.docx），自动提取文本层并按坐标重建段落，支持页码范围与 TXT 导出。无需注册，即开即用不留存，隐私安全有保障。">
+<meta name="keywords" content="PDF转Word,PDF转docx,在线PDF转Word,免费PDF转换器,PDF转Word文档,PDF转Word在线转换">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="PDF 转 Word - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线把 PDF 转换成 Word 文档（.docx），自动提取文字与段落排版，适合文字型 PDF。即开即用不留存，隐私安全有保障。">
+<meta property="og:title" content="PDF 转 Word 免费在线转换（保留排版 · 导出 docx） - FreeConvertBox">
+<meta property="og:description" content="免费在线把 PDF 转成可编辑的 Word 文档（.docx），自动提取文本层并按坐标重建段落，支持页码范围与 TXT 导出。无需注册，即开即用不留存，隐私安全有保障。">
 <meta property="og:url" content="https://www.freeconvertbox.com/pdf-to-word.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PDF 转 Word - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线把 PDF 转换成 Word 文档（.docx），自动提取文字与段落排版，适合文字型 PDF。即开即用不留存，隐私安全有保障。">
+<meta name="twitter:title" content="PDF 转 Word 免费在线转换（保留排版 · 导出 docx） - FreeConvertBox">
+<meta name="twitter:description" content="免费在线把 PDF 转成可编辑的 Word 文档（.docx），自动提取文本层并按坐标重建段落，支持页码范围与 TXT 导出。无需注册，即开即用不留存，隐私安全有保障。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -107,6 +108,33 @@
           <button class="btn btn-ghost" id="copyText" disabled>复制文本</button>
         </div>
       </section>
+
+      <section class="card">
+        <h2 class="card-title">如何使用 PDF 转 Word</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>点击上传区选择 PDF（或把文件直接拖拽到虚线框内），单个文件不超过 100MB。</li>
+          <li>只需转换部分内容时，在「页码范围」里填写页码，例如 1-5,8；留空则转换全部页面。</li>
+          <li>点击「开始转换」，完成后可下载 Word（.docx）、下载 TXT，或直接复制提取到的文本。</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">扫描件 PDF 能转 Word 吗？</h3>
+        <p class="page-desc">不能。本工具读取的是 PDF 中已有的文本层，扫描件与图片型 PDF 没有文本层，需要先做 OCR 文字识别。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">转换后的排版能完全还原吗？</h3>
+        <p class="page-desc">工具会按文字坐标重建行与段落，文字型 PDF 还原度较高；复杂表格、分栏和公式可能出现错位，建议导出后在 Word 中微调。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">支持导出哪些格式？</h3>
+        <p class="page-desc">支持导出 Word（.docx）与纯文本（.txt），也可以在页面直接预览并复制提取到的文字。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">我的文件会上传到服务器吗？</h3>
+        <p class="page-desc">不会。即开即用不留存，隐私安全有保障。</p>
+
+        <p class="page-desc">相关工具：<a href="pdf-to-img.html">PDF 转图片</a> · <a href="pdf-merge.html">PDF 合并拆分</a> · <a href="pdf-compress.html">PDF 压缩</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -122,20 +150,99 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/pdf-to-word.html#webpage",
       "url": "https://www.freeconvertbox.com/pdf-to-word.html",
-      "name": "PDF 转 Word - FreeConvertBox",
-      "description": "在线把 PDF 转换成 Word 文档（.docx），自动提取文字与段落排版，适合文字型 PDF。即开即用不留存，隐私安全有保障。",
+      "name": "PDF 转 Word 免费在线转换（保留排版 · 导出 docx） - FreeConvertBox",
+      "description": "免费在线把 PDF 转成可编辑的 Word 文档（.docx），自动提取文本层并按坐标重建段落，支持页码范围与 TXT 导出。无需注册，即开即用不留存，隐私安全有保障。",
       "inLanguage": "zh-CN",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "PDF 工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "PDF 转 Word", "item": "https://www.freeconvertbox.com/pdf-to-word.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF 转 Word 免费在线转换（保留排版 · 导出 docx） - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/pdf-to-word.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何使用 PDF 转 Word",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "第 1 步",
+          "text": "点击上传区选择 PDF（或把文件直接拖拽到虚线框内），单个文件不超过 100MB。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "第 2 步",
+          "text": "只需转换部分内容时，在「页码范围」里填写页码，例如 1-5,8；留空则转换全部页面。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "第 3 步",
+          "text": "点击「开始转换」，完成后可下载 Word（.docx）、下载 TXT，或直接复制提取到的文本。"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "扫描件 PDF 能转 Word 吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不能。本工具读取的是 PDF 中已有的文本层，扫描件与图片型 PDF 没有文本层，需要先做 OCR 文字识别。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "转换后的排版能完全还原吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "工具会按文字坐标重建行与段落，文字型 PDF 还原度较高；复杂表格、分栏和公式可能出现错位，建议导出后在 Word 中微调。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持导出哪些格式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持导出 Word（.docx）与纯文本（.txt），也可以在页面直接预览并复制提取到的文字。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的文件会上传到服务器吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。即开即用不留存，隐私安全有保障。"
+          }
+        }
       ]
     }
   ]

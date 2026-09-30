@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF 转图片 - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线把 PDF 每一页导出为 PNG / JPG 高清图片，支持页码范围选择与打包 ZIP 下载。即开即用不留存，隐私安全有保障。">
-<meta name="keywords" content="PDF转图片,PDF转PNG,PDF转JPG,在线PDF转图片,PDF截图">
+<title>PDF 转图片在线工具（PNG / JPG · 打包下载） - FreeConvertBox</title>
+<meta name="description" content="免费在线把 PDF 每一页导出为 PNG 或 JPG 高清图片，支持自定义清晰度、页码范围与 ZIP 打包下载。无需安装软件，即开即用不留存，隐私安全有保障。">
+<meta name="keywords" content="PDF转图片,PDF转PNG,PDF转JPG,在线PDF转图片,PDF截图,PDF导出图片,PDF转长图">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="PDF 转图片 - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线把 PDF 每一页导出为 PNG / JPG 高清图片，支持页码范围选择与打包 ZIP 下载。即开即用不留存，隐私安全有保障。">
+<meta property="og:title" content="PDF 转图片在线工具（PNG / JPG · 打包下载） - FreeConvertBox">
+<meta property="og:description" content="免费在线把 PDF 每一页导出为 PNG 或 JPG 高清图片，支持自定义清晰度、页码范围与 ZIP 打包下载。无需安装软件，即开即用不留存，隐私安全有保障。">
 <meta property="og:url" content="https://www.freeconvertbox.com/pdf-to-img.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PDF 转图片 - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线把 PDF 每一页导出为 PNG / JPG 高清图片，支持页码范围选择与打包 ZIP 下载。即开即用不留存，隐私安全有保障。">
+<meta name="twitter:title" content="PDF 转图片在线工具（PNG / JPG · 打包下载） - FreeConvertBox">
+<meta name="twitter:description" content="免费在线把 PDF 每一页导出为 PNG 或 JPG 高清图片，支持自定义清晰度、页码范围与 ZIP 打包下载。无需安装软件，即开即用不留存，隐私安全有保障。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -116,6 +117,34 @@
       </div>
       <div class="empty" id="empty"><p id="emptyText">上传 PDF 后点击「开始转换」，每一页会生成一张图片</p></div>
       <div class="grid grid-pages" id="list"></div>
+
+      <section class="card">
+        <h2 class="card-title">如何使用 PDF 转图片</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>点击上传区选择 PDF（或把文件直接拖拽到虚线框内），单个文件不超过 100MB。</li>
+          <li>在「输出格式」里选择 PNG 或 JPG，在「清晰度」里选择标准、高清或超清（约 96 / 192 / 288 DPI）。</li>
+          <li>只需导出部分页面时，在「页码范围」里填写页码，例如 1-5,8；留空则导出全部页面。</li>
+          <li>点击「开始转换」，完成后可逐张下载，或用「打包下载」把所有图片一次拿走（ZIP）。</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">PNG 和 JPG 该选哪个？</h3>
+        <p class="page-desc">需要无损、带透明背景或文字截图选 PNG；更在意体积选 JPG，还可以在「输出质量」滑块上调整画质与体积的平衡。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">清晰度越高越好吗？</h3>
+        <p class="page-desc">不一定。清晰度越高图片越大、耗时越长。日常查看与分享选高清（约 192 DPI）即可，打印再选超清。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">页数很多时会很慢吗？</h3>
+        <p class="page-desc">页数越多、清晰度越高，渲染耗时越长。可以先用「页码范围」分批导出，或把清晰度降一档。</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">我的文件会上传到服务器吗？</h3>
+        <p class="page-desc">不会。即开即用不留存，隐私安全有保障。</p>
+
+        <p class="page-desc">相关工具：<a href="pdf-to-word.html">PDF 转 Word</a> · <a href="pdf-compress.html">PDF 压缩</a> · <a href="pdf-merge.html">PDF 合并拆分</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -131,20 +160,105 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/pdf-to-img.html#webpage",
       "url": "https://www.freeconvertbox.com/pdf-to-img.html",
-      "name": "PDF 转图片 - FreeConvertBox",
-      "description": "在线把 PDF 每一页导出为 PNG / JPG 高清图片，支持页码范围选择与打包 ZIP 下载。即开即用不留存，隐私安全有保障。",
+      "name": "PDF 转图片在线工具（PNG / JPG · 打包下载） - FreeConvertBox",
+      "description": "免费在线把 PDF 每一页导出为 PNG 或 JPG 高清图片，支持自定义清晰度、页码范围与 ZIP 打包下载。无需安装软件，即开即用不留存，隐私安全有保障。",
       "inLanguage": "zh-CN",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "PDF 工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "PDF 转图片", "item": "https://www.freeconvertbox.com/pdf-to-img.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PDF 转图片在线工具（PNG / JPG · 打包下载） - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/pdf-to-img.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何使用 PDF 转图片",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "第 1 步",
+          "text": "点击上传区选择 PDF（或把文件直接拖拽到虚线框内），单个文件不超过 100MB。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "第 2 步",
+          "text": "在「输出格式」里选择 PNG 或 JPG，在「清晰度」里选择标准、高清或超清（约 96 / 192 / 288 DPI）。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "第 3 步",
+          "text": "只需导出部分页面时，在「页码范围」里填写页码，例如 1-5,8；留空则导出全部页面。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "第 4 步",
+          "text": "点击「开始转换」，完成后可逐张下载，或用「打包下载」把所有图片一次拿走（ZIP）。"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "PNG 和 JPG 该选哪个？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "需要无损、带透明背景或文字截图选 PNG；更在意体积选 JPG，还可以在「输出质量」滑块上调整画质与体积的平衡。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "清晰度越高越好吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不一定。清晰度越高图片越大、耗时越长。日常查看与分享选高清（约 192 DPI）即可，打印再选超清。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "页数很多时会很慢吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "页数越多、清晰度越高，渲染耗时越长。可以先用「页码范围」分批导出，或把清晰度降一档。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的文件会上传到服务器吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。即开即用不留存，隐私安全有保障。"
+          }
+        }
       ]
     }
   ]
