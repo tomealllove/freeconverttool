@@ -68,23 +68,49 @@
     }
   }
 
+  /* ---------- Scan reliability guards: quiet zone / module density / color contrast ---------- */
+  var MIN_QUIET_ZONE = 4;   // QR spec quiet zone; below this most scanners (incl. WeChat) fail
+  var MIN_MODULE_PX = 3;    // each module needs at least 3px or dense codes blur together
+
+  function parseHex(hex) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+    if (!m) return null;
+    var v = parseInt(m[1], 16);
+    return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+  }
+
+  function luminance(rgb) {
+    var c = rgb.map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+
+  function contrastRatio(a, b) {
+    var la = luminance(a), lb = luminance(b);
+    return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+  }
+
   function drawQr(q, n, size, margin, fg, bg) {
     var total = n + margin * 2;
     var canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     var c = canvas.getContext('2d');
+    c.imageSmoothingEnabled = false;
     c.fillStyle = bg;
     c.fillRect(0, 0, size, size);
     c.fillStyle = fg;
     var s = size / total;
+    // floor everywhere so each cell ends exactly where the next begins - no module overlap
     for (var r = 0; r < n; r++) {
       for (var col = 0; col < n; col++) {
         if (!q.isDark(r, col)) continue;
-        var x0 = Math.round((col + margin) * s);
-        var y0 = Math.round((r + margin) * s);
-        var x1 = Math.round((col + margin + 1) * s);
-        var y1 = Math.round((r + margin + 1) * s);
+        var x0 = Math.floor((col + margin) * s);
+        var y0 = Math.floor((r + margin) * s);
+        var x1 = Math.floor((col + margin + 1) * s);
+        var y1 = Math.floor((r + margin + 1) * s);
         c.fillRect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
       }
     }
@@ -127,7 +153,7 @@
       FT.toast('QR code component not loaded, please check your connection and reload', 'err');
       return;
     }
-    var text = textEl.value;
+    var text = textEl.value.replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
     if (!text) {
       FT.toast('Please enter the content to encode', 'err');
       textEl.focus();
@@ -151,11 +177,13 @@
         throw e;
       }
       var n = q.getModuleCount();
-      var size = Number(sizeEl.value) || 256;
-      var margin = Number(marginEl.value) || 0;
+      var asked = Number(sizeEl.value) || 256;
+      var margin = Math.max(MIN_QUIET_ZONE, Number(marginEl.value) || 0);
+      // longer content means more modules; keeping the chosen size would drop below 3px per module, so grow the canvas
+      var size = Math.max(asked, (n + margin * 2) * MIN_MODULE_PX);
       var canvas = drawQr(q, n, size, margin, fgEl.value, bgEl.value);
       var svg = buildSvg(q, n, size, margin, fgEl.value, bgEl.value);
-      return { q: q, n: n, size: size, canvas: canvas, svg: svg, level: levelEl.value };
+      return { q: q, n: n, size: size, asked: asked, margin: margin, canvas: canvas, svg: svg, level: levelEl.value };
     }).then(function (r) {
       lastCanvas = r.canvas;
       lastSvg = r.svg;
@@ -183,9 +211,32 @@
       FT.toast('QR code generated', 'ok');
       setTimeout(function () { FT.resetProgress(progress); }, 1200);
 
+      if (Number(marginEl.value) < MIN_QUIET_ZONE) {
+        FT.alert(tips, 'warn', '<b>Margin auto-raised to ' + MIN_QUIET_ZONE + ' modules</b>' +
+          '<p>A QR code needs a quiet zone around it. Below ' + MIN_QUIET_ZONE + ' modules, most scanners (including WeChat) fail to read it.</p>', true);
+      }
+      if (r.size > r.asked) {
+        FT.alert(tips, 'warn', '<b>Output size auto-enlarged to ' + r.size + '×' + r.size + ' px</b>' +
+          '<p>This content needs ' + r.n + '×' + r.n + ' modules. At the ' + r.asked + ' px you picked, each module would be under ' +
+          MIN_MODULE_PX + ' px and would blur into an unreadable block, so the output was enlarged.</p>', true);
+      }
+      var fgRgb = parseHex(fgEl.value), bgRgb = parseHex(bgEl.value);
+      if (fgRgb && bgRgb) {
+        if (luminance(fgRgb) > luminance(bgRgb)) {
+          FT.alert(tips, 'err', '<b>Inverted colors (foreground lighter than background)</b>' +
+            '<p>Most scanners cannot read an inverted QR code. Use a darker foreground and a lighter background — the default #000000 on #ffffff works best.</p>', true);
+        } else if (contrastRatio(fgRgb, bgRgb) < 4.5) {
+          FT.alert(tips, 'warn', '<b>Foreground/background contrast too low</b>' +
+            '<p>Current ratio is about ' + contrastRatio(fgRgb, bgRgb).toFixed(1) + ':1, below the 4.5:1 that scanners need for reliable reads. Darken the foreground.</p>', true);
+        }
+      }
+      if (/^www\./i.test(textEl.value.replace(/^\s+/, ''))) {
+        FT.alert(tips, 'warn', '<b>URL is missing the http(s):// prefix</b>' +
+          '<p>Content starting with www. scans as plain text and will not open as a link. Change it to start with https://.</p>', true);
+      }
       if (logoImg && r.level !== 'H') {
         FT.alert(tips, 'warn', '<b>A center logo was added — set the error correction level to H</b>' +
-          '<p>The logo covers part of the code; a higher error correction level keeps it scannable.</p>');
+          '<p>The logo covers part of the code; a higher error correction level keeps it scannable.</p>', true);
       }
     }).catch(function (err) {
       console.error(err);
