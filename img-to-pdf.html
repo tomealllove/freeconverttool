@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>图片转 PDF - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线把多张图片合并成一个 PDF 文件，支持图片排序、页面尺寸与页边距设置。即开即用不留存，隐私安全有保障。">
-<meta name="keywords" content="图片转PDF,照片转PDF,多图合成PDF,JPG转PDF,在线图片转PDF">
+<title>图片转 PDF 免费在线（多图合并成一个 PDF） - FreeConvertBox</title>
+<meta name="description" content="免费在线把多张图片合并成一个 PDF，可选 A4 纵向 / 横向或跟随首图尺寸，可调页边距与图片适应方式，支持排序管理。即开即用不留存，隐私安全有保障。">
+<meta name="keywords" content="图片转PDF,多图合并PDF,JPG转PDF,PNG转PDF,在线图片合成PDF,图片生成PDF文件,PDF合并图片">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="图片转 PDF - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线把多张图片合并成一个 PDF 文件，支持图片排序、页面尺寸与页边距设置。即开即用不留存，隐私安全有保障。">
+<meta property="og:title" content="图片转 PDF 免费在线（多图合并成一个 PDF） - FreeConvertBox">
+<meta property="og:description" content="免费在线把多张图片合并成一个 PDF，可选 A4 纵向 / 横向或跟随首图尺寸，可调页边距与图片适应方式，支持排序管理。即开即用不留存，隐私安全有保障。">
 <meta property="og:url" content="https://www.freeconvertbox.com/img-to-pdf.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="图片转 PDF - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线把多张图片合并成一个 PDF 文件，支持图片排序、页面尺寸与页边距设置。即开即用不留存，隐私安全有保障。">
+<meta name="twitter:title" content="图片转 PDF 免费在线（多图合并成一个 PDF） - FreeConvertBox">
+<meta name="twitter:description" content="免费在线把多张图片合并成一个 PDF，可选 A4 纵向 / 横向或跟随首图尺寸，可调页边距与图片适应方式，支持排序管理。即开即用不留存，隐私安全有保障。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -145,6 +146,30 @@
         <p>上传图片后，这里会显示每张图的缩略图，可用上移 / 下移或直接拖拽调整顺序，顺序即 PDF 的页序</p>
       </div>
       <div class="grid grid-pages" id="list"></div>
+      <section class="card">
+        <h2 class="card-title">如何把图片转成 PDF</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>上传一张或多张图片，可以拖动调整顺序，每张图片将作为 PDF 中的一页。</li>
+          <li>选择页面尺寸：A4 纵向、A4 横向，或跟随首图的原始像素尺寸。</li>
+          <li>设置页边距与小图的留白方式，并选择「适应页面居中」或「铺满页面」。</li>
+          <li>点击合成，预览确认后下载 PDF。</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">能把所有图片排成一个 PDF 吗？</h3>
+        <p class="page-desc">可以。上传多张图片后按希望的顺序排列，每张图生成 PDF 中的一页，最终下载为一个文件。</p>
+        <h3 class="card-title" style="margin-bottom:6px">想让每页正好是一张原尺寸图片怎么办？</h3>
+        <p class="page-desc">把「页面尺寸」选为「跟随首图原始尺寸」，并把页边距设为「无」，每页就按原图像素生成。</p>
+        <h3 class="card-title" style="margin-bottom:6px">图片太小导致周围留白太多怎么处理？</h3>
+        <p class="page-desc">把「图片适应方式」改为「铺满页面」，图片会放大铺满整页（超出部分可能被裁切）；或保持「适应页面居中」以获得完整画面。</p>
+        <h3 class="card-title" style="margin-bottom:6px">我的图片会上传到服务器吗？</h3>
+        <p class="page-desc">不会。即开即用不留存，隐私安全有保障。</p>
+
+        <p class="page-desc">相关工具： <a href="pdf-merge.html">PDF 合并拆分</a> · <a href="img-convert.html">图片格式转换</a> · <a href="img-compress.html">图片压缩</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -159,20 +184,105 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/img-to-pdf.html#webpage",
       "url": "https://www.freeconvertbox.com/img-to-pdf.html",
-      "name": "图片转 PDF - FreeConvertBox",
-      "description": "在线把多张图片合并成一个 PDF 文件，支持图片排序、页面尺寸与页边距设置。即开即用不留存，隐私安全有保障。",
+      "name": "图片转 PDF 免费在线（多图合并成一个 PDF） - FreeConvertBox",
+      "description": "免费在线把多张图片合并成一个 PDF，可选 A4 纵向 / 横向或跟随首图尺寸，可调页边距与图片适应方式，支持排序管理。即开即用不留存，隐私安全有保障。",
       "inLanguage": "zh-CN",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "图片工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "图片转 PDF", "item": "https://www.freeconvertbox.com/img-to-pdf.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "图片转 PDF 免费在线（多图合并成一个 PDF） - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/img-to-pdf.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何把图片转成 PDF",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "第 1 步",
+          "text": "上传一张或多张图片，可以拖动调整顺序，每张图片将作为 PDF 中的一页。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "第 2 步",
+          "text": "选择页面尺寸：A4 纵向、A4 横向，或跟随首图的原始像素尺寸。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "第 3 步",
+          "text": "设置页边距与小图的留白方式，并选择「适应页面居中」或「铺满页面」。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "第 4 步",
+          "text": "点击合成，预览确认后下载 PDF。"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "能把所有图片排成一个 PDF 吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以。上传多张图片后按希望的顺序排列，每张图生成 PDF 中的一页，最终下载为一个文件。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "想让每页正好是一张原尺寸图片怎么办？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "把「页面尺寸」选为「跟随首图原始尺寸」，并把页边距设为「无」，每页就按原图像素生成。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "图片太小导致周围留白太多怎么处理？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "把「图片适应方式」改为「铺满页面」，图片会放大铺满整页（超出部分可能被裁切）；或保持「适应页面居中」以获得完整画面。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的图片会上传到服务器吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。即开即用不留存，隐私安全有保障。"
+          }
+        }
       ]
     }
   ]

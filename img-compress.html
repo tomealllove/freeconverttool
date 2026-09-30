@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>图片压缩 - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线压缩图片体积，按画质或目标大小压缩 PNG / JPG / WebP，实时对比压缩前后效果。即开即用不留存，隐私安全有保障。">
-<meta name="keywords" content="图片压缩,在线压缩图片,PNG压缩,JPG压缩,图片体积减小,图片瘦身">
+<title>图片压缩免费在线（按质量或目标体积压缩 JPG / PNG） - FreeConvertBox</title>
+<meta name="description" content="免费在线图片压缩工具，支持质量压缩与按目标体积压缩两种模式，可调 JPEG / WebP 输出质量、限制最大边长，实时对比压缩前后体积。即开即用不留存，隐私安全有保障。">
+<meta name="keywords" content="图片压缩,在线压缩图片,JPG压缩,PNG压缩,WebP压缩,图片压缩到指定大小,批量缩小图片,图片体积减小">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="图片压缩 - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线压缩图片体积，按画质或目标大小压缩 PNG / JPG / WebP，实时对比压缩前后效果。即开即用不留存，隐私安全有保障。">
+<meta property="og:title" content="图片压缩免费在线（按质量或目标体积压缩 JPG / PNG） - FreeConvertBox">
+<meta property="og:description" content="免费在线图片压缩工具，支持质量压缩与按目标体积压缩两种模式，可调 JPEG / WebP 输出质量、限制最大边长，实时对比压缩前后体积。即开即用不留存，隐私安全有保障。">
 <meta property="og:url" content="https://www.freeconvertbox.com/img-compress.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="图片压缩 - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线压缩图片体积，按画质或目标大小压缩 PNG / JPG / WebP，实时对比压缩前后效果。即开即用不留存，隐私安全有保障。">
+<meta name="twitter:title" content="图片压缩免费在线（按质量或目标体积压缩 JPG / PNG） - FreeConvertBox">
+<meta name="twitter:description" content="免费在线图片压缩工具，支持质量压缩与按目标体积压缩两种模式，可调 JPEG / WebP 输出质量、限制最大边长，实时对比压缩前后体积。即开即用不留存，隐私安全有保障。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -134,6 +135,30 @@
         <p>上传图片后，这里会显示压缩前后的对比与体积缩减比例</p>
       </div>
       <div class="grid" id="list"></div>
+      <section class="card">
+        <h2 class="card-title">如何使用图片压缩</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>点击上传区选择一张或多张图片，也可以直接拖拽到虚线框内。</li>
+          <li>选择压缩模式：质量模式手动设定输出质量百分比；目标体积模式填写期望的 KB 数值，工具会自动逼近该大小。</li>
+          <li>可选设置输出格式（保持原格式 / JPG / WebP）与最大边长限制（1920 / 1280 / 800 px）。</li>
+          <li>点击开始压缩，完成后对比压缩前后体积，满意再下载。</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">质量模式和目标体积模式怎么选？</h3>
+        <p class="page-desc">想批量控制统一画质用质量模式；上传有硬性大小限制（如报名附件不超过 200KB）时用目标体积模式更省事，工具会自动试算出最接近的参数。</p>
+        <h3 class="card-title" style="margin-bottom:6px">压缩后画质能接受吗？</h3>
+        <p class="page-desc">JPEG / WebP 是有损压缩，质量越低体积越小。一般把质量设在 60~80 之间肉眼差别很小；建议先看预览，再决定是否继续降低。</p>
+        <h3 class="card-title" style="margin-bottom:6px">支持哪些图片格式？</h3>
+        <p class="page-desc">支持 JPG、PNG、WebP 等常见格式的输入，输出可选择保持原格式，或统一转成 JPG / WebP 以进一步减小体积。</p>
+        <h3 class="card-title" style="margin-bottom:6px">我的图片会上传到服务器吗？</h3>
+        <p class="page-desc">不会。即开即用不留存，隐私安全有保障。</p>
+
+        <p class="page-desc">相关工具： <a href="img-convert.html">图片格式转换</a> · <a href="img-to-pdf.html">图片转 PDF</a> · <a href="pdf-compress.html">PDF 压缩</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -148,20 +173,105 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/img-compress.html#webpage",
       "url": "https://www.freeconvertbox.com/img-compress.html",
-      "name": "图片压缩 - FreeConvertBox",
-      "description": "在线压缩图片体积，按画质或目标大小压缩 PNG / JPG / WebP，实时对比压缩前后效果。即开即用不留存，隐私安全有保障。",
+      "name": "图片压缩免费在线（按质量或目标体积压缩 JPG / PNG） - FreeConvertBox",
+      "description": "免费在线图片压缩工具，支持质量压缩与按目标体积压缩两种模式，可调 JPEG / WebP 输出质量、限制最大边长，实时对比压缩前后体积。即开即用不留存，隐私安全有保障。",
       "inLanguage": "zh-CN",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "图片工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "图片压缩", "item": "https://www.freeconvertbox.com/img-compress.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "图片压缩免费在线（按质量或目标体积压缩 JPG / PNG） - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/img-compress.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何使用图片压缩",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "第 1 步",
+          "text": "点击上传区选择一张或多张图片，也可以直接拖拽到虚线框内。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "第 2 步",
+          "text": "选择压缩模式：质量模式手动设定输出质量百分比；目标体积模式填写期望的 KB 数值，工具会自动逼近该大小。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "第 3 步",
+          "text": "可选设置输出格式（保持原格式 / JPG / WebP）与最大边长限制（1920 / 1280 / 800 px）。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "第 4 步",
+          "text": "点击开始压缩，完成后对比压缩前后体积，满意再下载。"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "质量模式和目标体积模式怎么选？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "想批量控制统一画质用质量模式；上传有硬性大小限制（如报名附件不超过 200KB）时用目标体积模式更省事，工具会自动试算出最接近的参数。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "压缩后画质能接受吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "JPEG / WebP 是有损压缩，质量越低体积越小。一般把质量设在 60~80 之间肉眼差别很小；建议先看预览，再决定是否继续降低。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些图片格式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持 JPG、PNG、WebP 等常见格式的输入，输出可选择保持原格式，或统一转成 JPG / WebP 以进一步减小体积。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的图片会上传到服务器吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。即开即用不留存，隐私安全有保障。"
+          }
+        }
       ]
     }
   ]
