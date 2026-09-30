@@ -1,27 +1,17 @@
-/* Audio Converter: upload → Native mode (WAV/MP3) or Advanced mode (ffmpeg.wasm) → playback preview / download */
+/* Audio Converter: upload → browser decoding → export WAV / MP3 → playback preview / download */
 (function () {
   'use strict';
 
   FT.mountShell('audio-convert');
 
   var MAX_SIZE = 200 * 1024 * 1024;
-  var FFMPEG_CORE = 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js';
-  var AUDIO_MIME = {
-    mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg',
-    m4a: 'audio/mp4', flac: 'audio/flac'
-  };
-
   var drop = FT.$('#drop');
   var input = FT.$('#file');
   var fileInfo = FT.$('#fileInfo');
-  var modeSel = FT.$('#mode');
   var nformat = FT.$('#nformat');
   var nrate = FT.$('#nrate');
   var nbitrate = FT.$('#nbitrate');
   var nbitrateField = FT.$('#nbitrateField');
-  var aformat = FT.$('#aformat');
-  var abitrate = FT.$('#abitrate');
-  var abitrateField = FT.$('#abitrateField');
   var convertBtn = FT.$('#convert');
   var resetBtn = FT.$('#reset');
   var progress = FT.$('#progress');
@@ -38,17 +28,15 @@
     file: null, info: null, busy: false,
     resultBlob: null, resultUrl: null, resultName: ''
   };
-  var ff = null, ffLoading = null;
-
   var LIMIT_HTML = '<b>About conversion capability</b>' +
-    '<p><b>Native mode</b> uses the browser\'s built-in decoder (instant startup), but browsers <b>ship no general purpose encoder</b>, ' +
-    'so only <b>WAV</b> (hand written PCM container) and <b>MP3</b> (lamejs encoding) are offered for export; ' +
-    'OGG/Opus has no universal front-end encoder and is not available in this mode.</p>' +
+    '<p>This tool uses the browser\'s built-in decoder (instant startup), but browsers <b>ship no general purpose encoder</b>, ' +
+    'so only <b>WAV</b> (hand written PCM container) and <b>MP3</b> (lamejs encoding) are offered; ' +
+    'OGG / AAC / FLAC have no universal front-end encoder and cannot be exported.</p>' +
     '<p><b>Sample rate</b>: with "<b>Keep original</b>" selected, <b>lossless formats such as WAV keep the exact source sample rate</b>; ' +
     'compressed formats like MP3 do not expose their original rate to the browser, so the decoded rate is used instead ' +
-    '(pick a specific value or Advanced mode if you need exact control).</p>' +
-    '<p><b>AAC / FLAC / OGG</b> and others require <b>Advanced mode</b> (ffmpeg.wasm). The first run downloads the engine (~30 MB), ' +
-    'and encoding is pure CPU software encoding with no hardware acceleration — <b>Long audio takes a while to encode — please be patient</b>.</p>';
+    '(pick a specific value if you need exact control).</p>' +
+    '<p><b>Input formats</b> depend on your browser\'s decoding ability; MP3, WAV, OGG and M4A generally work. ' +
+    'If you see a decoding error, that codec is not supported by your browser.</p>';
 
   function showLimitTip() { FT.alert(tips, 'warn', LIMIT_HTML); }
   showLimitTip();
@@ -91,7 +79,7 @@
   function decodeAudioBuffer(buf, preferredRate) {
     return new Promise(function (resolve, reject) {
       var Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) { reject(new Error('This browser does not support Web Audio, so Native mode cannot be used')); return; }
+      if (!Ctx) { reject(new Error('This browser does not support Web Audio, so conversion is not possible')); return; }
       var useRate = (preferredRate && preferredRate >= 8000 && preferredRate <= 96000) ? preferredRate : null;
       var ctx;
       try { ctx = useRate ? new Ctx({ sampleRate: useRate }) : new Ctx(); }
@@ -106,7 +94,7 @@
         }
       }, function () {
         try { ctx.close(); } catch (e) {}
-        reject(new Error('The browser cannot decode this audio, please use Advanced mode instead'));
+        reject(new Error('The browser cannot decode this audio (the codec may be unsupported)'));
       });
     });
   }
@@ -219,63 +207,6 @@
     });
   }
 
-  /* ---------------- Advanced mode: ffmpeg.wasm ---------------- */
-
-  function ensureFfmpeg() {
-    if (ff) return Promise.resolve(ff);
-    if (ffLoading) return ffLoading;
-    if (typeof FFmpeg === 'undefined') {
-      return Promise.reject(new Error('The conversion engine (ffmpeg.wasm) is not loaded, please check your connection and reload the page'));
-    }
-    FT.busyProgress(progress, 'Loading the conversion engine (~30 MB, first run only)…');
-    var inst;
-    try {
-      inst = FFmpeg.createFFmpeg({ corePath: FFMPEG_CORE, log: false });
-    } catch (e) {
-      return Promise.reject(new Error('Conversion engine initialization failed: ' + (e && e.message || e)));
-    }
-    ffLoading = inst.load().then(function () {
-      ff = inst;
-      return ff;
-    }).catch(function (e) {
-      ffLoading = null;
-      throw new Error('Failed to load the conversion engine, please check your connection or available memory and try again (' + (e && e.message || e) + ')');
-    });
-    return ffLoading;
-  }
-
-  function runFfmpeg(file, targetFmt, kbps) {
-    return ensureFfmpeg().then(function () {
-      var srcExt = FT.extName(file.name) || 'dat';
-      var inName = 'input.' + srcExt;
-      var outName = 'output.' + targetFmt;
-      FT.busyProgress(progress, 'Reading audio…');
-      return FT.readArrayBuffer(file).then(function (buf) {
-        ff.FS('writeFile', inName, new Uint8Array(buf));
-        var args = ['-i', inName, '-vn'];
-        if (['mp3', 'ogg', 'm4a'].indexOf(targetFmt) >= 0) args.push('-b:a', kbps + 'k');
-        args.push(outName);
-
-        try {
-          ff.setProgress(function (p) {
-            if (p && typeof p.ratio === 'number' && p.ratio >= 0 && p.ratio <= 1) {
-              FT.setProgress(progress, p.ratio, Math.round(p.ratio * 100) + '%');
-            }
-          });
-        } catch (e) { /* older versions may not expose this API */ }
-
-        FT.busyProgress(progress, 'Converting, please be patient…');
-        return ff.run.apply(ff, args).then(function () {
-          var data = ff.FS('readFile', outName);
-          try { ff.FS('unlink', inName); } catch (e) {}
-          try { ff.FS('unlink', outName); } catch (e) {}
-          if (!data || !data.length) throw new Error('Conversion output is empty, the source encoding may not be supported');
-          return new Blob([data.buffer], { type: AUDIO_MIME[targetFmt] || 'application/octet-stream' });
-        });
-      });
-    });
-  }
-
   /* ---------------- Upload ---------------- */
 
   function resetResult() {
@@ -322,7 +253,7 @@
       '</span><span class="fc-size">' + FT.formatBytes(file.size) + '</span></span>';
     FT.busyProgress(progress, 'Decoding to read file info…');
 
-    // Read duration / sample rate / channels with the native decoder (best effort, failure does not affect Advanced mode)
+    // Read duration / sample rate / channels with the native decoder (best effort)
     FT.readArrayBuffer(file).then(function (buf) {
       var parsed = parseWavSampleRate(buf);
       var eff = (parsed >= 8000 && parsed <= 96000) ? parsed : 0;
@@ -342,14 +273,14 @@
       } else {
         summary.textContent = file.name + ' · the browser cannot decode it natively';
         FT.alert(tips, 'warn', '<b>The browser cannot natively decode "' + FT.esc(file.name) + '"</b>' +
-          '<p>This encoding (possibly AAC/FLAC/WMA, etc.) has no built-in decoder in the current engine. <b>Native mode is unavailable</b>, please switch to "Advanced mode (ffmpeg.wasm)" to convert.</p>', true);
+          '<p>This encoding (possibly AAC/FLAC/WMA, etc.) has no built-in decoder in your browser, so it <b>cannot be converted</b>. Convert it to WAV or MP3 elsewhere first, then upload again.</p>', true);
       }
       FT.toast('Audio is ready', 'ok');
     }).catch(function (err) {
       console.error(err);
       FT.resetProgress(progress);
       summary.textContent = file.name;
-      FT.toast('Could not read file info, try Advanced mode: ' + (err && err.message || err), 'warn');
+      FT.toast('Could not read file info: ' + (err && err.message || err), 'warn');
     });
   }
 
@@ -376,7 +307,7 @@
     var kbps = Number(nbitrate.value) || 192;
 
     if (fmt === 'mp3' && typeof lamejs === 'undefined') {
-      FT.depMissing(tips, 'lamejs', 'Native MP3 export depends on lamejs (CDN). Please check your connection and reload the page, or use "Advanced mode".');
+      FT.depMissing(tips, 'lamejs', 'MP3 export depends on lamejs (CDN). Please check your connection and reload the page.');
       finish(false);
       return;
     }
@@ -403,22 +334,6 @@
     }).catch(function (err) {
       console.error(err);
       FT.alert(tips, 'err', '<b>Conversion failed</b><p>' + FT.esc(err && err.message || 'Unknown error') + '</p>', true);
-      FT.toast('Conversion failed: ' + (err && err.message || err), 'err');
-      finish(false);
-    });
-  }
-
-  function runAdvanced() {
-    var fmt = aformat.value;                        // mp3|wav|ogg|m4a|flac
-    var kbps = Number(abitrate.value) || 192;
-    runFfmpeg(state.file, fmt, kbps).then(function (blob) {
-      var info = state.info || {};
-      showResult(blob, fmt, { rate: info.sampleRate, ch: info.channels, dur: info.duration });
-      finish(true);
-    }).catch(function (err) {
-      console.error(err);
-      FT.alert(tips, 'err', '<b>Advanced mode conversion failed</b><p>' + FT.esc(err && err.message || 'Unknown error') +
-        '</p><p>Possible causes: connection dropped, not enough browser memory, or an unsupported source encoding. Try a shorter audio file.</p>', true);
       FT.toast('Conversion failed: ' + (err && err.message || err), 'err');
       finish(false);
     });
@@ -470,8 +385,7 @@
     showLimitTip();
     resetResult();
     FT.setBusy(convertBtn, true, 'Converting…');
-    if (modeSel.value === 'advanced') runAdvanced();
-    else runNative();
+    runNative();
   });
 
   downloadBtn.addEventListener('click', function () {
@@ -485,21 +399,7 @@
     showLimitTip();
   });
 
-  function syncModeFields() {
-    var adv = modeSel.value === 'advanced';
-    FT.$$('[data-grp="native"]').forEach(function (el) { el.hidden = adv; });
-    FT.$$('[data-grp="adv"]').forEach(function (el) { el.hidden = !adv; });
-    nbitrateField.hidden = adv || nformat.value !== 'mp3';
-    abitrateField.hidden = !adv || aformat.value === 'wav' || aformat.value === 'flac';
-  }
-
-  modeSel.addEventListener('change', syncModeFields);
   nformat.addEventListener('change', function () { nbitrateField.hidden = nformat.value !== 'mp3'; });
-  aformat.addEventListener('change', function () {
-    abitrateField.hidden = aformat.value === 'wav' || aformat.value === 'flac';
-  });
-
   FT.bindDropzone(drop, input, function (files) { if (files[0]) loadFile(files[0]); });
-  syncModeFields();
   resetAll(true);
 })();
