@@ -1,27 +1,17 @@
-/* 音频格式转换：上传 → 原生模式(WAV/MP3) 或 高级模式(ffmpeg.wasm) → 播放预览 / 下载 */
+/* 音频格式转换：上传 → 浏览器解码 → 导出 WAV / MP3 → 播放预览 / 下载 */
 (function () {
   'use strict';
 
   FT.mountShell('audio-convert');
 
   var MAX_SIZE = 200 * 1024 * 1024;
-  var FFMPEG_CORE = 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js';
-  var AUDIO_MIME = {
-    mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg',
-    m4a: 'audio/mp4', flac: 'audio/flac'
-  };
-
   var drop = FT.$('#drop');
   var input = FT.$('#file');
   var fileInfo = FT.$('#fileInfo');
-  var modeSel = FT.$('#mode');
   var nformat = FT.$('#nformat');
   var nrate = FT.$('#nrate');
   var nbitrate = FT.$('#nbitrate');
   var nbitrateField = FT.$('#nbitrateField');
-  var aformat = FT.$('#aformat');
-  var abitrate = FT.$('#abitrate');
-  var abitrateField = FT.$('#abitrateField');
   var convertBtn = FT.$('#convert');
   var resetBtn = FT.$('#reset');
   var progress = FT.$('#progress');
@@ -38,16 +28,14 @@
     file: null, info: null, busy: false,
     resultBlob: null, resultUrl: null, resultName: ''
   };
-  var ff = null, ffLoading = null;
-
   var LIMIT_HTML = '<b>关于转换能力的说明</b>' +
-    '<p><b>原生模式</b>直接使用浏览器内置解码器（秒开），但浏览器<b>没有通用的编码器</b>，' +
+    '<p>本工具使用浏览器内置解码器（秒开），但浏览器<b>没有通用的编码器</b>，' +
     '因此仅提供 <b>WAV</b>（手写 PCM 封装）与 <b>MP3</b>（lamejs 编码）两种导出；' +
-    'OGG/Opus 无通用前端编码器，此模式不提供。</p>' +
+    'OGG / AAC / FLAC 等无通用前端编码器，暂不支持输出。</p>' +
     '<p><b>采样率</b>：选「<b>保持原样</b>」时，<b>WAV 等无损格式可精确保留</b>源文件采样率；' +
-    'MP3 等压缩格式浏览器不暴露原始采样率，会按解码所得采样率输出（如需精确控制请选具体数值或高级模式）。</p>' +
-    '<p><b>AAC / FLAC / OGG</b> 等需切换到<b>高级模式</b>（ffmpeg.wasm）。高级模式首次点击会下载约 <b>30MB</b> 引擎，' +
-    '且为纯 CPU 软件编码、无硬件加速，<b>长音频耗时较久</b>，请耐心等待。</p>';
+    'MP3 等压缩格式浏览器不暴露原始采样率，会按解码所得采样率输出（如需精确控制请选具体数值）。</p>' +
+    '<p><b>输入格式</b>取决于浏览器的解码能力，常见的 MP3 / WAV / OGG / M4A 均可读入；' +
+    '若提示无法解码，说明该编码当前浏览器不支持。</p>';
 
   function showLimitTip() { FT.alert(tips, 'warn', LIMIT_HTML); }
   showLimitTip();
@@ -89,7 +77,7 @@
   function decodeAudioBuffer(buf, preferredRate) {
     return new Promise(function (resolve, reject) {
       var Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) { reject(new Error('当前浏览器不支持 Web Audio，无法使用原生模式')); return; }
+      if (!Ctx) { reject(new Error('当前浏览器不支持 Web Audio，无法转换')); return; }
       var useRate = (preferredRate && preferredRate >= 8000 && preferredRate <= 96000) ? preferredRate : null;
       var ctx;
       try { ctx = useRate ? new Ctx({ sampleRate: useRate }) : new Ctx(); }
@@ -104,7 +92,7 @@
         }
       }, function () {
         try { ctx.close(); } catch (e) {}
-        reject(new Error('浏览器无法解码该音频，请改用高级模式'));
+        reject(new Error('浏览器无法解码该音频（该编码可能不受支持）'));
       });
     });
   }
@@ -217,63 +205,6 @@
     });
   }
 
-  /* ---------------- 高级模式：ffmpeg.wasm ---------------- */
-
-  function ensureFfmpeg() {
-    if (ff) return Promise.resolve(ff);
-    if (ffLoading) return ffLoading;
-    if (typeof FFmpeg === 'undefined') {
-      return Promise.reject(new Error('转换引擎（ffmpeg.wasm）未加载，请检查网络后刷新页面'));
-    }
-    FT.busyProgress(progress, '正在加载转换引擎（约 30MB，仅首次）…');
-    var inst;
-    try {
-      inst = FFmpeg.createFFmpeg({ corePath: FFMPEG_CORE, log: false });
-    } catch (e) {
-      return Promise.reject(new Error('转换引擎初始化失败：' + (e && e.message || e)));
-    }
-    ffLoading = inst.load().then(function () {
-      ff = inst;
-      return ff;
-    }).catch(function (e) {
-      ffLoading = null;
-      throw new Error('转换引擎加载失败，请检查网络或内存后重试（' + (e && e.message || e) + '）');
-    });
-    return ffLoading;
-  }
-
-  function runFfmpeg(file, targetFmt, kbps) {
-    return ensureFfmpeg().then(function () {
-      var srcExt = FT.extName(file.name) || 'dat';
-      var inName = 'input.' + srcExt;
-      var outName = 'output.' + targetFmt;
-      FT.busyProgress(progress, '正在读取音频…');
-      return FT.readArrayBuffer(file).then(function (buf) {
-        ff.FS('writeFile', inName, new Uint8Array(buf));
-        var args = ['-i', inName, '-vn'];
-        if (['mp3', 'ogg', 'm4a'].indexOf(targetFmt) >= 0) args.push('-b:a', kbps + 'k');
-        args.push(outName);
-
-        try {
-          ff.setProgress(function (p) {
-            if (p && typeof p.ratio === 'number' && p.ratio >= 0 && p.ratio <= 1) {
-              FT.setProgress(progress, p.ratio, Math.round(p.ratio * 100) + '%');
-            }
-          });
-        } catch (e) { /* 旧版本可能无此 API */ }
-
-        FT.busyProgress(progress, '转换中，请耐心等待…');
-        return ff.run.apply(ff, args).then(function () {
-          var data = ff.FS('readFile', outName);
-          try { ff.FS('unlink', inName); } catch (e) {}
-          try { ff.FS('unlink', outName); } catch (e) {}
-          if (!data || !data.length) throw new Error('转换输出为空，可能是源文件编码不受支持');
-          return new Blob([data.buffer], { type: AUDIO_MIME[targetFmt] || 'application/octet-stream' });
-        });
-      });
-    });
-  }
-
   /* ---------------- 上传 ---------------- */
 
   function resetResult() {
@@ -320,7 +251,7 @@
       '</span><span class="fc-size">' + FT.formatBytes(file.size) + '</span></span>';
     FT.busyProgress(progress, '正在解码以读取信息…');
 
-    // 用原生解码器读取时长/采样率/声道（尽力而为，失败不影响高级模式）
+    // 用原生解码器读取时长/采样率/声道（尽力而为）
     FT.readArrayBuffer(file).then(function (buf) {
       var parsed = parseWavSampleRate(buf);
       var eff = (parsed >= 8000 && parsed <= 96000) ? parsed : 0;
@@ -340,14 +271,14 @@
       } else {
         summary.textContent = file.name + ' · 浏览器无法原生解码';
         FT.alert(tips, 'warn', '<b>浏览器无法原生解码「' + FT.esc(file.name) + '」</b>' +
-          '<p>该编码（可能是 AAC/FLAC/WMA 等）当前内核未内置解码器。<b>原生模式不可用</b>，请切换到「高级模式（ffmpeg.wasm）」转换。</p>', true);
+          '<p>该编码（可能是 AAC/FLAC/WMA 等）当前浏览器未内置解码器，<b>无法转换</b>。请先用其它工具转为 WAV / MP3 后再上传。</p>', true);
       }
       FT.toast('音频已就绪', 'ok');
     }).catch(function (err) {
       console.error(err);
       FT.resetProgress(progress);
       summary.textContent = file.name;
-      FT.toast('读取信息失败，可尝试高级模式：' + (err && err.message || err), 'warn');
+      FT.toast('读取信息失败：' + (err && err.message || err), 'warn');
     });
   }
 
@@ -373,7 +304,7 @@
     var kbps = Number(nbitrate.value) || 192;
 
     if (fmt === 'mp3' && typeof lamejs === 'undefined') {
-      FT.depMissing(tips, 'lamejs', '原生 MP3 导出依赖 lamejs（CDN），请检查网络后刷新页面，或改用「高级模式」。');
+      FT.depMissing(tips, 'lamejs', 'MP3 导出依赖 lamejs（CDN），请检查网络后刷新页面。');
       finish(false);
       return;
     }
@@ -400,22 +331,6 @@
     }).catch(function (err) {
       console.error(err);
       FT.alert(tips, 'err', '<b>转换失败</b><p>' + FT.esc(err && err.message || '未知错误') + '</p>', true);
-      FT.toast('转换失败：' + (err && err.message || err), 'err');
-      finish(false);
-    });
-  }
-
-  function runAdvanced() {
-    var fmt = aformat.value;                        // mp3|wav|ogg|m4a|flac
-    var kbps = Number(abitrate.value) || 192;
-    runFfmpeg(state.file, fmt, kbps).then(function (blob) {
-      var info = state.info || {};
-      showResult(blob, fmt, { rate: info.sampleRate, ch: info.channels, dur: info.duration });
-      finish(true);
-    }).catch(function (err) {
-      console.error(err);
-      FT.alert(tips, 'err', '<b>高级模式转换失败</b><p>' + FT.esc(err && err.message || '未知错误') +
-        '</p><p>可能原因：网络中断、浏览器内存不足或源编码不受支持。可尝试更短的音频。</p>', true);
       FT.toast('转换失败：' + (err && err.message || err), 'err');
       finish(false);
     });
@@ -467,8 +382,7 @@
     showLimitTip();
     resetResult();
     FT.setBusy(convertBtn, true, '转换中…');
-    if (modeSel.value === 'advanced') runAdvanced();
-    else runNative();
+    runNative();
   });
 
   downloadBtn.addEventListener('click', function () {
@@ -482,21 +396,7 @@
     showLimitTip();
   });
 
-  function syncModeFields() {
-    var adv = modeSel.value === 'advanced';
-    FT.$$('[data-grp="native"]').forEach(function (el) { el.hidden = adv; });
-    FT.$$('[data-grp="adv"]').forEach(function (el) { el.hidden = !adv; });
-    nbitrateField.hidden = adv || nformat.value !== 'mp3';
-    abitrateField.hidden = !adv || aformat.value === 'wav' || aformat.value === 'flac';
-  }
-
-  modeSel.addEventListener('change', syncModeFields);
   nformat.addEventListener('change', function () { nbitrateField.hidden = nformat.value !== 'mp3'; });
-  aformat.addEventListener('change', function () {
-    abitrateField.hidden = aformat.value === 'wav' || aformat.value === 'flac';
-  });
-
   FT.bindDropzone(drop, input, function (files) { if (files[0]) loadFile(files[0]); });
-  syncModeFields();
   resetAll(true);
 })();
