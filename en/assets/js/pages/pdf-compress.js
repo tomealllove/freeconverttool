@@ -5,7 +5,7 @@
   FT.mountShell('pdf-compress');
 
   var MAX_PDF = 100 * 1024 * 1024;
-  var MAX_SIDE = 8192;
+  var MAX_SIDE = 4096;
 
   var drop = FT.$('#drop');
   var input = FT.$('#file');
@@ -13,6 +13,8 @@
   var level = FT.$('#level');
   var dpiSel = FT.$('#dpi');
   var dpiField = FT.$('#dpiField');
+  var graySel = FT.$('#gray');
+  var grayField = FT.$('#grayField');
   var quality = FT.$('#quality');
   var qualityVal = FT.$('#qualityVal');
   var qualityField = FT.$('#qualityField');
@@ -153,7 +155,17 @@
 
   /* ---------------- Reprint compression ---------------- */
 
-  function renderPageJpeg(num, dpi, q) {
+  function toGray(ctx, w, h) {
+    var img = ctx.getImageData(0, 0, w, h);
+    var d = img.data;
+    for (var p = 0; p < d.length; p += 4) {
+      var v = (d[p] * 299 + d[p + 1] * 587 + d[p + 2] * 114) / 1000;
+      d[p] = v; d[p + 1] = v; d[p + 2] = v;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  function renderPageJpeg(num, dpi, q, gray) {
     return state.doc.getPage(num).then(function (page) {
       var base = page.getViewport({ scale: 1 });
       var pw = base.width, ph = base.height;
@@ -168,15 +180,16 @@
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       return page.render({ canvasContext: ctx, viewport: viewport }).promise
-        .then(function () { return FT.canvasToBlob(canvas, 'image/jpeg', q); })
+        .then(function () {
+          if (gray) toGray(ctx, canvas.width, canvas.height);
+          return FT.canvasToBlob(canvas, 'image/jpeg', q);
+        })
         .then(function (blob) { return blob.arrayBuffer(); })
         .then(function (buf) { return { bytes: new Uint8Array(buf), pw: pw, ph: ph }; });
     });
   }
 
-  function compressReprint() {
-    var dpi = Number(dpiSel.value) || 96;
-    var q = Number(quality.value) / 100;
+  function compressReprint(dpi, q, gray) {
     var doc = null, i = 0, failed = 0;
 
     function step() {
@@ -185,7 +198,7 @@
       var num = i + 1;
       FT.setProgress(progress, i / state.total, 'Processing ' + num + '/' + state.total);
       i++;
-      return renderPageJpeg(num, dpi, q).then(function (res) {
+      return renderPageJpeg(num, dpi, q, gray).then(function (res) {
         return doc.embedJpg(res.bytes).then(function (img) {
           var page = doc.addPage([res.pw, res.ph]);
           page.drawImage(img, { x: 0, y: 0, width: res.pw, height: res.ph });
@@ -237,7 +250,26 @@
     FT.setBusy(runBtn, true, 'Compressing…');
     FT.setProgress(progress, 0, 'Preparing…');
 
-    var job = isReprint() ? compressReprint() : compressLight();
+    var job;
+    if (isReprint()) {
+      var dpi0 = Number(dpiSel.value) || 96;
+      var q0 = Number(quality.value) / 100;
+      var gray0 = graySel.value === '1';
+      job = compressReprint(dpi0, q0, gray0).then(function (res) {
+        if (state.cancel || !res || !res.blob) return res;
+        if (res.blob.size < startSize || state.total > 60) return res;
+        if (dpi0 <= 72 && gray0 && q0 <= 0.25) return res;
+        FT.setProgress(progress, 0, 'Result did not shrink - retrying with a stronger preset...');
+        return compressReprint(Math.min(dpi0, 72), Math.max(0.25, q0 - 0.15), true)
+          .then(function (res2) {
+            if (res2 && res2.blob && res2.blob.size < res.blob.size) { res2.retry = true; return res2; }
+            res.retry = true;
+            return res;
+          });
+      });
+    } else {
+      job = compressLight();
+    }
 
     job.then(function (res) {
       if (state.cancel) { FT.toast('Compression cancelled', 'warn'); return; }
@@ -258,10 +290,19 @@
       summary.textContent = state.file.name + ' · size ' + delta + (smaller ? ' (reduced)' : ' (larger)');
       FT.setProgress(progress, 1, 'Done');
 
+      if (res.retry && smaller) {
+        FT.alert(tips, 'info', '<b>Auto downgraded preset</b>' +
+          '<p>Your settings did not produce a smaller file, so the page automatically retried with a lower resolution, grayscale and -15% JPEG quality, then kept whichever result was smaller.</p>', true);
+      }
+
       if (!smaller) {
+        var tail = isReprint()
+          ? (res.retry ? 'It already retried at 72 DPI + grayscale + lower quality and still could not beat the original - ' : '') +
+            'vector/text-heavy PDFs are inherently larger once rasterized. Try 72 DPI, 25% quality and grayscale.'
+          : 'Use "Reprint" for a bigger reduction.';
         FT.alert(tips, 'warn', '<b>Size did not shrink</b>' +
           '<p>This PDF may already be compact' + (isReprint() ? '' : ' (light compression mainly removes redundant structure and metadata, so gains are limited)') +
-          ', so the result is slightly larger than the original. ' + (isReprint() ? 'Try a lower resolution or quality.' : 'Use "Reprint" for a bigger reduction.') + '</p>', true);
+          ', so the result is slightly larger than the original. ' + tail + '</p>', true);
       }
       FT.toast('Compression complete: ' + FT.formatBytes(startSize) + ' → ' + FT.formatBytes(blob.size) +
         (res.failed ? ' (' + res.failed + ' page(s) failed)' : ''), res.failed ? 'warn' : 'ok');
@@ -301,6 +342,7 @@
 
   level.addEventListener('change', function () {
     dpiField.hidden = !isReprint();
+    grayField.hidden = !isReprint();
     qualityField.hidden = !isReprint();
     showLevelTip();
   });
