@@ -11,12 +11,11 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.8;
             color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
             background-color: #f9f9f9;
         }
         .container {
+            max-width: 800px;
+            margin: 0 auto;
             background-color: #fff;
             padding: 10px 40px 40px;
             border-radius: 8px;
@@ -53,11 +52,12 @@
             font-size: 14px;
             color: #d63384;
         }
-        ol, ul {
+        /* 作用域收窄到正文容器：避免污染导航菜单里的 ul.nav-list */
+        .container ol, .container ul {
             margin-bottom: 20px;
             padding-left: 20px;
         }
-        li {
+        .container li {
             margin-bottom: 10px;
         }
         /* 顶部横幅：紧贴浏览器顶部 */
@@ -121,8 +121,19 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "前端实用技巧：纯浏览器实现PDF转Word，全程本地零上传", "description": "浏览器如何把 PDF 转成可编辑的 Word 文档？本文讲清 pdf.js 逐页解析与 docx.js 重组段落的实现路径，覆盖坐标文本还原、自动补全换行等难点，附完整流程。", "image": "https://www.freeconvertbox.com/assets/img/og-cover.png", "url": "https://www.freeconvertbox.com/News/ch/PDF%E8%BD%ACWord0917.html", "inLanguage": "zh-CN", "datePublished": "2026-09-17", "dateModified": "2026-09-29", "publisher": {"@type": "Organization", "name": "FreeConvertBox", "logo": {"@type": "ImageObject", "url": "https://www.freeconvertbox.com/imgAll/favicon/icon-512x512.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/ch/PDF%E8%BD%ACWord0917.html"}, "translationOfWork": {"@type": "WebPage", "@id": "https://www.freeconvertbox.com/News/en/2PDFtoWord.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/"}, {"@type": "ListItem", "position": 2, "name": "资讯中心", "item": "https://www.freeconvertbox.com/News/ch/1newslist.html.html"}, {"@type": "ListItem", "position": 3, "name": "前端实用技巧：纯浏览器实现PDF转Word，全程本地零上传", "item": "https://www.freeconvertbox.com/News/ch/PDF%E8%BD%ACWord0917.html"}]}]}</script>
 </head>
 <body>
-<aside class="sidebar" id="sidebar"></aside>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="nav-overlay" id="navOverlay"></div>
 
+  <div class="content">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="打开导航">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <b id="topTitle">资讯中心</b>
+    </header>
+
+    <main class="content-inner">
     <div class="container">
 
         <!-- ========== 顶部横幅 ========== -->
@@ -167,7 +178,7 @@
         <!-- ========== 底部区域 ========== -->
         <hr />
 
-        <div style="padding-left: 80px;"><a title="" href="https://www.freeconvertbox.com/News/ch/1newslist.html.html" target="_blank" rel="noopener">
+        <div><a title="" href="https://www.freeconvertbox.com/News/ch/1newslist.html.html" target="_blank" rel="noopener">
           <img src="https://www.freeconvertbox.com/News/tongyong/rego.png" alt="图片转化就选&middot;FreeBox佛博士    PDF转Word就选&middot;佛博士"/></a></div>
 
         <hr />
@@ -179,6 +190,12 @@
         <p class="banner"><a title="FreeBox佛博士  免费还高效精准" href="https://www.freeconvertbox.com/"><img src="https://www.freeconvertbox.com/News/tongyong/TopComm.png" alt="FreeBox佛博士 免费转化工具箱" width="1440" height="160" /></a></p>
 
     </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script src="assets/js/common.js"></script>
 <script>
   FT.mountShell(null);
