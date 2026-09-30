@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>二维码生成 - FreeConvertBox 在线文件工具箱</title>
-<meta name="description" content="在线二维码生成器，把文本 / 链接 / WiFi 等内容转为二维码，可调容错等级、尺寸与配色，支持导出 PNG / SVG。">
-<meta name="keywords" content="二维码生成,在线二维码,免费二维码生成器,二维码制作,链接转二维码">
+<title>二维码生成器免费在线（文字 · 网址 · WiFi 转二维码） - FreeConvertBox</title>
+<meta name="description" content="免费在线二维码生成器，支持文字、网址、WiFi 与名片 vCard 生成二维码，可调容错等级、尺寸、配色与中心 Logo，扫码稳定，支持导出 PNG / SVG。">
+<meta name="keywords" content="二维码生成器,在线二维码生成,免费二维码制作,网址转二维码,文字转二维码,WiFi二维码,带Logo二维码,二维码下载PNG">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -18,17 +18,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="二维码生成 - FreeConvertBox 在线文件工具箱">
-<meta property="og:description" content="在线二维码生成器，把文本 / 链接 / WiFi 等内容转为二维码，可调容错等级、尺寸与配色，支持导出 PNG / SVG。">
+<meta property="og:title" content="二维码生成器免费在线（文字 · 网址 · WiFi 转二维码） - FreeConvertBox">
+<meta property="og:description" content="免费在线二维码生成器，支持文字、网址、WiFi 与名片 vCard 生成二维码，可调容错等级、尺寸、配色与中心 Logo，扫码稳定，支持导出 PNG / SVG。">
 <meta property="og:url" content="https://www.freeconvertbox.com/qrcode.html">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="FreeConvertBox 在线文件工具箱">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="二维码生成 - FreeConvertBox 在线文件工具箱">
-<meta name="twitter:description" content="在线二维码生成器，把文本 / 链接 / WiFi 等内容转为二维码，可调容错等级、尺寸与配色，支持导出 PNG / SVG。">
+<meta name="twitter:title" content="二维码生成器免费在线（文字 · 网址 · WiFi 转二维码） - FreeConvertBox">
+<meta name="twitter:description" content="免费在线二维码生成器，支持文字、网址、WiFi 与名片 vCard 生成二维码，可调容错等级、尺寸、配色与中心 Logo，扫码稳定，支持导出 PNG / SVG。">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/assets/img/og-cover.png">
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="/imgAll/favicon/icon-16x16.png">
@@ -102,8 +103,8 @@
             <input type="color" id="bg" value="#ffffff">
           </label>
           <label class="field field-range">
-            <span>边距（模块）<b id="marginVal">4</b></span>
-            <input type="range" id="margin" min="0" max="8" step="1" value="4">
+            <span>边距（模块，至少 4）<b id="marginVal">4</b></span>
+            <input type="range" id="margin" min="4" max="8" step="1" value="4">
           </label>
         </div>
         <div class="toolbar">
@@ -143,6 +144,32 @@
           </div>
         </div>
       </div>
+
+      <section class="card">
+        <h2 class="card-title">如何使用二维码生成器</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>在输入框填写内容，支持中文；也可点击「网址 / WiFi / 名片」等模板按钮一键套用格式。</li>
+          <li>设置参数：容错等级建议用默认的 M，需要加 Logo 时调到 H；尺寸越大越清晰。</li>
+          <li>可选：上传一张图片作为中心 Logo；保持前景深、背景浅，四周留白不要小于 4 个模块。</li>
+          <li>点击「生成二维码」，然后下载 PNG、下载 SVG，或直接复制到剪贴板。</li>
+        </ol>
+      </section>
+
+
+      <section class="card">
+        <h2 class="card-title">常见问题</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">用微信扫不出来怎么办？</h3>
+        <p class="page-desc">绝大多数情况是这三点：一是配色对比度太低或用了反色，建议回到黑前景 + 白背景；二是四周留白不足，边距请保持至少 4 个模块；三是内容太长导致码点过密，可把容错等级降到 L、或改用短链接。</p>
+        <h3 class="card-title" style="margin-bottom:6px">可以生成中文内容的二维码吗？</h3>
+        <p class="page-desc">可以。内容按 UTF-8 编码写入，微信等主流扫码工具都能正确读出中文。</p>
+        <h3 class="card-title" style="margin-bottom:6px">加中心 Logo 会影响识别吗？</h3>
+        <p class="page-desc">会有一定遮挡。使用 Logo 时请把容错等级调到 H，并把 Logo 做得越简洁越好，生成后务必用手机实际扫一次确认。</p>
+        <h3 class="card-title" style="margin-bottom:6px">我的内容会上传到服务器吗？</h3>
+        <p class="page-desc">不会。即开即用不留存，隐私安全有保障。</p>
+
+        <p class="page-desc">相关工具：<a href="id-photo.html">证件照生成</a> · <a href="img-convert.html">图片格式转换</a> · <a href="pdf-to-img.html">PDF 转图片</a></p>
+      </section>
     </div>
   </div>
 </div>
@@ -151,26 +178,111 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="assets/js/common.js"></script>
-<script src="assets/js/pages/qrcode.js"></script>
+<script src="assets/js/pages/qrcode.js?v=20260930c"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "zh-CN"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/qrcode.html#webpage",
       "url": "https://www.freeconvertbox.com/qrcode.html",
-      "name": "二维码生成 - FreeConvertBox",
-      "description": "在线二维码生成器，把文本 / 链接 / WiFi 等内容转为二维码，可调容错等级、尺寸与配色，支持导出 PNG / SVG。",
+      "name": "二维码生成器免费在线（文字 · 网址 · WiFi 转二维码） - FreeConvertBox",
+      "description": "免费在线二维码生成器，支持文字、网址、WiFi 与名片 vCard 生成二维码，可调容错等级、尺寸、配色与中心 Logo，扫码稳定，支持导出 PNG / SVG。",
       "inLanguage": "zh-CN",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
+      "isPartOf": {
+        "@id": "https://www.freeconvertbox.com/#website"
+      }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "证件照与码工具", "item": "https://www.freeconvertbox.com/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "二维码生成", "item": "https://www.freeconvertbox.com/qrcode.html" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.freeconvertbox.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "二维码生成器免费在线（文字 · 网址 · WiFi 转二维码） - FreeConvertBox",
+          "item": "https://www.freeconvertbox.com/qrcode.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "如何使用二维码生成器",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "第 1 步",
+          "text": "在输入框填写内容，支持中文；也可点击「网址 / WiFi / 名片」等模板按钮一键套用格式。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "第 2 步",
+          "text": "设置参数：容错等级建议用默认的 M，需要加 Logo 时调到 H；尺寸越大越清晰。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "第 3 步",
+          "text": "可选：上传一张图片作为中心 Logo；保持前景深、背景浅，四周留白不要小于 4 个模块。"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "第 4 步",
+          "text": "点击「生成二维码」，然后下载 PNG、下载 SVG，或直接复制到剪贴板。"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "用微信扫不出来怎么办？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "绝大多数情况是这三点：一是配色对比度太低或用了反色，建议回到黑前景 + 白背景；二是四周留白不足，边距请保持至少 4 个模块；三是内容太长导致码点过密，可把容错等级降到 L、或改用短链接。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以生成中文内容的二维码吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以。内容按 UTF-8 编码写入，微信等主流扫码工具都能正确读出中文。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "加中心 Logo 会影响识别吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "会有一定遮挡。使用 Logo 时请把容错等级调到 H，并把 Logo 做得越简洁越好，生成后务必用手机实际扫一次确认。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "我的内容会上传到服务器吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。即开即用不留存，隐私安全有保障。"
+          }
+        }
       ]
     }
   ]
