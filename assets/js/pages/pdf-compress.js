@@ -5,7 +5,7 @@
   FT.mountShell('pdf-compress');
 
   var MAX_PDF = 100 * 1024 * 1024;
-  var MAX_SIDE = 8192;
+  var MAX_SIDE = 4096;
 
   var drop = FT.$('#drop');
   var input = FT.$('#file');
@@ -13,6 +13,8 @@
   var level = FT.$('#level');
   var dpiSel = FT.$('#dpi');
   var dpiField = FT.$('#dpiField');
+  var graySel = FT.$('#gray');
+  var grayField = FT.$('#grayField');
   var quality = FT.$('#quality');
   var qualityVal = FT.$('#qualityVal');
   var qualityField = FT.$('#qualityField');
@@ -153,7 +155,17 @@
 
   /* ---------------- 重印压缩 ---------------- */
 
-  function renderPageJpeg(num, dpi, q) {
+  function toGray(ctx, w, h) {
+    var img = ctx.getImageData(0, 0, w, h);
+    var d = img.data;
+    for (var p = 0; p < d.length; p += 4) {
+      var v = (d[p] * 299 + d[p + 1] * 587 + d[p + 2] * 114) / 1000;
+      d[p] = v; d[p + 1] = v; d[p + 2] = v;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  function renderPageJpeg(num, dpi, q, gray) {
     return state.doc.getPage(num).then(function (page) {
       var base = page.getViewport({ scale: 1 });
       var pw = base.width, ph = base.height;
@@ -168,15 +180,16 @@
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       return page.render({ canvasContext: ctx, viewport: viewport }).promise
-        .then(function () { return FT.canvasToBlob(canvas, 'image/jpeg', q); })
+        .then(function () {
+          if (gray) toGray(ctx, canvas.width, canvas.height);
+          return FT.canvasToBlob(canvas, 'image/jpeg', q);
+        })
         .then(function (blob) { return blob.arrayBuffer(); })
         .then(function (buf) { return { bytes: new Uint8Array(buf), pw: pw, ph: ph }; });
     });
   }
 
-  function compressReprint() {
-    var dpi = Number(dpiSel.value) || 96;
-    var q = Number(quality.value) / 100;
+  function compressReprint(dpi, q, gray) {
     var doc = null, i = 0, failed = 0;
 
     function step() {
@@ -185,7 +198,7 @@
       var num = i + 1;
       FT.setProgress(progress, i / state.total, '正在处理 ' + num + '/' + state.total);
       i++;
-      return renderPageJpeg(num, dpi, q).then(function (res) {
+      return renderPageJpeg(num, dpi, q, gray).then(function (res) {
         return doc.embedJpg(res.bytes).then(function (img) {
           var page = doc.addPage([res.pw, res.ph]);
           page.drawImage(img, { x: 0, y: 0, width: res.pw, height: res.ph });
@@ -237,7 +250,26 @@
     FT.setBusy(runBtn, true, '压缩中…');
     FT.setProgress(progress, 0, '准备中…');
 
-    var job = isReprint() ? compressReprint() : compressLight();
+    var job;
+    if (isReprint()) {
+      var dpi0 = Number(dpiSel.value) || 96;
+      var q0 = Number(quality.value) / 100;
+      var gray0 = graySel.value === '1';
+      job = compressReprint(dpi0, q0, gray0).then(function (res) {
+        if (state.cancel || !res || !res.blob) return res;
+        if (res.blob.size < startSize || state.total > 60) return res;
+        if (dpi0 <= 72 && gray0 && q0 <= 0.25) return res;
+        FT.setProgress(progress, 0, '结果没有变小，自动换更强档位再压一次…');
+        return compressReprint(Math.min(dpi0, 72), Math.max(0.25, q0 - 0.15), true)
+          .then(function (res2) {
+            if (res2 && res2.blob && res2.blob.size < res.blob.size) { res2.retry = true; return res2; }
+            res.retry = true;
+            return res;
+          });
+      });
+    } else {
+      job = compressLight();
+    }
 
     job.then(function (res) {
       if (state.cancel) { FT.toast('已取消压缩', 'warn'); return; }
@@ -258,10 +290,19 @@
       summary.textContent = state.file.name + ' · 体积 ' + delta + (smaller ? '（已减小）' : '（变大了）');
       FT.setProgress(progress, 1, '完成');
 
+      if (res.retry && smaller) {
+        FT.alert(tips, 'info', '<b>已自动降档压缩</b>' +
+          '<p>按当前设置压出来的文件没有变小，已自动改用「更低清晰度 + 灰度 + 质量 −15%」再压一次，并取体积更小的一份。</p>', true);
+      }
+
       if (!smaller) {
+        var tail = isReprint()
+          ? (res.retry ? '已自动用「72 DPI + 灰度 + 更低质量」再压过一次，仍不小于原文件——' : '') +
+            '这类以矢量 / 文字为主的 PDF 转成位图后天生会变大，可手动选 72 DPI、质量 25%、开启灰度后再试。'
+          : '可改用「重印压缩」获得更大降幅。';
         FT.alert(tips, 'warn', '<b>压缩后体积没有下降</b>' +
           '<p>该 PDF 可能已经是紧凑结构' + (isReprint() ? '' : '（轻度压缩主要去除冗余结构与元数据，幅度有限）') +
-          '，结果比原文件略大。' + (isReprint() ? '可降低清晰度或质量后重试。' : '可改用「重印压缩」获得更大降幅。') + '</p>', true);
+          '，结果比原文件略大。' + tail + '</p>', true);
       }
       FT.toast('压缩完成：' + FT.formatBytes(startSize) + ' → ' + FT.formatBytes(blob.size) +
         (res.failed ? '（' + res.failed + ' 页失败）' : ''), res.failed ? 'warn' : 'ok');
@@ -301,6 +342,7 @@
 
   level.addEventListener('change', function () {
     dpiField.hidden = !isReprint();
+    grayField.hidden = !isReprint();
     qualityField.hidden = !isReprint();
     showLevelTip();
   });

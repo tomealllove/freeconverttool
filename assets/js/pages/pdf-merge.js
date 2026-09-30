@@ -12,7 +12,7 @@
   var drop = FT.$('#drop');
   var input = FT.$('#file');
   var chips = FT.$('#chips');
-  var modeSel = FT.$('#mode');
+  var modeInputs = Array.prototype.slice.call(document.querySelectorAll('#modePick input[name="mode"]'));
   var dzTitle = FT.$('#dzTitle');
   var dzSub = FT.$('#dzSub');
   var mergeOpts = FT.$('#mergeOpts');
@@ -455,8 +455,18 @@
 
   /* ---------------- 事件 ---------------- */
 
+  function syncModeCards() {
+    var v = 'merge';
+    modeInputs.forEach(function (el) {
+      if (el.checked) v = el.value;
+      var card = el.closest('.mode-card');
+      if (card) card.classList.toggle('is-active', el.checked);
+    });
+    return v;
+  }
+
   function switchMode() {
-    state.mode = modeSel.value;
+    state.mode = syncModeCards();
     releaseAll();
     parts = [];
     outBlob = null;
@@ -515,7 +525,7 @@
     removeAt(Number(btn.getAttribute('data-chip')));
   });
 
-  modeSel.addEventListener('change', switchMode);
+  modeInputs.forEach(function (el) { el.addEventListener('change', switchMode); });
 
   FT.bindDropzone(drop, input, addFiles, { multiple: true });
   switchMode();
