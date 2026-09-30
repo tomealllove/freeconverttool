@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Video Converter - FreeConvertBox Online File Toolbox</title>
-<meta name="description" content="Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.">
-<meta name="keywords" content="video converter,convert video online,mp4 converter,video to gif,online video converter,video compression,frame extractor,webm to mp4">
+<title>Video Converter (MP4, WebM, MOV) - FreeConvertBox</title>
+<meta name="description" content="Convert video online free: MP4, WebM and MOV. Fast, no quality loss, no sign-up. No uploads, no retention. Your privacy is fully protected.">
+<meta name="keywords" content="video converter,convert video online,free video converter,mp4 converter,webm to mp4,mov to mp4,video format converter">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="FreeConvertBox">
 <meta name="theme-color" content="#4f46e5">
@@ -22,10 +22,11 @@
 <!-- Open Graph / social sharing -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="FreeConvertBox">
-<meta property="og:title" content="Video Converter - FreeConvertBox Online File Toolbox">
-<meta property="og:description" content="Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.">
+<meta property="og:title" content="Video Converter (MP4, WebM, MOV) - FreeConvertBox">
+<meta property="og:description" content="Convert video online free: MP4, WebM and MOV. Fast, no quality loss, no sign-up. No uploads, no retention. Your privacy is fully protected.">
 <meta property="og:url" content="https://www.freeconvertbox.com/en/video-convert.html">
 <meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
 <meta property="og:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -33,8 +34,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Video Converter - FreeConvertBox Online File Toolbox">
-<meta name="twitter:description" content="Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.">
+<meta name="twitter:title" content="Video Converter (MP4, WebM, MOV) - FreeConvertBox">
+<meta name="twitter:description" content="Convert video online free: MP4, WebM and MOV. Fast, no quality loss, no sign-up. No uploads, no retention. Your privacy is fully protected.">
 <meta name="twitter:image" content="https://www.freeconvertbox.com/en/assets/img/og-cover.png">
 
 <link rel="icon" href="/imgAll/favicon/favicon.ico" sizes="any">
@@ -61,7 +62,8 @@
       <header class="page-head">
         <div class="page-crumb">Converters / Video Converter</div>
         <h1 class="page-title">Video Converter</h1>
-        <p class="page-desc">Transcode short clips, convert video to GIF and grab frames online. Transcoding and GIF use ffmpeg.wasm, while frame extraction uses the browser's native decoder. Free and fast, right in your browser.</p>
+        <p class="page-desc">Convert short clips to MP4, WebM or MOV online. Powered by the browser's native WebCodecs API — fast and lossless. Free to use, right in your browser.</p>
+        <p class="page-desc"><b>Chrome, Edge or Safari (recent versions) only — requires browser WebCodecs support.</b></p>
       </header>
 
       <div id="tips"></div>
@@ -82,17 +84,8 @@
       <section class="card">
         <div class="card-title"><span class="step">2</span>Settings</div>
         <div class="toolbar tight">
-          <label class="field field-narrow">
-            <span>Task</span>
-            <select id="task">
-              <option value="transcode">Transcode</option>
-              <option value="gif">Convert to GIF</option>
-              <option value="frames">Extract frames (native)</option>
-            </select>
-          </label>
-
           <!-- Transcode -->
-          <label class="field field-narrow" data-grp="transcode">
+          <label class="field field-narrow">
             <span>Target format</span>
             <select id="tFormat">
               <option value="mp4">MP4 (H.264)</option>
@@ -100,70 +93,10 @@
               <option value="mov">MOV (H.264)</option>
             </select>
           </label>
-          <label class="field field-narrow" data-grp="transcode">
-            <span>Resolution</span>
-            <select id="tRes">
-              <option value="0">Original</option>
-              <option value="720">720p</option>
-              <option value="480">480p</option>
-            </select>
-          </label>
-          <label class="field field-narrow" data-grp="transcode">
-            <span>Quality (CRF)</span>
-            <select id="tCrf">
-              <option value="18">High (18)</option>
-              <option value="23" selected>Standard (23)</option>
-              <option value="28">Small size (28)</option>
-            </select>
-          </label>
-          <label class="field field-narrow" data-grp="transcode">
-            <span>Audio track</span>
-            <label class="checkline"><input type="checkbox" id="tNoAudio">Remove audio track</label>
-          </label>
-
-          <!-- GIF -->
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>Frame rate (FPS)</span>
-            <select id="gFps"><option value="10">10</option><option value="15" selected>15</option><option value="24">24</option></select>
-          </label>
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>Width</span>
-            <select id="gWidth"><option value="320">320</option><option value="480" selected>480</option><option value="640">640</option></select>
-          </label>
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>Start time (seconds)</span>
-            <input type="number" id="gStart" min="0" step="0.5" value="0">
-          </label>
-          <label class="field field-narrow" data-grp="gif" hidden>
-            <span>Duration (seconds)</span>
-            <input type="number" id="gDur" min="0.5" step="0.5" value="5">
-          </label>
-
-          <!-- Frame extraction -->
-          <label class="field field-narrow" data-grp="frames" hidden>
-            <span>Extraction mode</span>
-            <select id="fMode">
-              <option value="interval">By interval (every N seconds)</option>
-              <option value="point">Single time point</option>
-            </select>
-          </label>
-          <label class="field field-narrow" data-grp="frames" id="fIntervalField" hidden>
-            <span>Interval (seconds)</span>
-            <input type="number" id="fInterval" min="0.2" step="0.5" value="2">
-          </label>
-          <label class="field field-narrow" data-grp="frames" id="fPointField" hidden>
-            <span>Time point (seconds)</span>
-            <input type="number" id="fPoint" min="0" step="0.5" value="0">
-          </label>
-          <label class="field field-narrow" data-grp="frames" hidden>
-            <span>Image format</span>
-            <select id="fFormat"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option></select>
-          </label>
 
           <div class="toolbar-actions">
             <button class="btn btn-ghost" id="reset" disabled>Reset</button>
-            <button class="btn" id="downloadAll" disabled>Download all</button>
-            <button class="btn btn-primary" id="run" disabled>Start</button>
+            <button class="btn btn-primary" id="run" disabled>Convert</button>
           </div>
         </div>
         <div class="progress" id="progress" hidden>
@@ -176,7 +109,7 @@
         <h2>Result</h2>
         <span class="muted" id="summary">No video loaded yet</span>
       </div>
-      <div class="empty" id="empty"><p id="emptyText">Upload a video, set your options, then click "Start" to generate the result</p></div>
+      <div class="empty" id="empty"><p id="emptyText">Upload a video, pick a target format, then click "Convert"</p></div>
 
       <section class="card" id="resultCard" hidden>
         <div class="card-title">Result preview</div>
@@ -187,36 +120,98 @@
         </div>
       </section>
 
-      <div class="grid grid-pages" id="frameList"></div>
+      <section class="card">
+        <h2 class="card-title">How to Convert a Video</h2>
+        <ol class="page-desc" style="margin:0;padding-left:20px">
+          <li>Click the upload area to choose a video, or drag and drop the file (under 200 MB recommended).</li>
+          <li>Pick a target format: MP4, WebM or MOV.</li>
+          <li>Click "Convert", then click "Download" to save the file.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title">FAQ</h2>
+
+        <h3 class="card-title" style="margin-bottom:6px">Will converting reduce the quality?</h3>
+        <p class="page-desc">Converting between MP4 and MOV usually copies the video stream directly without re-encoding, so there is no quality loss. WebM (VP9) requires re-encoding; quality stays visually the same and the file is usually smaller.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">Is my video uploaded to a server?</h3>
+        <p class="page-desc">No. Everything runs locally in your browser. No uploads, no retention. Your privacy is fully protected.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">Why does it say my browser is not supported?</h3>
+        <p class="page-desc">This tool uses native WebCodecs. It works in recent versions of Chrome, Edge and Safari. Firefox is not supported yet - please switch to one of those browsers.</p>
+
+        <h3 class="card-title" style="margin-bottom:6px">Which input formats are supported?</h3>
+        <p class="page-desc">Most common video formats work as input, including MP4, WebM, MOV, MKV, AVI, M4V and OGV. Output is MP4, WebM or MOV. Keep files under 200 MB - shorter clips convert faster.</p>
+
+        <p class="page-desc">Related tools: <a href="audio-convert.html">Audio Converter</a> · <a href="img-to-gif.html">Image to GIF</a> · <a href="pdf-to-img.html">PDF to Images</a></p>
+      </section>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="assets/js/common.js"></script>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><script src="assets/js/common.js"></script>
 <script src="assets/js/pages/video-convert.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://www.freeconvertbox.com/#website",
+      "url": "https://www.freeconvertbox.com/",
+      "name": "FreeConvertBox",
+      "inLanguage": "en-US"
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.freeconvertbox.com/en/video-convert.html#webpage",
       "url": "https://www.freeconvertbox.com/en/video-convert.html",
       "name": "Video Converter - FreeConvertBox",
-      "description": "Convert video online free: MP4, WebM, MOV, GIF, screenshots. No uploads, no retention. Your privacy is fully protected.",
+      "description": "Convert video online free: MP4, WebM and MOV. Fast, no quality loss, no sign-up. No uploads, no retention. Your privacy is fully protected.",
       "inLanguage": "en-US",
-      "isPartOf": { "@id": "https://www.freeconvertbox.com/index.html#website" }
+      "isPartOf": { "@id": "https://www.freeconvertbox.com/#website" }
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.freeconvertbox.com/en/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "Converters", "item": "https://www.freeconvertbox.com/en/index.html" },
-        { "@type": "ListItem", "position": 3, "name": "Video Converter", "item": "https://www.freeconvertbox.com/en/video-convert.html" }
+        { "@type": "ListItem", "position": 2, "name": "Video Converter", "item": "https://www.freeconvertbox.com/en/video-convert.html" }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to convert a video",
+      "description": "Upload a video, choose the target format, convert and download.",
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Upload the video", "text": "Click the upload area to choose a video, or drag and drop the file (under 200 MB recommended)." },
+        { "@type": "HowToStep", "position": 2, "name": "Choose the target format", "text": "Pick MP4, WebM or MOV." },
+        { "@type": "HowToStep", "position": 3, "name": "Convert and download", "text": "Click \"Convert\", then click \"Download\" to save the file." }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Will converting reduce the quality?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Converting between MP4 and MOV usually copies the video stream directly without re-encoding, so there is no quality loss. WebM (VP9) requires re-encoding; quality stays visually the same and the file is usually smaller." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my video uploaded to a server?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs locally in your browser. No uploads, no retention. Your privacy is fully protected." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does it say my browser is not supported?",
+          "acceptedAnswer": { "@type": "Answer", "text": "This tool uses native WebCodecs. It works in recent versions of Chrome, Edge and Safari. Firefox is not supported yet." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which input formats are supported?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most common video formats work as input, including MP4, WebM, MOV, MKV, AVI, M4V and OGV. Output is MP4, WebM or MOV. Keep files under 200 MB - shorter clips convert faster." }
+        }
       ]
     }
   ]
